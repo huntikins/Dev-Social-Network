@@ -12,6 +12,6 @@ export default {
 
 <style>
 .logo-img {
-    height: 200px;
+    height: 250px;
 }
 </style>
