@@ -1,14 +1,27 @@
 <template>
     <div class="col col-offset-4 text-center img-wrapper">
         <img class="text-logo" src="@/assets/text-logo.png" alt=""> 
-        <div class="button-join hvr-float-shadow">JOIN US</div>
-        <div class="button-login hvr-float-shadow">LOGIN</div>
+        <div class="button-join hvr-float-shadow" @click="join = true">JOIN US</div>
+        <app-join v-if="join" @close="join = false"/>
+        <div class="button-login hvr-float-shadow" @click="login = true">LOGIN</div>
+        <app-login v-if="login" @close="login = false"/>
     </div>
 </template>
 
 <script>
+import Login from '@/components/modals/Login'
+import Join from '@/components/modals/NewUsr'
 export default {
-
+    data(){
+        return {
+            login: false,
+            join: false,
+        }
+    },
+    components: {
+        appLogin: Login,
+        appJoin: Join
+    }
 }
 </script>
 
