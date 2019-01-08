@@ -1,6 +1,6 @@
 <template>
     <div class="col col-offset-4 text-center img-wrapper">
-        <img class="text-logo" src="@/assets/text-logo.png" alt=""> 
+        <img class="text-logo" src="@/assets/logo-text.svg" alt=""> 
         <div class="button-join hvr-float-shadow" @click="join = true">JOIN US</div>
         <app-join v-if="join" @close="join = false"/>
         <div class="button-login hvr-float-shadow" @click="login = true">LOGIN</div>
@@ -27,12 +27,13 @@ export default {
 
 <style>
 .text-logo {
-    height: 250px !important;
+    height: 400px !important;
 }
 .img-wrapper {
     position: relative;
     cursor:default;
     z-index: 3;
+    top: -60px;
 }
 .button-join {
     z-index: 4;

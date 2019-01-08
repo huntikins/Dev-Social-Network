@@ -1,6 +1,6 @@
 <template>
     <div class="text-center col col-offset-4">
-        <img class="logo-img" src="@/assets/logo.png" alt="logo">
+        <img class="logo-img" src="@/assets/logo-brain.svg" alt="logo">
     </div>
 </template>
 
@@ -12,6 +12,6 @@ export default {
 
 <style>
 .logo-img {
-    height: 250px;
+    height: 200px;
 }
 </style>

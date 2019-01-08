@@ -48,12 +48,12 @@ export default {
         position: relative;
         z-index: 0;
         background-color: transparent;
-        top: -600px;	
+        top: -900px;	
 	svg {
         position: relative;
         float: left;
         z-index: 0;
-		width: 350%;
+		width: 300%;
 		height: auto;
 		fill: none;
 		stroke: #f39121;
