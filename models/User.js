@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     unique: true,
     required: true,
     // from bootcamp week 18 activity 15
-    match: [/.+@.+\..+/, "Please enter a valid e-mail address"]
+    match: [/.+@.+\..+/, 'Please enter a valid e-mail address']
   },
   password: {
     type: String,
@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     required: true,
     validate: {
       validator: value => Number.isInteger(value) && value > 0 && value < 1000000,
-      message: "Please enter a valid 6 digit zip code."
+      message: 'Please enter a valid 6 digit zip code.'
     }
   },
   bio: String,
@@ -36,14 +36,14 @@ const UserSchema = new Schema({
   interests: [String],
   followers: [{
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User'
   }],
   following: [{
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User'
   }]
 });
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
