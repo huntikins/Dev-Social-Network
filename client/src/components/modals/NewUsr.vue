@@ -37,10 +37,12 @@
                 </div>
               </div>
             </form>
-            <small class="home-body">your privacy is important, we will never share or sell any information provided to us.</small>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer mt-4 pt-4">
             <button class="btn btn-light modal-default-button">LOGIN</button>
+          </div>
+          <div class="mt-4 pt-4">
+            <small class="home-body">your privacy is important, we will never share or sell any information provided to us.</small>
           </div>
         </div>
       </div>
