@@ -3,7 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
+          <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
           <div class="modal-header">
             <h3>Content goes here</h3>
           </div>
@@ -11,8 +11,7 @@
             <h3>Content goes here</h3>
           </div>
           <div class="modal-footer">
-            <h3>Content goes here</h3>
-            <button class="modal-default-button" @click="$emit('close')">OK</button>
+            <button class="btn btn-light modal-default-button">OK</button>
           </div>
         </div>
       </div>

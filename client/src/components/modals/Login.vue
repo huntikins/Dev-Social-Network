@@ -3,7 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
+          <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
           <div class="modal-header">
             <h3>Content goes here</h3>
           </div>
@@ -11,8 +11,7 @@
             <h3>Content goes here</h3>
           </div>
           <div class="modal-footer">
-            <h3>Content goes here</h3>
-            <button class="modal-default-button" @click="$emit('close')">OK</button>
+            <button class="btn btn-light modal-default-button">OK</button>
           </div>
         </div>
       </div>
@@ -55,20 +54,36 @@ export default {
   font-family: roboto, sans-serif;
 }
 
-.modal-header h3 {
+.modal-header {
   margin-top: 0;
-  color: #42b983;
+  border: none !important;
 }
-
+.modal-footer {
+  border: none !important;
+}
 .modal-body {
   margin: 20px 0;
+  border: none !important;
 }
 
 .modal-default-button {
-  float: right;
+    margin: auto;
+    width: 150px;
+    height: 40px;
+    background: white;
+    border-radius: 100px !important;
+    color: black;
+    font-family: alternate-gothic-no-1-d, sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 100;
 }
 .modal-enter {
   opacity: 0;
+}
+.modal-close {
+  float: right;
+  color: white;
 }
 
 .modal-leave-active {
