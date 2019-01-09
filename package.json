@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "install": "cd client && npm install"
   },
   "repository": "https://github.com/huntertrammell/Dev-Social-Network.git",
   "author": "djknit <djknit@gmail.com>",
