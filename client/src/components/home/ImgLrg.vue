@@ -12,6 +12,7 @@ export default {
 
 <style>
 .logo-img {
-    height: 200px;
+    height: 250px;
+    padding-bottom: 50px;
 }
 </style>
