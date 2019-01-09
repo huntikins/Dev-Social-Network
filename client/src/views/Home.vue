@@ -23,4 +23,12 @@ export default {
     height: auto;
     overflow-y: hidden;
 }
+.home-header {
+    color: white;
+    font-family: alternate-gothic-no-1-d, sans-serif;
+}
+.home-body {
+    color: white;
+    font-family: roboto, sans-serif;
+}
 </style>
