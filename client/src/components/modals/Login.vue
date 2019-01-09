@@ -5,13 +5,20 @@
         <div class="modal-container">
           <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
           <div class="modal-header">
-            <h3>Content goes here</h3>
+            <h1 class="home-header m-auto">Welcome Back</h1>
           </div>
           <div class="modal-body">
-            <h3>Content goes here</h3>
+            <form>
+              <div class="form-group">
+                <input type="email" class="form-control modal-field" placeholder="email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control modal-field" placeholder="password">
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-light modal-default-button">OK</button>
+            <button class="btn btn-light modal-default-button">LOGIN</button>
           </div>
         </div>
       </div>
@@ -26,6 +33,33 @@ export default {
 </script>
 
 <style>
+input.modal-field{
+  background-color: rgb(133,149,149);
+  border: 1px solid #ffffff;
+  border-radius: 100px;
+  text-align: center;
+  color: white;
+  font-family: roboto, sans-serif;
+}
+input.modal-field::placeholder {
+  color: white !important;
+  text-align: center;
+  font-family: roboto, sans-serif;
+}
+input.modal-field:focus::placeholder {
+  opacity: 0;
+}
+input.modal-field:focus {
+  background-color: white;
+  text-align: center;
+  color: black;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  font-family: roboto, sans-serif;
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -57,6 +91,9 @@ export default {
 .modal-header {
   margin-top: 0;
   border: none !important;
+  clear: both;
+  display: block;
+  text-align: center !important;
 }
 .modal-footer {
   border: none !important;
@@ -73,10 +110,11 @@ export default {
     background: white;
     border-radius: 100px !important;
     color: black;
-    font-family: alternate-gothic-no-1-d, sans-serif;
+    font-family: roboto, sans-serif;
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: 100;
+
 }
 .modal-enter {
   opacity: 0;

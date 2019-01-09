@@ -46,7 +46,7 @@ export default {
     background: white;
     border-radius: 100px !important;
     color: black;
-    font-family: alternate-gothic-no-1-d, sans-serif;
+    font-family: roboto, sans-serif;
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: 100;
@@ -71,7 +71,7 @@ export default {
     background: white;
     border-radius: 100px !important;
     color: black;
-    font-family: alternate-gothic-no-1-d, sans-serif;
+    font-family: roboto, sans-serif;
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: 100;
