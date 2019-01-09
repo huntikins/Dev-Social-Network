@@ -11,10 +11,12 @@
             <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
             <form>
               <div class="form-group">
-                <input type="email" class="form-control modal-field" placeholder="email">
+                <input v-validate="'required'" name="email" type="email" class="form-control modal-field" placeholder="email">
+                <small class="home-body">{{ errors.first('email') }}</small>
               </div>
               <div class="form-group">
-                <input type="password" class="form-control modal-field" placeholder="password">
+                <input v-validate="'required'" name="password" type="password" class="form-control modal-field" placeholder="password">
+                <small class="home-body">{{ errors.first('password') }}</small>
               </div>
             </form>
             <div class="row m-0 p-0">

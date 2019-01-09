@@ -12,23 +12,28 @@
             <form>
               <div class="form-row">
                 <div class="form-group col-md-6 col-sm-12">
-                  <input type="text" class="form-control modal-field" placeholder="first name">
+                  <input v-validate="'required|min:2'" name="name" type="text" class="form-control modal-field" placeholder="first name">
+                  <small class="home-body">{{ errors.first('name') }}</small>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
-                  <input type="text" class="form-control modal-field" placeholder="last name">
+                  <input v-validate="'required|min:2'" name="name" type="text" class="form-control modal-field" placeholder="last name">
+                  <small class="home-body">{{ errors.first('name') }}</small>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-12">
-                  <input type="email" class="form-control modal-field" placeholder="email">
+                  <input v-validate="'required|email'" name="email" type="email" class="form-control modal-field" placeholder="email">
+                  <small class="home-body">{{ errors.first('email') }}</small>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-9 col-lg-8 col-sm-12">
-                  <input type="password" class="form-control modal-field" placeholder="password">
+                  <input v-validate="'required|length:8|alpha_num'" name="password" type="password" class="form-control modal-field" placeholder="password">
+                  <small class="home-body">{{ errors.first('password') }}</small>
                 </div>
                 <div class="form-row col-md-3 col-lg-4 col-sm-12">
-                  <input type="text" class="form-control modal-field" placeholder="zipcode">
+                  <input v-validate="'required|numeric|digits:5'" name="zipcode" type="text" class="form-control modal-field" placeholder="zipcode">
+                  <small class="home-body">{{ errors.first('zipcode') }}</small>
                 </div>
               </div>
             </form>
@@ -44,6 +49,7 @@
 </template>
 
 <script>
+
 export default {
 
 }
