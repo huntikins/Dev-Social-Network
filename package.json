@@ -1,0 +1,16 @@
+{
+  "name": "Dev-Social-Network",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": "https://github.com/huntertrammell/Dev-Social-Network.git",
+  "author": "djknit <djknit@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.2",
+    "morgan": "^1.9.1"
+  }
+}
