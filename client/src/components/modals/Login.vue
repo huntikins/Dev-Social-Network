@@ -2,20 +2,31 @@
    <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container-login">
           <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
-          <div class="modal-header">
-            <h1 class="home-header m-auto">Welcome Back</h1>
+          <div class="modal-header m-0 p-0">
+            <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
           </div>
-          <div class="modal-body">
+          <div class="modal-body m-0 p-0">
+            <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
             <form>
               <div class="form-group">
-                <input type="email" class="form-control modal-field" placeholder="email">
+                <input v-validate="'required'" name="email" type="email" class="form-control modal-field" placeholder="email">
+                <small class="home-body">{{ errors.first('email') }}</small>
               </div>
               <div class="form-group">
-                <input type="password" class="form-control modal-field" placeholder="password">
+                <input v-validate="'required'" name="password" type="password" class="form-control modal-field" placeholder="password">
+                <small class="home-body">{{ errors.first('password') }}</small>
               </div>
             </form>
+            <div class="row m-0 p-0">
+              <div class="col m-0 p-0">
+                <a href="" class="forgot-data align-top">forgot password</a>
+              </div>
+              <div class="col m-0 p-0">
+                <a href="" class="forgot-data align-top">forgot username</a>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-light modal-default-button">LOGIN</button>
@@ -33,6 +44,18 @@ export default {
 </script>
 
 <style>
+.modal-image {
+  width: 95px;
+}
+.forgot-data {
+  color: #3dc0ec;
+  font-family: roboto, sans-serif;
+  text-align: center;
+  font-size: 12px;
+}
+.forgot-data:hover {
+  color: #3dc0ec;
+}
 input.modal-field{
   background-color: rgb(133,149,149);
   border: 1px solid #ffffff;
@@ -77,7 +100,7 @@ input.modal-field:focus {
   vertical-align: middle;
 }
 
-.modal-container {
+.modal-container-login {
   width: 300px;
   margin: 0px auto;
   padding: 20px 30px;
@@ -94,6 +117,8 @@ input.modal-field:focus {
   clear: both;
   display: block;
   text-align: center !important;
+  letter-spacing: 2px;
+  font-weight: 100;
 }
 .modal-footer {
   border: none !important;
@@ -122,6 +147,7 @@ input.modal-field:focus {
 .modal-close {
   float: right;
   color: white;
+  cursor: pointer;
 }
 
 .modal-leave-active {
