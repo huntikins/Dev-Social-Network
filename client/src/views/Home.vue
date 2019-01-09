@@ -24,7 +24,7 @@ export default {
     overflow-y: hidden;
 }
 .home-header {
-    color: white;
+    color: white !important;
     font-family: alternate-gothic-no-1-d, sans-serif;
 }
 .home-body {

@@ -2,7 +2,7 @@
    <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container-login">
           <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
           <div class="modal-header m-0 p-0">
             <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
@@ -98,7 +98,7 @@ input.modal-field:focus {
   vertical-align: middle;
 }
 
-.modal-container {
+.modal-container-login {
   width: 300px;
   margin: 0px auto;
   padding: 20px 30px;
