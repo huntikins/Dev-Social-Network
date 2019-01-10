@@ -1,16 +1,13 @@
-const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const UserController = require('../controllers/User');
-
 // Function to Configure Passport
-function configurePassport() {
+module.exports.configurePassport = passport => {
   passport.use(new LocalStrategy(
     {
       usernameField: 'email'
     },
     function (email, password, done) {
-      User.findByEmail(email, (err, user) => {
+      require('../controllers/User').findByEmail(email, (err, user) => {
         if (err) { return done(err); }
         if (!user) {
           return done(null, false, { message: 'Incorrect email.' });
@@ -29,20 +26,4 @@ function configurePassport() {
   passport.deserializeUser((id, done) => {
     User.findById(id, done);
   });
-}
-
-module.exports.addPassportAndOtherRelatedMiddleware = app => {
-  configurePassport();
-  // Additional middleware needed
-  app.use(require('cookie-parser')());
-  app.use(require('connect-flash')());
-  app.use(require('express-session')({
-    secret: "cats",
-    resave: false,
-    saveUninitialized: false,
-    maxAge: 240000
-  }));
-  //Add Passport as middleware
-  app.use(passport.initialize());
-  app.use(passport.session());
 }
