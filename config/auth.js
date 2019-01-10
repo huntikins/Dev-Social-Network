@@ -1,6 +1,8 @@
 const LocalStrategy = require('passport-local').Strategy;
 
-// Function to Configure Passport
+const UserController = require('../controllers/User');
+
+// Function to configure Passport
 module.exports.configurePassport = passport => {
   passport.use(new LocalStrategy(
     {
@@ -24,6 +26,6 @@ module.exports.configurePassport = passport => {
   passport.serializeUser((user, done) => done(null, user._id));
   
   passport.deserializeUser((id, done) => {
-    User.findById(id, done);
+    UserController.findById(id, done);
   });
 }

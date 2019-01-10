@@ -2,6 +2,8 @@
 const express = require('express');
 const app = express();
 const passport = require('passport');
+
+// Configure Passport
 require('./auth').configurePassport(passport);
 
 // Add Middleware
