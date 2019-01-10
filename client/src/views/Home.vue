@@ -192,23 +192,114 @@ export default {
 }
 /*galaxy s5*/
 @media (width: 360px) {
-
+    .button-join {
+        left: 23%;
+        width: 85px;
+        height: 25px;
+        font-size: 10px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
+    .button-login {
+        left: 53%;
+        width: 85px;
+        height: 25px;
+        font-size: 10px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
+    .text-logo {
+        width: 325px;
+        height: auto !important;
+    }
 }
 /*pixel 2*/
 @media (width: 411px) {
-    
+    .text-logo {
+        width: 350px;
+        height: auto !important;
+    }
+    .button-join {
+        left: 25%;
+        width: 85px;
+        height: 25px;
+        font-size: 10px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
+    .button-login {
+        left: 53%;
+        width: 85px;
+        height: 25px;
+        font-size: 10px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
 }
 /*iphone 5SE*/
-@media (width: 360px) {
-    
+@media (width: 320px) {
+    .button-join {
+        left: 21%;
+        width: 85px;
+        height: 25px;
+        font-size: 10px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
+    .button-login {
+        left: 52%;
+        width: 85px;
+        height: 25px;
+        font-size: 10px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
 }
 /*iphone 6/7/8*/
 @media (width: 375px) {
-    
+    .text-logo {
+        width: 350px;
+        height: auto !important;
+    }
+    .button-join {
+        left: 22%;
+        width: 90px;
+        height: 30px;
+        font-size: 11px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
+    .button-login {
+        left: 54%;
+        width: 90px;
+        height: 30px;
+        font-size: 11px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
 }
 /*iphone 6/7/8 Plus*/
 @media (width: 414px) {
-    
+    .text-logo {
+        width: 375px;
+        height: auto !important;
+    }
+    .button-join {
+        left: 23%;
+        width: 100px;
+        height: 35px;
+        font-size: 12px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
+    .button-login {
+        left: 53%;
+        width: 100px;
+        height: 35px;
+        font-size: 12px !important;
+        letter-spacing: 2px;
+        font-weight: 100;
+    }
 }
 /*iphone X*/
 @media (width: 375px) {
