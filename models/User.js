@@ -23,10 +23,14 @@ const UserSchema = new Schema({
     required: true
   },
   zipCode: {
-    type: Number,
+    type: String,
     required: true,
     validate: {
-      validator: value => Number.isInteger(value) && value > 0 && value < 1000000,
+      validator: value => {
+        if (value.length !== 6) return false;
+        if (value !== parseInt(value).toString()) return false;
+        return true;
+      },
       message: 'Please enter a valid 6 digit zip code.'
     }
   },
@@ -41,6 +45,14 @@ const UserSchema = new Schema({
   following: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
+  }],
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
+  kbItems: [{
+    type: Schema.Types.ObjectId,
+    ref: 'KBItem'
   }]
 });
 

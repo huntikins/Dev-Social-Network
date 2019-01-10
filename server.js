@@ -7,14 +7,16 @@ app.use(express.static('client/dist'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(require('morgan')('combined')); // logs http requests
+// Passport
+require('./config/auth').addPassportAndOtherRelatedMiddleware(app);
 
 // Database
 require('./config/database').connect();
 
 // Routes
-// const routes = require('./routes');
+const routes = require('./routes');
 const router = express.Router();
-// router.use(routes);
+router.use(routes);
 
 // router.get('*', (req, res) => {
 //   res.redirect('/');
@@ -23,3 +25,5 @@ const router = express.Router();
 app.use(router);
 
 app.listen(PORT, () => console.log('Server listening on PORT ' + PORT));
+
+require('./controllers/User')

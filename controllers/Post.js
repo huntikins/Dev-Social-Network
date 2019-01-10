@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 
 module.exports = {
   create: (post, callback) => {
-    Post.insertOne(post)
+    Post.create(post)
     .then(result => callback(result))
     .catch(err => console.error(err));
   },
