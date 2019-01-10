@@ -1,9 +1,9 @@
 <template>
     <div class="col col-offset-4 text-center img-wrapper">
-        <img class="text-logo" src="@/assets/logo-text.svg" alt=""> 
-        <div class="button-join hvr-float-shadow" @click="join = true">JOIN US</div>
+        <img class="text-logo" src="@/assets/logo-home.png" alt=""> 
+        <button class="btn btn-light button-join hvr-float-shadow" @click="join = true">JOIN US</button>
         <app-join v-if="join" @close="join = false"/>
-        <div class="button-login hvr-float-shadow" @click="login = true">LOGIN</div>
+        <button class="btn btn-light button-login hvr-float-shadow" @click="login = true">LOGIN</button>
         <app-login v-if="login" @close="login = false"/>
     </div>
 </template>
@@ -27,7 +27,7 @@ export default {
 
 <style>
 .text-logo {
-    height: 400px !important;
+    height: 250px !important;
 }
 .img-wrapper {
     position: relative;
@@ -44,9 +44,9 @@ export default {
     width: 150px;
     height: 40px;
     background: white;
-    border-radius: 20px;
+    border-radius: 100px !important;
     color: black;
-    font-family: alternate-gothic-no-1-d, sans-serif;
+    font-family: roboto, sans-serif;
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: 100;
@@ -69,9 +69,9 @@ export default {
     width: 150px;
     height: 40px;
     background: white;
-    border-radius: 20px;
+    border-radius: 100px !important;
     color: black;
-    font-family: alternate-gothic-no-1-d, sans-serif;
+    font-family: roboto, sans-serif;
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: 100;

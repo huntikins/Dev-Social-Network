@@ -1,0 +1,24 @@
+<template>
+    <div>
+        <img  class="profile-image" src="@/assets/user-icon.png" alt="">
+    </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+.profile-image {
+    height: 175px;
+    width: 175px;
+    border: 10px solid #f39121;
+    border-radius: 100%;
+    position: fixed;
+    z-index: 15;
+    top: 2%;
+    left: 11%;
+}
+</style>

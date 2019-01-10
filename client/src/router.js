@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import NotFound from './views/NotFound.vue'
+import Profile from './views/Profile.vue'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '*', 
       name: 'notfound',
       component: NotFound
+     },
+     {
+       path: '/profile',
+       name: 'profile',
+       component: Profile
      }
   ]
 })

@@ -45,6 +45,7 @@ export default {
 
 <style lang="scss">
     .wrapper-anime {
+        overflow:  hidden !important;
         position: relative;
         z-index: 0;
         background-color: transparent;
