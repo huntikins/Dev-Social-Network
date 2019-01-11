@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="social-feed">
         <app-new-post />
         <!--v-for list-->
     </div>
