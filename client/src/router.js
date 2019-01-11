@@ -20,9 +20,9 @@ export default new Router({
       component: NotFound
      },
      {
-       path: '/profile',
-       name: 'profile',
-       component: () => import(/* webpackChunkName: "dashboard" */ './views/Profile.vue')
+      path: '/profile',
+      name: 'profile',
+      component: () => import(/* webpackChunkName: "dashboard" */ './views/Profile.vue')
      }
   ]
 })

@@ -9,15 +9,15 @@
           </div>
           <div class="modal-body m-0 p-0">
             <h1 class="home-header m-auto py-4">TELL US A LITTLE ABOUT YOURSELF</h1>
-            <form>
+            <form id="new-user-form">
               <div class="form-row">
                 <div class="form-group col-md-6 col-sm-12">
-                  <input v-validate="'required|min:2'" v-model="newUser.firstName" name="name" type="text" class="form-control modal-field" placeholder="first name">
-                  <small class="home-body">{{ errors.first('name') }}</small>
+                  <input v-validate="'required|min:2'" v-model="newUser.firstName" name="first name" type="text" class="form-control modal-field" placeholder="first name">
+                  <small class="home-body">{{ errors.first('first name') }}</small>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
-                  <input v-validate="'required|min:2'" v-model="newUser.lastName" name="name" type="text" class="form-control modal-field" placeholder="last name">
-                  <small class="home-body">{{ errors.first('name') }}</small>
+                  <input v-validate="'required|min:2'" v-model="newUser.lastName" name="last name" type="text" class="form-control modal-field" placeholder="last name">
+                  <small class="home-body">{{ errors.first('last name') }}</small>
                 </div>
               </div>
               <div class="form-row">
@@ -28,7 +28,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-9 col-lg-8 col-sm-12">
-                  <input v-validate="'required|length:8|alpha_num'" v-model="newUser.password" name="password" type="password" class="form-control modal-field" placeholder="password">
+                  <input v-validate="'required|min:8|alpha_num'" v-model="newUser.password" name="password" type="password" class="form-control modal-field" placeholder="password">
                   <small class="home-body">{{ errors.first('password') }}</small>
                 </div>
                 <div class="form-row col-md-3 col-lg-4 col-sm-12">
@@ -37,9 +37,10 @@
                 </div>
               </div>
             </form>
+            <small class="home-body">{{ message }}</small>
           </div>
           <div class="modal-footer mt-4 pt-4">
-            <button class="btn btn-light modal-default-button" @click="createAccount">LOGIN</button>
+            <button class="btn btn-light modal-default-button" @click.prevent="createAccount" :disabled="errors.any() || isEmpty" type="submit" form="new-user-form">LOGIN</button>
           </div>
           <div class="mt-4 pt-4">
             <small class="home-body">Your privacy is important, we will never share or sell any information provided to us.</small>
@@ -62,13 +63,23 @@ export default {
         firstName: '',
         lastName: '',
         zipCode: ''
-      }
+      },
+      message: ''
     }
   },
   methods: {
     createAccount() {
+      const self = this;
       api.createAccount(this.newUser)
-        .then(result => console.log(result));
+        .then(res => {
+          if (res.data.success) self.$router.push('/profile');
+          self.message = res.data.message;
+        });
+    }
+  },
+  computed: {
+    isEmpty() {
+      return !this.newUser.email || !this.newUser.password || !this.newUser.firstName || !this.newUser.lastName || !this.newUser.zipCode;
     }
   }
 }
