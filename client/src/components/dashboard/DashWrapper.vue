@@ -24,7 +24,7 @@ export default {
 
 <style>
 .dash-container {
-    position: relative;
+    position: fixed;
     left: 17vw;
     border-top: 10px solid #f39121;
     width: 82.5vw;

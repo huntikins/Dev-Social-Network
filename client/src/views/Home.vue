@@ -9,7 +9,7 @@
 import logo from '@/components/home/Logo'
 import AnimeLogo from '@/components/home/LogoAnime'
 export default {
-    name: 'body',
+    name: 'home',
     components: {
         appLogo: logo,
         appAnime: AnimeLogo
