@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "install": "cd client && yarn install",
+    "build": "cd client && yarn build && cd .. && nodemon server.js"
   },
   "repository": "https://github.com/huntertrammell/Dev-Social-Network.git",
   "author": "djknit <djknit@gmail.com>",
@@ -17,6 +19,7 @@
     "mongoose": "^5.4.2",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "socket.io": "^2.2.0"
   }
 }
