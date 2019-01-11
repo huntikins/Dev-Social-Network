@@ -11,11 +11,11 @@
             <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
             <form>
               <div class="form-group">
-                <input v-validate="'required'" name="email" type="email" class="form-control modal-field" placeholder="email">
+                <input v-validate="'required'" v-model="email" name="email" type="email" class="form-control modal-field" placeholder="email">
                 <small class="home-body">{{ errors.first('email') }}</small>
               </div>
               <div class="form-group">
-                <input v-validate="'required'" name="password" type="password" class="form-control modal-field" placeholder="password">
+                <input v-validate="'required'" v-model="password" name="password" type="password" class="form-control modal-field" placeholder="password">
                 <small class="home-body">{{ errors.first('password') }}</small>
               </div>
             </form>
@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-light modal-default-button">LOGIN</button>
+            <button class="btn btn-light modal-default-button" @click="submitLogin">LOGIN</button>
           </div>
         </div>
       </div>
@@ -38,8 +38,21 @@
 </template>
 
 <script>
-export default {
+import api from '../../utils/auth.js';
 
+export default {
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    submitLogin() {
+      api.login(this.email, this.password)
+        .then(result => console.log(result));
+    }
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-   <transition name="modal">
+  <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container-newusr">
@@ -12,37 +12,37 @@
             <form>
               <div class="form-row">
                 <div class="form-group col-md-6 col-sm-12">
-                  <input v-validate="'required|min:2'" name="name" type="text" class="form-control modal-field" placeholder="first name">
+                  <input v-validate="'required|min:2'" v-model="newUser.firstName" name="name" type="text" class="form-control modal-field" placeholder="first name">
                   <small class="home-body">{{ errors.first('name') }}</small>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
-                  <input v-validate="'required|min:2'" name="name" type="text" class="form-control modal-field" placeholder="last name">
+                  <input v-validate="'required|min:2'" v-model="newUser.lastName" name="name" type="text" class="form-control modal-field" placeholder="last name">
                   <small class="home-body">{{ errors.first('name') }}</small>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-12">
-                  <input v-validate="'required|email'" name="email" type="email" class="form-control modal-field" placeholder="email">
+                  <input v-validate="'required|email'" v-model="newUser.email" name="email" type="email" class="form-control modal-field" placeholder="email">
                   <small class="home-body">{{ errors.first('email') }}</small>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-9 col-lg-8 col-sm-12">
-                  <input v-validate="'required|length:8|alpha_num'" name="password" type="password" class="form-control modal-field" placeholder="password">
+                  <input v-validate="'required|length:8|alpha_num'" v-model="newUser.password" name="password" type="password" class="form-control modal-field" placeholder="password">
                   <small class="home-body">{{ errors.first('password') }}</small>
                 </div>
                 <div class="form-row col-md-3 col-lg-4 col-sm-12">
-                  <input v-validate="'required|numeric|digits:5'" name="zipcode" type="text" class="form-control modal-field" placeholder="zipcode">
+                  <input v-validate="'required|numeric|digits:6'" v-model="newUser.zipCode" name="zipcode" type="text" class="form-control modal-field" placeholder="zipcode">
                   <small class="home-body">{{ errors.first('zipcode') }}</small>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer mt-4 pt-4">
-            <button class="btn btn-light modal-default-button">LOGIN</button>
+            <button class="btn btn-light modal-default-button" @click="createAccount">LOGIN</button>
           </div>
           <div class="mt-4 pt-4">
-            <small class="home-body">your privacy is important, we will never share or sell any information provided to us.</small>
+            <small class="home-body">Your privacy is important, we will never share or sell any information provided to us.</small>
           </div>
         </div>
       </div>
@@ -51,9 +51,26 @@
 </template>
 
 <script>
+import api from '../../utils/auth.js';
 
 export default {
-
+  data() {
+    return {
+      newUser: {
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        zipCode: ''
+      }
+    }
+  },
+  methods: {
+    createAccount() {
+      api.createAccount(this.newUser)
+        .then(result => console.log(result));
+    }
+  }
 }
 </script>
 
