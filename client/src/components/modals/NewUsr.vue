@@ -1,5 +1,6 @@
 <template>
   <transition name="modal">
+    <app-loading v-if="load"/>
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container-newusr">
@@ -28,11 +29,11 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-9 col-lg-8 col-sm-12">
-                  <input v-validate="'required|min:8|alpha_num'" v-model="newUser.password" name="password" type="password" class="form-control modal-field" placeholder="password">
+                  <input v-validate="'required|min:8'" v-model="newUser.password" name="password" type="password" class="form-control modal-field" placeholder="password">
                   <small class="home-body">{{ errors.first('password') }}</small>
                 </div>
                 <div class="form-row col-md-3 col-lg-4 col-sm-12">
-                  <input v-validate="'required|numeric|digits:6'" v-model="newUser.zipCode" name="zipcode" type="text" class="form-control modal-field" placeholder="zipcode">
+                  <input v-validate="'required|numeric|digits:5'" v-model="newUser.zipCode" name="zipcode" type="text" class="form-control modal-field" placeholder="zipcode">
                   <small class="home-body">{{ errors.first('zipcode') }}</small>
                 </div>
               </div>
@@ -53,7 +54,7 @@
 
 <script>
 import api from '../../utils/auth.js';
-
+import Loading from '@/components/modals/Loading'
 export default {
   data() {
     return {
@@ -64,17 +65,27 @@ export default {
         lastName: '',
         zipCode: ''
       },
-      message: ''
+      message: '',
+      load: false
     }
+  },
+  components: {
+    appLoading: Loading
   },
   methods: {
     createAccount() {
       const self = this;
       api.createAccount(this.newUser)
         .then(res => {
-          if (res.data.success) self.$router.push('/profile');
+          if (res.data.success){
+            self.load = true
+            self.$router.push('/profile');
+          } 
           self.message = res.data.message;
-        });
+      });
+      setTimeout(function(){
+        this.load = false
+      }, 3000)
     }
   },
   computed: {

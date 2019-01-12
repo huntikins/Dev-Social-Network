@@ -60,7 +60,7 @@ export default {
 <style>
 .profile-info {
     height: 88vh;
-    width: 300px;
+    width: 14%;
     background-color: #f39121; 
     position: fixed;
 }

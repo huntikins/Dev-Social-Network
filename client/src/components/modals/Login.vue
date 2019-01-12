@@ -1,5 +1,6 @@
 <template>
    <transition name="modal">
+    <app-loading v-if="load"/>
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container-login">
@@ -40,23 +41,32 @@
 
 <script>
 import api from '../../utils/auth.js';
-
+import Loading from '@/components/modals/Loading'
 export default {
   data() {
     return {
       email: '',
       password: '',
-      message: ''
+      message: '',
+      load: false,
     }
+  },
+  components: {
+    appLoading: Loading
   },
   methods: {
     submitLogin() {
       const self = this;
       api.login(this.email, this.password)
         .then(res => {
-          if (res.data.success) self.$router.push('/profile');
+          if (res.data.success) {
+            self.load=true
+            self.$router.push('/profile')}
           self.message = res.data.message;
         });
+      setTimeout(function(){
+        this.load = false
+      }, 3000)
     }
   },
   computed: {

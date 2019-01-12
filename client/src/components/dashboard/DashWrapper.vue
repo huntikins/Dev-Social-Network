@@ -1,10 +1,10 @@
 <template>
     <div class="dash-container">
         <div class="row m-1">
-            <div class="col-8 bg-white mr-3">
+            <div class="social-container">
                 <app-social-feed />
             </div>
-            <div class="col bg-white">
+            <div class="list-container">
                 <app-list-pane />
             </div>
         </div>
@@ -24,14 +24,23 @@ export default {
 
 <style>
 .dash-container {
-    position: fixed;
-    left: 17vw;
-    border-top: 10px solid #f39121;
-    width: 82.5vw;
-}
-.col {
-    height: 100vh;
+    position: relative;
+    width: 87%;
     padding: 0 !important;
-    margin: 0 !important;
+    margin-left: 14% !important;
+    border-left: 10px solid #f39121;
+    overflow-x: hidden;
+}
+.social-container {
+    position: relative;
+    height: 100vh !important;
+    width: 65%;
+}
+.list-container {
+    position: relative;
+    height: 100vh !important;
+    width: 35%;
+    margin-top: 10px;
+    border-left: 20px solid #f39121;
 }
 </style>
