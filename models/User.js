@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     required: true,
     validate: {
       validator: value => {
-        if (value.length !== 6) return false;
+        if (value.length !== 5) return false;
         if (value !== parseInt(value).toString()) return false;
         return true;
       },
