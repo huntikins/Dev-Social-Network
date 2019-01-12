@@ -35,7 +35,7 @@ export default {
     width: 90%;
 }
 textarea#post {
-    height: 100px;
+    height: 75px;
     resize: none;
     border-radius: 25px 0 0 25px;
 }

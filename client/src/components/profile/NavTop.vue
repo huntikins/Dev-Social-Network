@@ -1,19 +1,19 @@
 <template>
     <div class="navbar navbar-light justify-content-end">
         <app-slide>
-            <a id="" href="#">
+            <router-link id="" to="/social">
                 <span>Social</span>
-            </a>
-            <a id="" href="#">
+            </router-link>
+            <router-link id="" to="/profile">
                 <span>Profile</span>
-            </a>
-            <a id="" href="#">
+            </router-link>
+            <router-link id="" to="/account">
                 <span>Account</span>
-            </a>
+            </router-link>
             <br><br><br><br>
-            <a id="" href="#">
+            <router-link id="" to="/">
                 <span>Log Out</span>
-            </a>
+            </router-link>
         </app-slide>
         <a class="navbar-brand text-right" href="#">
             <img class="nav-logo" src="@/assets/nav-logo.png" alt="cerebellum">
