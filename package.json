@@ -4,15 +4,23 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "install": "cd client && npm install"
+    "install": "cd client && yarn install",
+    "build": "cd client && yarn build && cd .. && nodemon server.js"
   },
   "repository": "https://github.com/huntertrammell/Dev-Social-Network.git",
   "author": "djknit <djknit@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "connect-ensure-login": "^0.1.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "mongoose": "^5.4.2",
     "morgan": "^1.9.1",
+    "nodemon": "^1.18.9",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "socket.io": "^2.2.0"
   }
 }

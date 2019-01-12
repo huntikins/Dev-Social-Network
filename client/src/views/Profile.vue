@@ -1,14 +1,19 @@
 <template>
-    <div class="profile-content">
-        <app-boomerang />
+    <div>
+        <div class="profile-content">
+            <app-boomerang />
+            <app-dash-wrapper />
+        </div>
     </div>
 </template>
 
 <script>
 import Boomerang from '@/components/profile/Boomerang'
+import DashWrapper from '@/components/dashboard/DashWrapper'
 export default {
     components: {
-        appBoomerang: Boomerang
+        appBoomerang: Boomerang,
+        appDashWrapper: DashWrapper
     }
 }
 </script>
@@ -16,7 +21,6 @@ export default {
 <style>
 .profile-content {
     background-color: #f39121;
-    height: 100vh;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 </style>

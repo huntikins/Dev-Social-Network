@@ -1,5 +1,6 @@
 <template>
    <transition name="modal">
+    <app-loading v-if="load"/>
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container-login">
@@ -9,13 +10,13 @@
           </div>
           <div class="modal-body m-0 p-0">
             <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
-            <form>
+            <form id="login-form">
               <div class="form-group">
-                <input v-validate="'required'" name="email" type="email" class="form-control modal-field" placeholder="email">
+                <input v-validate="'required'" v-model="email" name="email" type="email" class="form-control modal-field" placeholder="email">
                 <small class="home-body">{{ errors.first('email') }}</small>
               </div>
               <div class="form-group">
-                <input v-validate="'required'" name="password" type="password" class="form-control modal-field" placeholder="password">
+                <input v-validate="'required'" v-model="password" name="password" type="password" class="form-control modal-field" placeholder="password">
                 <small class="home-body">{{ errors.first('password') }}</small>
               </div>
             </form>
@@ -27,9 +28,10 @@
                 <a href="" class="forgot-data align-top">forgot username</a>
               </div>
             </div>
+            <small class="home-body">{{ message }}</small>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-light modal-default-button">LOGIN</button>
+            <button class="btn btn-light modal-default-button" @click.prevent="submitLogin" :disabled="errors.any() || isEmpty" type="submit" form="login-form">LOGIN</button>
           </div>
         </div>
       </div>
@@ -38,8 +40,40 @@
 </template>
 
 <script>
+import api from '../../utils/auth.js';
+import Loading from '@/components/modals/Loading'
 export default {
-
+  data() {
+    return {
+      email: '',
+      password: '',
+      message: '',
+      load: false,
+    }
+  },
+  components: {
+    appLoading: Loading
+  },
+  methods: {
+    submitLogin() {
+      const self = this;
+      api.login(this.email, this.password)
+        .then(res => {
+          if (res.data.success) {
+            self.load=true
+            self.$router.push('/profile')}
+          self.message = res.data.message;
+        });
+      setTimeout(function(){
+        this.load = false
+      }, 3000)
+    }
+  },
+  computed: {
+    isEmpty() {
+      return !this.email || !this.password;
+    }
+  }
 }
 </script>
 
