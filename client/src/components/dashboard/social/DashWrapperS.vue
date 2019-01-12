@@ -39,7 +39,7 @@ export default {
 .list-container {
     position: relative;
     height: 100vh !important;
-    width: 35%;
+    width: 33.5%;
     margin-top: 10px;
     border-left: 20px solid #f39121;
 }
