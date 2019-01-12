@@ -1,25 +1,25 @@
 <template>
     <div>
-        <div class="profile-content">
+        <div class="social-content">
             <app-boomerang />
-            <app-dash-wrapper-p />
+            <app-dash-wrapper-s />
         </div>
     </div>
 </template>
 
 <script>
 import Boomerang from '@/components/profile/Boomerang'
-import DashWrapperP from '@/components/dashboard/profile/DashWrapperP'
+import DashWrapperS from '@/components/dashboard/social/DashWrapperS'
 export default {
     components: {
         appBoomerang: Boomerang,
-        appDashWrapperP: DashWrapperP
+        appDashWrapperS: DashWrapperS
     }
 }
 </script>
 
 <style>
-.profile-content {
+.social-content {
     background-color: #f39121;
     overflow: hidden;
 }

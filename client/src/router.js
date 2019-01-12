@@ -23,6 +23,12 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: () => import(/* webpackChunkName: "dashboard" */ './views/Profile.vue')
+     },
+     ,
+     {
+      path: '/social',
+      name: 'social',
+      component: () => import(/* webpackChunkName: "dashboard" */ './views/Social.vue')
      }
   ]
 })
