@@ -15,7 +15,12 @@ router.get(
 );
 
 router.post('/create', (req, res) => {
-  UserController.create(req.body, result => res.json(result));
+  UserController.create(req.body, result => {
+    if (result.success) {
+      req.login(result.user, err => err ? res.json(err) : res.json({ success: true, message: 'Successful authentication.' }));
+    }
+    else res.json(result);
+  });
 });
 
 router.post(

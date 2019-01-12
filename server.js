@@ -10,9 +10,9 @@ const routes = require('./routes');
 const router = require('express').Router();
 router.use(routes);
 
-// router.get('*', (req, res) => {
-//   res.redirect('/');
-// });
+router.get('*', (req, res) => {
+  res.redirect('/');
+});
 
 app.use(router);
 

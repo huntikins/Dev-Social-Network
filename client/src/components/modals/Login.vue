@@ -9,7 +9,7 @@
           </div>
           <div class="modal-body m-0 p-0">
             <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
-            <form>
+            <form id="login-form">
               <div class="form-group">
                 <input v-validate="'required'" v-model="email" name="email" type="email" class="form-control modal-field" placeholder="email">
                 <small class="home-body">{{ errors.first('email') }}</small>
@@ -27,9 +27,10 @@
                 <a href="" class="forgot-data align-top">forgot username</a>
               </div>
             </div>
+            <small class="home-body">{{ message }}</small>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-light modal-default-button" @click="submitLogin">LOGIN</button>
+            <button class="btn btn-light modal-default-button" @click.prevent="submitLogin" :disabled="errors.any() || isEmpty" type="submit" form="login-form">LOGIN</button>
           </div>
         </div>
       </div>
@@ -44,13 +45,23 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      message: ''
     }
   },
   methods: {
     submitLogin() {
+      const self = this;
       api.login(this.email, this.password)
-        .then(result => console.log(result));
+        .then(res => {
+          if (res.data.success) self.$router.push('/profile');
+          self.message = res.data.message;
+        });
+    }
+  },
+  computed: {
+    isEmpty() {
+      return !this.email || !this.password;
     }
   }
 }
