@@ -21,7 +21,6 @@ export default {
 <style>
 .profile-content {
     background-color: #f39121;
-    height: 100vh;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 </style>
