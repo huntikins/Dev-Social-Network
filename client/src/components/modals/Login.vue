@@ -63,7 +63,8 @@ export default {
             self.load=true
             self.$router.push('/social')}
           self.message = res.data.message;
-        });
+        })
+        .catch(err => err.response.data.message || '');
       setTimeout(function(){
         this.load = false
       }, 3000)
