@@ -2,7 +2,7 @@
     <div class="kb-item grid-item">
         <div class="kb-show">
             <i class="kb-icon fas fa-chevron-circle-down" @click="kbExpand = false ? kbExpand === true : kbExpand === false"></i>
-            <a class="kb-title" :href="link">{{ title }}</a>
+            <a class="kb-title" :href="link" target="_blank">{{ title }}</a>
         </div>
         <div class="kb-hide">
             <transition name="bounce">
@@ -66,5 +66,8 @@ export default {
     color:  white;
     font-family: roboto, sans-serif;
     font-size: 1.75em;
+}
+.kb-title:hover {
+    color:  white;
 }
 </style>
