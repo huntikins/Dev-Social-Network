@@ -5,18 +5,18 @@
                 <app-social-feed />
             </div>
             <div class="list-container">
-                <app-list-pane />
+                <app-event-list />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import ListPane from '@/components/dashboard/ListPane'
-import SocialFeed from '@/components/dashboard/SocialFeed'
+import EventList from '@/components/dashboard/social/EventList'
+import SocialFeed from '@/components/dashboard/social/SocialFeed'
 export default {
     components: {
-        appListPane: ListPane,
+        appEventList: EventList,
         appSocialFeed: SocialFeed
     }
 }
@@ -39,7 +39,7 @@ export default {
 .list-container {
     position: relative;
     height: 100vh !important;
-    width: 35%;
+    width: 33.5%;
     margin-top: 10px;
     border-left: 20px solid #f39121;
 }

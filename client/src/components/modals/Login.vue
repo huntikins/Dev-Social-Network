@@ -61,7 +61,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             self.load=true
-            self.$router.push('/profile')}
+            self.$router.push('/social')}
           self.message = res.data.message;
         });
       setTimeout(function(){
