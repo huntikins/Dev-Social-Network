@@ -48,6 +48,7 @@ router.get('/fail', (req, res) => {
   let response = { success: false };
   const message = req.flash();
   response.message = message.error ? message.error[0] : 'You are not authenticated.';
+  res.status(401);
   res.json(response);
 });
 

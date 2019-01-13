@@ -82,7 +82,8 @@ export default {
             self.$router.push('/profile');
           } 
           self.message = res.data.message;
-      });
+        })
+        .catch(err => err.response.data.message || '');
       setTimeout(function(){
         this.load = false
       }, 3000)
