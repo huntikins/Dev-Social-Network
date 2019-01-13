@@ -16,21 +16,25 @@ export default new Router({
       name: 'home',
       component: Home
     },
-    { 
-      path: '*', 
+    {
+      path: '*',
       name: 'notfound',
       component: NotFound
-     },
-     {
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import(/* webpackChunkName: "dashboard" */ './views/Profile.vue')
-     },
-     ,
-     {
+    },
+    {
       path: '/social',
       name: 'social',
       component: () => import(/* webpackChunkName: "dashboard" */ './views/Social.vue')
-     }
+    },
+    {
+      path: '/account',
+      name: 'accountManagement',
+      component: () => import(/*  */ './views/Account.vue')
+    }
   ]
 })
