@@ -69,5 +69,21 @@ module.exports = {
         .catch(err => console.error(err));
     })
       .catch(err => console.error(err));
+  },
+  addPost: (userId, postId, callback) => {
+    User.update(
+      { _id: userId },
+      { $push: { posts: postId } }
+    ).then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  populate: (id, callback) => {
+    User.find({ _id: id })
+      .populate('posts')
+      .then(res => {
+        if (res.password) res.password = undefined;
+        callback(res);
+      })
+      .catch(err => console.error(err));
   }
 }

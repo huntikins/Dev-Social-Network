@@ -20,10 +20,8 @@ const PostSchema = new Schema({
   body: String,
   date: Date,
   likes: [{
-    user: {
       type: Schema.Types.ObjectId,
       ref: 'User'
-    }
   }],
   comments: [{
     body: String,

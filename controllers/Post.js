@@ -6,13 +6,8 @@ module.exports = {
       .then(result => callback(result))
       .catch(err => console.error(err));
   },
-  findAllForUser: (articles, callback) => {
-    Post.insertMany(articles)
-    .then(result => callback ? callback(result) : "no callback")
-    .catch(err => console.error(err));
-  },
-  deleteAll: callback => {
-    Post.deleteMany({})
+  delete: (userId, postId, callback) => {
+    Post.deleteOne({ user: userId, _id: postId })
     .then(result => callback(result))
     .catch(err => console.error(err));
   }
