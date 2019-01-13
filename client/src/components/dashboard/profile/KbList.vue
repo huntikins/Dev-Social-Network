@@ -1,35 +1,73 @@
 <template>
-    <div class="list-feed">
-        <div class="list-item">
-            <h3></h3>
-            <h6></h6>
-            <a>More info</a>
+    <div class="kb-item grid-item">
+        <div class="kb-show">
+            <i class="kb-icon fas fa-chevron-circle-down" @click="kbExpand = false ? kbExpand === true : kbExpand === false"></i>
+            <a class="kb-title" :href="link" target="_blank">{{ title }}</a>
+        </div>
+        <div class="kb-hide">
+            <transition name="bounce">
+                <app-kb-comment
+                    v-if="kbExpand" 
+                    :post="post"
+                    :comments="comments"
+                />
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
 import moment from 'moment'
+import KbComments from '@/components/dashboard/profile/KbComments'
 export default {
+    props: ['title', 'link', 'post', 'comments'],
     data(){
         return {
+            kbExpand: false,
         }
+    },
+    components: {
+        appKbComment: KbComments
     }
 }
 </script>
 
 <style>
-.list-feed {
-    background-color: white;
-    padding: 10px 0px 50% 10px;
-    border-radius: 25px 0 0 25px;
-    height: 100%;
-    overflow: scroll;
+.bounce-enter-active {
+  animation: bounce-in .5s;
 }
-.list-item {
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.kb-item {
     margin: 10px;
-    padding: 10px;
+    padding: 10px 0 10px 10px;
     border-radius: 25px 0 0 25px;
-    background-color:#859595; 
+    border: 3px solid rgb(61,192,236);
+    background-color: rgba(61,192,236, 0.6); 
+}
+.kb-show{
+    padding: 5px;
+}
+.kb-icon {
+    color: white;
+    font-size: 1.25em;
+    padding-right: 10px;
+}
+.kb-title {
+    color:  white;
+    font-family: roboto, sans-serif;
+    font-size: 1.75em;
+}
+.kb-title:hover {
+    color:  white;
 }
 </style>
