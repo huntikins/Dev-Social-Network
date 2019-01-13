@@ -44,6 +44,20 @@
       </section>
 
       <section class="row justify-content-md-center">
+        <div class="col-8">
+          <div id="bio" class="section-wrapper" v-if="!editBio">
+            <div class="pos-relative">
+              <h4>Biography</h4>
+              <button class="btn circle-button" @click="editBio = true">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <p>I am a new JS developer</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row justify-content-md-center">
         <div class="col-8"></div>
       </section>
     </div>
