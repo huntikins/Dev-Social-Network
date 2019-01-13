@@ -24,16 +24,66 @@ module.exports = {
     User.findOne({ email }, (err, user) => callback(err, user));
   },
   findById: (id, callback) => {
-    User.findById(id, (err, user) => callback(err, user));
+    User.findById(id, (err, user) => {
+      if (user) user.password = undefined;
+      callback(err, user);
+    });
   },
   findAllForUser: (articles, callback) => {
     User.insertMany(articles)
-    .then(result => callback ? callback(result) : "no callback")
-    .catch(err => console.error(err));
+      .then(result => callback(result))
+      .catch(err => console.error(err));
   },
-  deleteAll: callback => {
-    User.deleteMany({})
-    .then(result => callback(result))
-    .catch(err => console.error(err));
+  delete: (id, callback) => {
+    User.deleteOne({ _id: id })
+      .then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  update: (id, updatedProps, callback) => {
+    User.updateOne({ _id: id }, updatedProps)
+      .then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  follow: (followerId, targetId, callback) => {
+    User.update(
+      { _id: followerId },
+      { $push: { following: targetId } }
+    ).then(result_1 => {
+      User.update(
+        { _id: targetId },
+        { $push: { followers: followerId } }
+      ).then(result_2 => callback({ result_1, result_2 }))
+        .catch(err => console.error(err));
+    })
+      .catch(err => console.error(err));
+  },
+  unfollow: (followerId, targetId, callback) => {
+    User.update(
+      { _id: followerId },
+      { $pull: { following: targetId } }
+    ).then(result_1 => {
+      User.update(
+        { _id: targetId },
+        { $pull: { followers: followerId } }
+      ).then(result_2 => callback({ result_1, result_2 }))
+        .catch(err => console.error(err));
+    })
+      .catch(err => console.error(err));
+  },
+  addPost: (userId, postId, callback) => {
+    User.update(
+      { _id: userId },
+      { $push: { posts: postId } }
+    ).then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  populate: (id, callback) => {
+    User.find({ _id: id })
+      .populate('posts')
+      .then(res => {
+        if (res.password) res.password = undefined;
+        callback(res);
+      })
+      .catch(err => console.error(err));
   }
 }

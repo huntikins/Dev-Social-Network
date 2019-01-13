@@ -31,7 +31,7 @@ const UserSchema = new Schema({
         if (value !== parseInt(value).toString()) return false;
         return true;
       },
-      message: 'Please enter a valid 6 digit zip code.'
+      message: 'Please enter a valid 5 digit zip code.'
     }
   },
   bio: String,
