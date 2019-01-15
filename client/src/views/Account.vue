@@ -4,11 +4,11 @@
     <app-user-img/>
     <div id="account-management" class="container">
       <section class="row justify-content-md-center">
-        <div class="col-8">
+        <div class="col-10">
           <div id="demographic-info" class="section-wrapper" v-if="!editDemographics">
             <div class="pos-relative">
               <button class="btn circle-button" @click="editDemographics = true">
-                <i class="fas fa-pencil-alt"></i>
+                <i class="fas fa-pencil-alt edit-pencil"></i>
               </button>
               <!-- <p>{{user.firstname + user.lastname}}</p>
               <p>{{user.email}}</p>
@@ -20,19 +20,20 @@
               <p>Soleran Support</p>
             </div>
           </div>
+          <app-demo-form v-if="editDemographics" class="section-wrapper"/>
         </div>
       </section>
 
       <section class="row justify-content-md-center">
-        <div class="col-8">
-          <div id="interests" class="section-wrapper" v-if="!editInterists">
+        <div class="col-10">
+          <div id="interests" class="section-wrapper" v-if="!editInterests">
             <div class="pos-relative">
-              <button class="btn circle-button" @click="editInterists = true">
-                <i class="fas fa-pencil-alt"></i>
+              <button class="btn circle-button" @click="editInterests = true">
+                <i class="fas fa-pencil-alt edit-pencil"></i>
               </button>
               <h4>Interests</h4>
               <ul>
-                <!-- <li v-for="(interest, index) in user.interests" :key="index">{{interest}}</li> -->
+                <!-- <li v-for="(interest, index) in user.interests" :key="index">{{user.interest}}</li> -->
                 <li>Dogs</li>
                 <li>Pizzza</li>
                 <li>Javascript</li>
@@ -40,20 +41,26 @@
               </ul>
             </div>
           </div>
+          <app-interests v-if="editInterests" class="section-wrapper"/>
         </div>
       </section>
 
       <section class="row justify-content-md-center">
-        <div class="col-8">
+        <div class="col-10">
           <div id="bio" class="section-wrapper" v-if="!editBio">
             <div class="pos-relative">
-              <h4>Biography</h4>
               <button class="btn circle-button" @click="editBio = true">
-                <i class="fas fa-pencil-alt"></i>
+                <i class="fas fa-pencil-alt edit-pencil"></i>
               </button>
-              <p>I am a new JS developer</p>
+              <h4>Biography</h4>
+              <!-- <p>{{user.bio}}</p> -->
+              <p>
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                Section 1.10.32 of "de Finibus Bonorum et
+              </p>
             </div>
           </div>
+          <app-biography class="section-wrapper" v-if="editBio"/>
         </div>
       </section>
 
@@ -69,24 +76,30 @@
 // import API from "./utils";
 import NavTop from "@/components/profile/NavTop";
 import UserImage from "@/components/profile/UserImage";
+import DemographicForm from "@/components/forms/Demographic";
+import InterestsForm from "@/components/forms/Interests";
+import BiographyForm from "@/components/forms/Biography";
 
 export default {
   data() {
     return {
       editDemographics: false,
-      editInterists: false,
+      editInterests: false,
       editBio: false
     };
   },
   props: ["user"],
   components: {
     appNavTop: NavTop,
-    appUserImg: UserImage
+    appUserImg: UserImage,
+    appDemoForm: DemographicForm,
+    appInterests: InterestsForm,
+    appBiography: BiographyForm
   }
 };
 </script>
 
-<style>
+<style scoped>
 #account-root {
   background-color: #f39121;
   height: 100vh;
@@ -112,13 +125,13 @@ export default {
 .circle-button {
   border-radius: 100% !important;
   background-color: slategray !important;
-  position: relative;
+  position: absolute;
   top: 20px;
   right: 0%;
   left: 98%;
 }
 
-.fa-pencil-alt {
+.edit-pencil {
   color: rgb(236, 239, 241);
 }
 </style>

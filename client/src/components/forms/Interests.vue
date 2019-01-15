@@ -1,0 +1,26 @@
+<template>
+  <div id="root">
+    <form id="interests-form">
+      <div class="form-group">
+          <label for="interest-list"><h4>Interests</h4></label>
+          <textarea class="form-control" name="interests" id="interest-list" rows="6">Comma Separated List</textarea>
+      </div>
+      <button class="btn save-button" @click="editInterests = false">
+        <i class="fas fa-save save-floppy"></i>
+      </button>
+    </form>
+  </div>
+</template>
+
+
+<script>
+export default {};
+</script>
+
+<style>
+#interests-form{
+  position: relative;
+  margin-bottom: 3rem;
+  margin-top: 0.5rem;
+}
+</style>
