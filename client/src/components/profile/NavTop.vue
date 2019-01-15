@@ -34,6 +34,10 @@ export default {
 .navbar {
     background-color: #859595;
     height: 12vh;
+    width: 100vw;
+    margin-bottom:12vh;
+    position: fixed;
+    z-index: 4;
 }
 .nav-logo {
     height: auto;

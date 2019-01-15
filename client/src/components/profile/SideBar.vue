@@ -61,6 +61,7 @@ export default {
 .profile-info {
     height: 88vh;
     width: 14%;
+    margin-top: 12vh;
     background-color: #f39121; 
     position: fixed;
 }

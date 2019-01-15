@@ -44,7 +44,7 @@ export default {
                     url: "post.url",
                     title: "content",
                     date: "post.date",
-                    likes: "post.likes",
+                    likes: 0,
                     comments: [{name: "username", content: "post.comments", date: "commentdate"}],
                     type: "content"
                 },
@@ -54,7 +54,7 @@ export default {
                     url: "post.url",
                     title: "content",
                     date: "post.date",
-                    likes: "post.likes",
+                    likes: 0,
                     comments: [{name: "username", content: "post.comments", date: "commentdate"}],
                     type: "content"
                 },
@@ -64,7 +64,7 @@ export default {
                     url: "post.url",
                     title: "text",
                     date: "post.date",
-                    likes: "post.likes",
+                    likes: 0,
                     comments: [{name: "username", content: "post.comments", date: "commentdate"}],
                     type: "text"
                 },
@@ -74,7 +74,7 @@ export default {
                     url: "post.url",
                     title: "text",
                     date: "post.date",
-                    likes: "post.likes",
+                    likes: 0,
                     comments: [{name: "username", content: "post.comments", date: "commentdate"}],
                     type: "text"
                 },
@@ -84,7 +84,7 @@ export default {
                     url: "post.url",
                     title: "text",
                     date: "post.date",
-                    likes: "post.likes",
+                    likes: 0,
                     comments: [{name: "username", content: "post.comments", date: "commentdate"}],
                     type: "text"
                 },
@@ -94,7 +94,7 @@ export default {
                     url: "post.url",
                     title: "content",
                     date: "post.date",
-                    likes: "post.likes",
+                    likes: 0,
                     comments: [{name: "username", content: "post.comments", date: "commentdate"}],
                     type: "content"
                 },
@@ -107,8 +107,8 @@ export default {
 <style>
 .social-list {
     margin-top: 20px;
-    background: white;
     height: 100%;
     border-radius: 25px 25px 0 0;
+    padding-bottom: 30vh;
 }
 </style>

@@ -109,6 +109,7 @@ export default {
 #account-management {
   background-color: rgb(236, 239, 241);
   height: 100%;
+  margin-top: 12vh;
 }
 
 .section-wrapper {
