@@ -1,18 +1,18 @@
 <template>
     <div class="navbar navbar-light justify-content-end">
-        <app-slide>
-            <router-link id="" to="/social">
-                <span>Social</span>
+        <app-slide width="285">
+            <router-link id="" to="/social" class="menu-link">
+                Social
             </router-link>
-            <router-link id="" to="/profile">
-                <span>Profile</span>
+            <router-link id="" to="/profile" class="menu-link">
+                Profile
             </router-link>
-            <router-link id="" to="/account">
-                <span>Account</span>
+            <router-link id="" to="/account" class="menu-link">
+                Account
             </router-link>
-            <br><br><br><br>
-            <router-link id="" to="/">
-                <span>Log Out</span>
+            <app-user-search />
+            <router-link id="" to="/" class="logout">
+                Log Out
             </router-link>
         </app-slide>
         <a class="navbar-brand text-right" href="#">
@@ -22,10 +22,12 @@
 </template>
 
 <script>
-import { Slide } from 'vue-burger-menu'
+import Slide from '@/components/menus/BurgerMenu'
+import UserSearch from '@/components/forms/UserSearch'
 export default {
     components: {
-        appSlide: Slide
+        appSlide: Slide,
+        appUserSearch: UserSearch
     }
 }
 </script>
@@ -39,22 +41,31 @@ export default {
     position: fixed;
     z-index: 4;
 }
+.logout {
+    color: white;
+    font-family: roboto, sans-serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 10% 2% 2% 10%;
+}
+.menu-link {
+    color: white;
+    font-family: roboto, sans-serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    display: block;
+    margin: 2% 2% 2% 10%;
+}
+.menu-link:hover {
+    color: white;
+    text-decoration: none;
+}
+.logout:hover {
+    color: white;
+    text-decoration: none;
+}
 .nav-logo {
     height: auto;
     width: 8%;
-}
-.bm-menu {
-    background-color: #859595; 
-    z-index: 10;
-}
-.bm-burger-bars {
-    background-color: white;
-}
-.bm-cross {
-    background: white;
-}
-.bm-cross-button {
-    margin-right: 80%;
-    margin-top: 5%;
 }
 </style>

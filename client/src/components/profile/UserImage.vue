@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img  class="profile-image" src="@/assets/user-icon.png" alt="">
+        <img  class="profile-image img-fluid" src="@/assets/user-icon.png" alt="">
     </div>
 </template>
 
