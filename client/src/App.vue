@@ -1,12 +1,19 @@
 <template>
-    <router-view/>
+    <router-view class="scroll"/>
 </template>
 
 <style lang="scss">
 @import url("https://use.typekit.net/cdt2rei.css");
 html {
     background-color: #859595;
-    overflow: hidden;
+    height: 100%;
 }
-
+body{
+    overflow: hidden;
+    height: 100%;
+}
+.scroll {
+    height: 100%;
+    overflow-x: hidden;
+}
 </style>

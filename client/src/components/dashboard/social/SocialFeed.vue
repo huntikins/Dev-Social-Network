@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import NewPost from '@/components/dashboard/NewPost'
+import NewPost from '@/components/forms/NewPost'
 import SocialList from '@/components/dashboard/social/SocialList'
 export default {
     components: {
@@ -18,6 +18,7 @@ export default {
 
 <style>
 .social-feed {
-    overflow: hidden;
+    height: 100%;
+    padding-bottom: 30vh;
 }
 </style>

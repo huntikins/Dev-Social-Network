@@ -844,26 +844,12 @@ export default {
 </script>
 
 <style>
-.list-feed::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-    background-color: #f39121;
-}
-.list-feed::-webkit-scrollbar {
-	width: 15px;
-	background-color: #f39121;
-}
-.list-feed::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: rgb(61,192,236);
-}
 .list-feed {
     background-color: rgba(61,192,236, 0);
-    padding: 0px 0px 50% 10px;
+    padding: 0px 0px 50px 10px;
     border-radius: 25px 0 0 25px;
     height: 100%;
-    overflow: scroll;
+    padding-bottom: 30vh;
 }
 .event-item {
     margin: 10px;

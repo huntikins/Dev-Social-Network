@@ -46,11 +46,11 @@ export default {
                 location: zipcodes.lookup(66224),
                 job_title: "Developer",
                 job_company: "Chuck E. Cheese",
-                interests: ["Cheese", "Robotic Singers", "Pizza"],
+                interests: ["Cheese", "Robotic Singers", "Pizza","Cheese", "Robotic Singers", "Pizza"],
                 friend_count: 500,
                 following_count: 675,
                 follower_count: 533,
-                bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
             }
         }
     }
@@ -59,8 +59,9 @@ export default {
 
 <style>
 .profile-info {
-    height: 88vh;
+    height: 87vh;
     width: 14%;
+    margin-top: 12vh;
     background-color: #f39121; 
     position: fixed;
 }
@@ -126,9 +127,15 @@ export default {
     text-align:center;
     font-size: 2em;
 }
-.interest-list{
+.interest-list {
     list-style-type: none;
     padding-left: 15%;
+    overflow-y: scroll;
+    height: 11vh;
+}
+.interest-list::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
 .interest-list-item{
     text-align: center;
@@ -138,13 +145,19 @@ export default {
     border: 1px solid #3dc0ec;
     padding: 2px;
     border-radius: 100px;
-    margin: 2px;
+    margin: 4px;
     width: 75%;
 }
 .user-bio{
+    height: 40vh;
     padding: 4px 4px 4px 10px;
     background-color: #859595;
     border-radius: 0 25px 25px 0;
+    overflow-y: scroll;
+}
+.user-bio::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
 .bio-text{
     font-family: roboto, sans-serif;

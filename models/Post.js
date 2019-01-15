@@ -17,7 +17,8 @@ const PostSchema = new Schema({
   body: String,
   url: String,
   title: String,
-  body: String,
+  image: String,
+  description: String,
   date: Date,
   likes: [{
       type: Schema.Types.ObjectId,

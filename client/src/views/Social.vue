@@ -21,6 +21,6 @@ export default {
 <style>
 .social-content {
     background-color: #f39121;
-    overflow: hidden;
+    height: 100%;
 }
 </style>

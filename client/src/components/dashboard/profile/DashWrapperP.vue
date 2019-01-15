@@ -1,6 +1,6 @@
 <template>
     <div class="dash-container">
-        <div class="row m-1">
+        <div class="row m-0 p-0">
             <div class="social-container">
                 <app-user-feed />
             </div>
@@ -109,43 +109,40 @@ export default {
 </script>
 
 <style>
-.kb-feed {
-    background-color: rgba(61,192,236, 0);
-    padding: 0px 0px 50% 10px;
-    border-radius: 25px 0 0 25px;
+.dash-container {
+    position: absolute;
+    width: 85.5%;
+    padding: 0;
+    left: 14% !important;
+    border-left: 10px solid #f39121;
+    overflow-y: scroll;
+    overflow-x: hidden;
     height: 100%;
-    overflow: scroll;
+    background-color: #f39121;
+    margin-top: 13vh;
 }
-.kb-feed::-webkit-scrollbar-track {
+.dash-container::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
     background-color: #f39121;
 }
-.kb-feed::-webkit-scrollbar {
+.dash-container::-webkit-scrollbar {
 	width: 15px;
 	background-color: #f39121;
 }
-.kb-feed::-webkit-scrollbar-thumb {
+.dash-container::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: rgb(61,192,236);
 }
-.dash-container {
-    position: relative;
-    width: 87%;
-    padding: 0 !important;
-    margin-left: 14% !important;
-    border-left: 10px solid #f39121;
-    overflow-x: hidden;
-}
 .social-container {
     position: relative;
-    height: 100vh !important;
+    height: 100%;
     width: 65%;
 }
 .list-container {
     position: relative;
-    height: 100vh !important;
+    height: 100% !important;
     width: 33.5%;
     margin-top: 10px;
     border-left: 20px solid #f39121;
