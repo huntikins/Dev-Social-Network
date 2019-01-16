@@ -24,14 +24,14 @@ const PostSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User'
   }],
-  comments: [{
+  comments: [new Schema({
     body: String,
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
     date: Date
-  }]
+  })]
 });
 
 const Post = mongoose.model('Post', PostSchema);

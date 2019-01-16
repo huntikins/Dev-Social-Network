@@ -35,10 +35,8 @@ const UserSchema = new Schema({
     }
   },
   bio: String,
-  job: {
-    title: String,
-    company: String
-  },
+  jobTitle: String,
+  jobCompany: String,
   picture: String,
   interests: [String],
   followers: [{
