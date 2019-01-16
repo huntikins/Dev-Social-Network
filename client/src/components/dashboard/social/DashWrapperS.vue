@@ -25,7 +25,7 @@ export default {
 <style>
 .dash-container {
     position: absolute;
-    width: 85.5%;
+    width: 86%;
     padding: 0;
     left: 14% !important;
     border-left: 10px solid #f39121;
@@ -57,8 +57,7 @@ export default {
 .list-container {
     position: relative;
     height: 100%;
-    width: 33.5%;
+    width: 35%;
     margin-top: 10px;
-    border-left: 20px solid #f39121;
 }
 </style>

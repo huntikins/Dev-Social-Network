@@ -53,6 +53,9 @@ export default {
     border-radius: 25px 0 0 25px;
     border: 3px solid rgb(61,192,236);
     background-color: rgba(61,192,236, 0.6); 
+    -webkit-box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
 }
 .kb-show{
     padding: 5px;
