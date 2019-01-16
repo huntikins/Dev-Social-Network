@@ -19,6 +19,5 @@ export default {
 <style>
 .social-feed {
     height: 100%;
-    padding-bottom: 30vh;
 }
 </style>

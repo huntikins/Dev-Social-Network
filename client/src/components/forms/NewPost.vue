@@ -66,6 +66,9 @@ export default {
     padding: 0;
     width: 100%;
     background-color: #3dc0ec;
+    -webkit-box-shadow: 12px 14px 30px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 12px 14px 30px -10px rgba(0,0,0,0.75);
+    box-shadow: 12px 14px 30px -10px rgba(0,0,0,0.75);
 }
 .post_body {
     margin: 10px;

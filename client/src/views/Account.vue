@@ -1,7 +1,7 @@
 <template>
   <div id="account-root">
     <app-nav-top/>
-    <app-user-img/>
+    <app-user-img-edit/>
     <div id="account-management" class="container">
       <section class="row justify-content-md-center">
         <div class="col-10">
@@ -75,7 +75,7 @@
 <script>
 // import API from "./utils";
 import NavTop from "@/components/profile/NavTop";
-import UserImage from "@/components/profile/UserImage";
+import UserImageEdit from "@/components/profile/UserImageEdit";
 import DemographicForm from "@/components/forms/Demographic";
 import InterestsForm from "@/components/forms/Interests";
 import BiographyForm from "@/components/forms/Biography";
@@ -91,7 +91,7 @@ export default {
   props: ["user"],
   components: {
     appNavTop: NavTop,
-    appUserImg: UserImage,
+    appUserImgEdit: UserImageEdit,
     appDemoForm: DemographicForm,
     appInterests: InterestsForm,
     appBiography: BiographyForm
@@ -108,8 +108,23 @@ export default {
 
 #account-management {
   background-color: rgb(236, 239, 241);
-  height: 100%;
+  height: 88vh;
   margin-top: 12vh;
+  overflow-y: scroll;
+}
+#account-management::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+    background-color: #f39121;
+}
+#account-management::-webkit-scrollbar {
+	width: 15px;
+	background-color: #f39121;
+}
+#account-management::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: rgb(61,192,236);
 }
 
 .section-wrapper {

@@ -19,7 +19,6 @@ export default {
 .comment-section {
     padding: 0px;
     margin-top: 5px;
-    border-top: 4px solid #3dc0ec;
     background-color: rgba(133,149,149, 0.1)
 }
 .post-comments {
@@ -32,6 +31,10 @@ export default {
 .post-comment-user {
     font-family: roboto, sans-serif;
     color: #3dc0ec;
+}
+.post-comment-user:hover{
+    color: #3dc0ec;
+    text-decoration: none;
 }
 .post-comment-wrapper {
     border-bottom: 2px solid rgba(133,149,149, 0.1);

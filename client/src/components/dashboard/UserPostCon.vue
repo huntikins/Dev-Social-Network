@@ -1,14 +1,5 @@
 <template>
     <div class="post-wrapper" title="">
-        <div class="content-top">
-            <div class="content-img-wrapper">
-                <a class="content-link" :href="url" target="_blank">
-                    <img class="w-100 content-img" :src="image">
-                    <br>
-                    <span class="content-desc">{{ description }}</span>
-                </a>
-            </div>
-        </div>
         <div class="content-bottom">
             <div class="row post-userinfo">
                 <div class="col-1">
@@ -24,8 +15,14 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h3 class="post-title">{{ title }}</h3>
                     <p class="post-text" v-html="getAnchorTag()"></p>
+                    <div class="media content-media-wrapper img-thumbnail" v-if="image && title && description">
+                        <img :src="image" class="mr-3 img-thumbnail w-25" alt="...">
+                        <div class="media-body content-desc">
+                            <h5><a :href="url" target="_blank" class="mt-0 content-link">{{ title }}</a></h5>
+                            {{ description }}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -118,6 +115,9 @@ export default {
     background-color: white;
     border-radius: 25px;
     border: 4px solid #3dc0ec;
+    -webkit-box-shadow: 0px 14px 27px -13px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 14px 27px -13px rgba(0,0,0,0.75);
+    box-shadow: 0px 14px 27px -13px rgba(0,0,0,0.75);
 }
 .post-userinfo {
     padding: 5px 1px 5px 5px;
@@ -133,16 +133,24 @@ export default {
     color: #3dc0ec;
     text-decoration: none;
 }
-.content-img {
-    border-radius: 25px 25px 0 0;
-    float: left;
+.content-media-wrapper {
+    margin: 10px 30px 25px 10px;
+    background-color: rgba(133,149,149, 0.2);
 }
-.content-img-wrapper {
-    padding: 0 !important;
+.content-link {
+    color: #3dc0ec;
+    font-family: roboto, sans-serif;
+    font-size: 1.5em;
+}
+.content-link:hover {
+    color: #3dc0ec;
+}
+.content-desc {
+    padding: 10px;
     margin: 0 !important;
-    text-align: center;
-    border-radius: 25px 25px 0 0 ;
-    background-color: #3dc0ec;
+    font-family: roboto, sans-serif;
+    text-align: left;
+    color: black;
 }
 .content-top{
     padding: 0 !important;
@@ -150,23 +158,6 @@ export default {
 }
 .content-bottom{
     padding: 10px 10px 0 10px;
-}
-.content-link {
-    text-align: center;
-    font-family: roboto, sans-serif;
-    color: white;
-}
-.content-desc {
-    padding-left: 20px;
-    font-family: roboto, sans-serif;
-    color: white;
-    font-size: 1em;
-    text-align: center;
-    clear: both;
-}
-.content-link:hover{
-    color: white;
-    text-decoration: none;
 }
 .post-username {
     font-family: alternate-gothic-no-1-d, sans-serif;
