@@ -1,24 +1,46 @@
 <template>
   <div id="root">
     <form id="demo-form">
-        <h4>Demographics</h4>
+      <h4>Demographics</h4>
       <div class="form-row">
         <div class="form-group name-div col">
           <label for="first-name">First Name</label>
-          <input type="text" class="form-control" id="first-name" placeholder="Gary">
+          <input
+            type="text"
+            class="form-control"
+            id="first-name"
+            placeholder="Gary"
+            :value="firstName"
+          >
         </div>
         <div class="form-group name-div col">
           <label for="last-name">Last Name</label>
-          <input type="text" class="form-control" id="last-name" placeholder="Gygax">
+          <input
+            type="text"
+            class="form-control"
+            id="last-name"
+            placeholder="Gygax"
+            :value="lastName"
+          >
         </div>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="youremail@gmail.com">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="youremail@gmail.com"
+          :value="email"
+        >
       </div>
       <div class="form-group">
         <label for="zip-code">Zip Code</label>
-        <input type="text" class="form-control" id="zip-code" placeholder="55555">
+        <input type="text" class="form-control" id="zip-code" placeholder="55555" :value="zipCode">
+      </div>
+      <div class="form-group">
+        <label for="job">Job</label>
+        <input type="text" class="form-control" id="job" placeholder="Badass" :value="job">
       </div>
       <button class="btn save-button" @click="editBio = false">
         <i class="fas fa-save save-floppy"></i>
@@ -28,13 +50,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["demographics"],
+  data() {
+    return {
+      firstName: this.$props.demographics.firstName,
+      lastName: this.$props.demographics.lastName,
+      email: this.$props.demographics.email,
+      job: this.$props.demographics.job,
+      zipCode: this.$props.demographics.zipCode
+    };
+  }
+};
 </script>
 
 <style>
-#demo-form{
+#demo-form {
   position: relative;
-  margin-bottom: 3rem; 
+  margin-bottom: 3rem;
   margin-top: 0.5rem;
 }
 
@@ -55,5 +88,4 @@ export default {};
 .save-floppy {
   color: rgb(236, 239, 241);
 }
-
 </style>
