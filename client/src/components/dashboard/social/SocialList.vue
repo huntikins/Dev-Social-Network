@@ -42,9 +42,9 @@ export default {
             posts: [
                 {
                     user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    body: "Lorem ipsum dolor sit amet, https://github.com/mysqljs/mysql#escaping-query-values consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     url: "post.url",
-                    image: "http://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png",
+                    image: "http://getbootstrap.com/docs/4.2/assets/brand/bootstrap-social.png",
                     title: "content",
                     description: "Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.",
                     date: "post.date",
@@ -56,7 +56,9 @@ export default {
                     user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
                     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     url: "post.url",
+                    image: "https://avatars0.githubusercontent.com/u/39362365?s=400&v=4",
                     title: "content",
+                    description: "A Social Network with a Purpose, aimed at building a community based on the sharing and collecting of knowledge - huntertrammell/Dev-Social-Network",
                     date: "post.date",
                     likes: 0,
                     comments: [{name: "username", content: "post.comments", date: "commentdate"}],

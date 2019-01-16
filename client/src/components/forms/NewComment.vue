@@ -28,7 +28,7 @@ export default {
     .comment-form{
         background-color: white;
         border-radius: 0 0 25px 25px;
-        margin: 0 5px 0 5px;
+        margin: 0 15px 0 15px;
     }
     .comment-button{
         margin: auto;
@@ -36,11 +36,15 @@ export default {
         height: 40px;
         background: #3dc0ec;
         border-radius: 100px !important;
-        color: black;
+        color: white;
         font-family: roboto, sans-serif;
         font-size: 20px;
         letter-spacing: 2px;
         font-weight: 100;
+    }
+    .comment-button:hover{
+        color: white;
+        text-decoration: none;
     }
     textarea.comment-field {
         resize: none;

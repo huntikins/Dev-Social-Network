@@ -93,14 +93,13 @@ export default {
     background-color: white;
     border-radius: 25px;
     border: 4px solid #3dc0ec;
+    -webkit-box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
+    box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
 }
 .post-userinfo {
     padding: 5px 1px 5px 5px;
     margin-top: 10px;
-}
-.content-img {
-    border-radius: 25px 25px 0 0;
-    float: left;
 }
 .content-bottom{
     padding: 10px 10px 0 10px;
