@@ -52,4 +52,33 @@ router.get('/fail', (req, res) => {
   res.json(response);
 });
 
+const async = require('async');
+const crypto = require('crypto');
+const sendPasswordResetEmail = require('../../services/nodemailer');
+
+// source: http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/
+router.post('/forgotpassword', (req, res) => {
+  // https://caolan.github.io/async/docs.html#waterfall 
+  async.waterfall([
+    done => {
+      crypto.randomBytes(20, (err, buf) => {
+        const token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    (token, done) => {
+      UserController.findByEmail(req.body.email, (err, user) => {
+        if (!user) return res.json({ error: 'No account is registered for that address.' });
+        user.passwordResetToken = token;
+        user.resetTokenExpiration = Date.now() + 3600000;
+        user.save(err => done(err, res, token, user));
+      });
+    },
+    sendPasswordResetEmail
+  ], err => {
+    if (err) return console.error(err);
+
+  });
+});
+
 module.exports = router;
