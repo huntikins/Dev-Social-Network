@@ -3,7 +3,7 @@
         <div class="post-comments" v-for="(comment, index) in comments" :key="index">
             <div class="post-comment-wrapper">
                 <small class="text-muted mr-2">{{ comment.date }}</small>
-                <small><a href="#"  class="post-comment-user">{{ comment.name }}: </a>{{ comment.content }}</small>
+                <small><router-link to="/user"  class="post-comment-user">{{ comment.name }}</router-link>: {{ comment.content }}</small>
             </div>
         </div>
     </div>
