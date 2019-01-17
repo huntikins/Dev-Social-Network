@@ -10,7 +10,7 @@
             class="form-control"
             id="first-name"
             placeholder="Gary"
-            :value="firstName"
+            :value="dem.firstName"
           >
         </div>
         <div class="form-group name-div col">
@@ -20,7 +20,7 @@
             class="form-control"
             id="last-name"
             placeholder="Gygax"
-            :value="lastName"
+            :value="dem.lastName"
           >
         </div>
       </div>
@@ -31,16 +31,22 @@
           class="form-control"
           id="email"
           placeholder="youremail@gmail.com"
-          :value="email"
+          :value="dem.email"
         >
       </div>
       <div class="form-group">
         <label for="zip-code">Zip Code</label>
-        <input type="text" class="form-control" id="zip-code" placeholder="55555" :value="zipCode">
+        <input
+          type="text"
+          class="form-control"
+          id="zip-code"
+          placeholder="55555"
+          :value="dem.zipCode"
+        >
       </div>
       <div class="form-group">
         <label for="job">Job</label>
-        <input type="text" class="form-control" id="job" placeholder="Badass" :value="job">
+        <input type="text" class="form-control" id="job" placeholder="Badass" :value="dem.job">
       </div>
       <button class="btn save-button" @click="editBio = false">
         <i class="fas fa-save save-floppy"></i>
@@ -50,16 +56,27 @@
 </template>
 
 <script>
+import API from "@/utils/userData";
+
 export default {
   props: ["demographics"],
   data() {
     return {
-      firstName: this.$props.demographics.firstName,
-      lastName: this.$props.demographics.lastName,
-      email: this.$props.demographics.email,
-      job: this.$props.demographics.job,
-      zipCode: this.$props.demographics.zipCode
+      bio = {
+        firstName: this.$props.demographics.firstName,
+        lastName: this.$props.demographics.lastName,
+        email: this.$props.demographics.email,
+        job: this.$props.demographics.job,
+        zipCode: this.$props.demographics.zipCode
+        }        
     };
+  },
+  methods: {
+    putDemo(id, demo) {
+      API.putDemo(id, bio)
+      .then()
+      .catch();
+    }
   }
 };
 </script>

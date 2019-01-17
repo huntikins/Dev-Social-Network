@@ -5,7 +5,14 @@
         <label for="interest-list">
           <h4>Interests</h4>
         </label>
-        <textarea class="form-control" name="interests" id="interest-list" rows="6">Comma Separated List</textarea>
+        <textarea
+          class="form-control"
+          name="interests"
+          id="interest-list"
+          rows="6"
+          placeholder="Comma Separated List"
+          :interests="interest"
+        ></textarea>
       </div>
       <button class="btn save-button" @click="editInterests = false">
         <i class="fas fa-save save-floppy"></i>
@@ -16,12 +23,19 @@
 
 
 <script>
+import API from "@/utils/userData";
+
 export default {
   props: ["interests"],
   data() {
     return {
       interests: this.$props.interests.interests.toString()
     };
+  },
+  methods: {
+    putInterests(currentID, interests) {
+      API.putInterests();
+    }
   }
 };
 </script>

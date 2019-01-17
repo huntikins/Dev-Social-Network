@@ -22,11 +22,20 @@
 
 
 <script>
+import API from "@/utils/userData";
+
 export default {
   props: ["biography"],
   data() {
     return {
-      biography: this.$props.biography.biography,
+      biography: this.$props.biography.biography
+    };
+  },
+  methods: {
+    putBio(id, bio) {
+      API.putBio(id, bio)
+        .then()
+        .catch();
     }
   }
 };
