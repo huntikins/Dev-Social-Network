@@ -10,7 +10,7 @@ router.post(
       req.user._id,
       req.params.id,
       result => res.json(result)
-    )
+    );
   }
 );
 
@@ -22,8 +22,8 @@ router.post(
       req.user._id,
       req.params.id,
       result => res.json(result)
-    )
+    );
   }
-)
+);
 
 module.exports = router;

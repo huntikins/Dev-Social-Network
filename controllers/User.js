@@ -29,11 +29,6 @@ module.exports = {
       callback(err, user);
     });
   },
-  findAllForUser: (articles, callback) => {
-    User.insertMany(articles)
-      .then(result => callback(result))
-      .catch(err => console.error(err));
-  },
   delete: (id, callback) => {
     User.deleteOne({ _id: id })
       .then(result => callback(result))
@@ -46,12 +41,12 @@ module.exports = {
   },
   follow: (followerId, targetId, callback) => {
     User.update(
-      { _id: followerId },
-      { $push: { following: targetId } }
+      { _id: followerId, },
+      { $addToSet: { following: targetId } }
     ).then(result_1 => {
       User.update(
         { _id: targetId },
-        { $push: { followers: followerId } }
+        { $addToSet: { followers: followerId } }
       ).then(result_2 => callback({ result_1, result_2 }))
         .catch(err => console.error(err));
     })
@@ -78,11 +73,53 @@ module.exports = {
       .catch(err => console.error(err));
   },
   populate: (id, callback) => {
-    User.find({ _id: id })
-      .populate('posts')
-      .then(res => {
-        if (res.password) res.password = undefined;
-        callback(res);
+    User.findOne({ _id: id })
+      .populate([{
+        path: 'posts',
+        populate: [
+          { path: 'comments.user' },
+          { path: 'likes.user' }
+        ]
+      }, {
+        path: 'kbItems',
+        populate: [
+          { path: 'comments.user' },
+          { path: 'likes.user' }
+        ]
+      }])
+      .populate(['followers', 'following'])
+      .then(result => {
+        if (result && result.password) result.password = undefined;
+        callback(result);
+      })
+      .catch(err => console.error(err));
+  },
+  getFollowingPosts: (id, callback) => {
+    User.findOne({ _id: id })
+      .populate({
+        path: 'following',
+        select: 'posts',
+        populate: {
+          path: 'posts',
+          populate: [
+            { path: 'user' },
+            { path: 'comments.user' },
+            { path: 'likes' }
+          ]
+        }
+      })
+      .then(result => {
+        let posts = [];
+        result.following.forEach(user => {
+          Array.prototype.push.apply(posts, user.posts);
+        });
+        posts.sort((post_a, post_b) => {
+          if (post_a.date && post_b.date) {
+            return post_b.date.getTime() - post_a.date.getTime();
+          }
+          else return 0;
+        });
+        callback(posts);
       })
       .catch(err => console.error(err));
   }

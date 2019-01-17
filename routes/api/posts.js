@@ -3,6 +3,56 @@ const router = require('express').Router();
 const controllers = require('../../controllers');
 
 router.post(
+  '/like/:id',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    controllers.Post.like(
+      req.user._id,
+      req.params.id,
+      result => res.json(result)
+    );
+  }
+);
+
+router.post(
+  '/unlike/:id',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    controllers.Post.unlike(
+      req.user._id,
+      req.params.id,
+      result => res.json(result)
+    );
+  }
+);
+
+router.post(
+  '/comment/',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    controllers.Post.addComment(
+      req.user._id,
+      req.body.postId,
+      req.body.comment,
+      result => res.json(result)
+    );
+  }
+);
+
+router.delete(
+  '/comment/',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    controllers.Post.deleteComment(
+      req.user._id,
+      req.body.postId,
+      req.body.commentId,
+      result => res.json(result)
+    );
+  }
+);
+
+router.post(
   '/',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
@@ -37,8 +87,11 @@ router.get(
   '/following',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
-    // controllers.
+    controllers.User.getFollowingPosts(
+      req.user._id,
+      result => res.json(result)
+    );
   }
-)
+);
 
 module.exports = router;
