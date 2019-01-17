@@ -1,7 +1,5 @@
 <template>
    <transition name="modal">
-    <app-loading v-if="load"/>
-    <app-forgot-password v-if="forgot" @close="forgot = false"/>
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container-login">
@@ -10,26 +8,17 @@
             <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
           </div>
           <div class="modal-body m-0 p-0">
-            <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
-            <form id="login-form">
+            <h1 class="home-header m-auto py-4">Forget your password?</h1>
+            <form id="reset-form">
               <div class="form-group">
                 <input v-validate="'required'" v-model="email" name="email" type="email" class="form-control modal-field" placeholder="email">
                 <small class="home-body">{{ errors.first('email') }}</small>
               </div>
-              <div class="form-group">
-                <input v-validate="'required'" v-model="password" name="password" type="password" class="form-control modal-field" placeholder="password">
-                <small class="home-body">{{ errors.first('password') }}</small>
-              </div>
             </form>
-            <div class="row m-0 p-0">
-              <div class="col m-0 p-0">
-                <a href="" class="forgot-data align-top"  @click.prevent="forgot=true">forgot password</a>
-              </div>
-            </div>
             <small class="home-body">{{ message }}</small>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-light modal-default-button" @click.prevent="submitLogin" :disabled="errors.any() || isEmpty" type="submit" form="login-form">LOGIN</button>
+            <button class="btn btn-light modal-default-button" @click.prevent="forgotPassword" :disabled="errors.any() || isEmpty" type="submit" form="reset-form">Reset</button>
           </div>
         </div>
       </div>
@@ -39,41 +28,22 @@
 
 <script>
 import api from '../../utils/auth.js';
-import Loading from '@/components/modals/Loading'
-import ForgotPassword from '@/components/modals/ForgotPassword'
 export default {
   data() {
     return {
       email: '',
-      password: '',
-      message: '',
-      load: false,
-      forgot: false
+      message: ''
     }
-  },
-  components: {
-    appLoading: Loading,
-    appForgotPassword: ForgotPassword
   },
   methods: {
-    submitLogin() {
-      const self = this;
-      api.login(this.email, this.password)
-        .then(res => {
-          if (res.data.success) {
-            self.load=true
-            self.$router.push('/social')}
-          self.message = res.data.message;
-        })
-        .catch(err => err.response.data.message || '');
-      setTimeout(function(){
-        this.load = false
-      }, 3000)
-    }
+      forgotPassword(){
+        this.message = 'If an account exists with the email provided, your password will be sent via email'
+        //send message
+      }
   },
   computed: {
     isEmpty() {
-      return !this.email || !this.password;
+      return !this.email;
     }
   }
 }
@@ -82,15 +52,6 @@ export default {
 <style>
 .modal-image {
   width: 95px;
-}
-.forgot-data {
-  color: #3dc0ec;
-  font-family: roboto, sans-serif;
-  text-align: center;
-  font-size: 12px;
-}
-.forgot-data:hover {
-  color: #3dc0ec;
 }
 input.modal-field{
   background-color: rgb(133,149,149);
