@@ -63,9 +63,11 @@
           <app-biography class="section-wrapper" v-if="editBio"/>
         </div>
       </section>
-
-      <section class="row justify-content-md-center">
-        <div class="col-8"></div>
+      <app-delete-account v-if="purge"  @close="purge = false"/>
+      <section class="row justify-content-md-center pb-3">
+        <div class="col-8 text-center">
+            <button class="btn btn-danger" @click="purge = true">Delete Account</button>
+        </div>
       </section>
     </div>
   </div>
@@ -79,13 +81,15 @@ import UserImageEdit from "@/components/profile/UserImageEdit";
 import DemographicForm from "@/components/forms/Demographic";
 import InterestsForm from "@/components/forms/Interests";
 import BiographyForm from "@/components/forms/Biography";
+import DeleteAccount from '@/components/modals/DeleteAccount';
 
 export default {
   data() {
     return {
       editDemographics: false,
       editInterests: false,
-      editBio: false
+      editBio: false,
+      purge: false
     };
   },
   props: ["user"],
@@ -94,7 +98,8 @@ export default {
     appUserImgEdit: UserImageEdit,
     appDemoForm: DemographicForm,
     appInterests: InterestsForm,
-    appBiography: BiographyForm
+    appBiography: BiographyForm,
+    appDeleteAccount: DeleteAccount
   }
 };
 </script>
@@ -137,7 +142,9 @@ export default {
 .pos-relative {
   position: relative;
 }
-
+.btn-danger {
+  border-radius: 100px;
+}
 .circle-button {
   border-radius: 100% !important;
   background-color: slategray !important;

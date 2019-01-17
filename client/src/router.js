@@ -33,6 +33,11 @@ export default new Router({
       path: '/account',
       name: 'accountManagement',
       component: () => import(/*  */ './views/Account.vue')
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import(/*  */ './views/OtherUser.vue')
     }
   ]
 })
