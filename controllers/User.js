@@ -122,5 +122,12 @@ module.exports = {
         callback(posts);
       })
       .catch(err => console.error(err));
+  },
+  checkResetToken: (token, callback) => {
+    User.findOne({
+      passwordResetToken: token,
+      resetTokenExpiration: { $gt: Date.now() }
+    }).then(callback)
+      .catch(err => console.error(err));
   }
 }

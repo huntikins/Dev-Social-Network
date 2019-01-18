@@ -56,7 +56,7 @@ const UserSchema = new Schema({
     ref: 'KBItem'
   }],
   passwordResetToken: String,
-  resetTokenExpiration: String
+  resetTokenExpiration: Number
 });
 
 const User = mongoose.model('User', UserSchema);

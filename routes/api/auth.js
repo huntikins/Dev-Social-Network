@@ -71,7 +71,7 @@ router.post('/forgotpassword', (req, res) => {
         if (!user) return res.json({ error: 'No account is registered for that address.' });
         user.passwordResetToken = token;
         user.resetTokenExpiration = Date.now() + 3600000;
-        user.save(err => done(err, res, token, user));
+        user.save(err => done(err, req, res, token, user));
       });
     },
     sendPasswordResetEmail
