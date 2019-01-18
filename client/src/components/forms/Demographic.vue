@@ -10,7 +10,7 @@
             class="form-control"
             id="first-name"
             placeholder="Gary"
-            :value="dem.firstName"
+            :value="demographics.firstName"
           >
         </div>
         <div class="form-group name-div col">
@@ -20,7 +20,7 @@
             class="form-control"
             id="last-name"
             placeholder="Gygax"
-            :value="dem.lastName"
+            :value="demographics.lastName"
           >
         </div>
       </div>
@@ -31,7 +31,7 @@
           class="form-control"
           id="email"
           placeholder="youremail@gmail.com"
-          :value="dem.email"
+          :value="demographics.email"
         >
       </div>
       <div class="form-group">
@@ -41,12 +41,18 @@
           class="form-control"
           id="zip-code"
           placeholder="55555"
-          :value="dem.zipCode"
+          :value="demographics.zipCode"
         >
       </div>
       <div class="form-group">
         <label for="job">Job</label>
-        <input type="text" class="form-control" id="job" placeholder="Badass" :value="dem.job">
+        <input
+          type="text"
+          class="form-control"
+          id="job"
+          placeholder="Badass"
+          :value="demographics.job"
+        >
       </div>
       <button class="btn save-button" @click="editBio = false">
         <i class="fas fa-save save-floppy"></i>
@@ -62,20 +68,20 @@ export default {
   props: ["demographics"],
   data() {
     return {
-      bio = {
+      demographics: {
         firstName: this.$props.demographics.firstName,
         lastName: this.$props.demographics.lastName,
         email: this.$props.demographics.email,
         job: this.$props.demographics.job,
         zipCode: this.$props.demographics.zipCode
-        }        
+      }
     };
   },
   methods: {
     putDemo(id, demo) {
       API.putDemo(id, bio)
-      .then()
-      .catch();
+        .then()
+        .catch();
     }
   }
 };
