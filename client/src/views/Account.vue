@@ -67,9 +67,11 @@
           <app-biography class="section-wrapper" v-if="editBio"/>
         </div>
       </section>
-
-      <section class="row justify-content-md-center">
-        <div class="col-8"></div>
+      <app-delete-account v-if="purge" @close="purge = false"/>
+      <section class="row justify-content-md-center pb-3">
+        <div class="col-8 text-center">
+          <button class="btn btn-danger" @click="purge = true">Delete Account</button>
+        </div>
       </section>
     </div>
   </div>
@@ -84,6 +86,7 @@ import DemographicForm from "@/components/forms/Demographic";
 import InterestsForm from "@/components/forms/Interests";
 import BiographyForm from "@/components/forms/Biography";
 import API from "@/utils/userData";
+import DeleteAccount from "@/components/modals/DeleteAccount";
 
 export default {
   data() {
@@ -93,7 +96,8 @@ export default {
       editBio: false,
       demographics: {},
       interests: [],
-      biography: ""
+      biography: "",
+      purge: false
     };
   },
   props: ["user"],
@@ -143,18 +147,18 @@ export default {
   overflow-y: scroll;
 }
 #account-management::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-    background-color: #f39121;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f39121;
 }
 #account-management::-webkit-scrollbar {
-	width: 15px;
-	background-color: #f39121;
+  width: 15px;
+  background-color: #f39121;
 }
 #account-management::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: rgb(61,192,236);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgb(61, 192, 236);
 }
 
 .section-wrapper {
@@ -167,7 +171,9 @@ export default {
 .pos-relative {
   position: relative;
 }
-
+.btn-danger {
+  border-radius: 100px;
+}
 .circle-button {
   border-radius: 100% !important;
   background-color: slategray !important;

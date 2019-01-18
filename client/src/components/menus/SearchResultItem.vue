@@ -1,10 +1,10 @@
 <template>
     <div class="display-user">
         <div class="display-user-item" v-for="(result, index) in results" :key="index">
-            <a :href="result.link" class="result-link-wrapper">
+            <router-link to="/user" class="result-link-wrapper">
                 <img :src="result.image" alt="" class="result-image img-fluid">
                 <p class="result-link">{{ result.username }}</p>
-            </a>
+            </router-link>
         </div>
         <h1 class="nothing-found" v-if="!results.length">No results</h1>
     </div>

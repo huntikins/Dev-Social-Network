@@ -8,7 +8,7 @@
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
-                    <a class="post-username" href="#">{{ user.name }}</a>
+                    <router-link class="post-username" to="/user">{{ user.name }}</router-link>
                     <!--date-->
                     <h3 class="post-date">{{ date }}</h3>
                 </div>
