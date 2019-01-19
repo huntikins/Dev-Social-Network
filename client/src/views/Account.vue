@@ -167,56 +167,248 @@ export default {
     .edit-img-container{
       height: 100px;
       width: 100px;
-      border: 5px solid #f39121;
+      border: 5px solid rgb(236, 239, 241);
       top: 3%;
     }
 }
 /* Laptops, Desktops */
 @media (min-width: 1025px) and (max-width: 1280px) {
-    
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
+    #account-management{
+      padding: 6% 0 5% 0;
+    }
 }
 /* Tablets, Ipads (portrait) */
 @media (min-width: 768px) and (max-width: 1024px) {
-    
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
+    #account-management{
+      padding: 8% 0 5% 0;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /* Tablets, Ipads (landscape) */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
+    #account-management{
+      padding: 8% 0 5% 0;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /* Low Resolution Tablets, Mobiles (Landscape) */
 @media (min-width: 481px) and (max-width: 767px) {
-  
+  .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+      left: 15%;
+    }
+    #account-management{
+      padding: 15% 0 5% 0;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /* Most of the Smartphones Mobiles (Portrait) */
-@media (min-width: 320px) and (max-width: 480px) {
-    
+@media (min-width: 319px) and (max-width: 480px) {
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+      left: 20% !important;
+    }
+    #account-management{
+      padding: 30% 0 5% 0;
+      overflow-x:hidden;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /*galaxy s5*/
 @media (width: 360px) {
-    
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
+     #account-management{
+      padding: 30% 0 5% 0;
+      overflow-x:hidden;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /*pixel 2*/
 @media (width: 411px) {
-    
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
+     #account-management{
+      padding: 30% 0 5% 0;
+      overflow-x:hidden;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /*iphone 5SE*/
 @media (width: 320px) {
-    
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
+     #account-management{
+      padding: 30% 0 5% 0;
+      overflow-x:hidden;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /*iphone 6/7/8*/
 @media (width: 375px) {
-   
+   .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+      left: 15% !important;
+    }
+     #account-management{
+      padding: 30% 0 5% 0;
+      overflow-x:hidden;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /*iphone 6/7/8 Plus*/
 @media (width: 414px) {
-  
+  .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+      left: 15% !important;
+    }
+     #account-management{
+      padding: 20% 0 5% 0;
+      overflow-x:hidden;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /*iphone X*/
 @media (width: 375px) {
-    
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
+     #account-management{
+      padding: 25% 0 5% 0;
+      overflow-x:hidden;
+    }
+    .section-wrapper {
+      width: 100%;
+      margin: 10%;
+      background-color: white;
+      border-radius: 20px;
+    }
+    #account-management::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 }
 /*iPad pro*/
 @media (width: 1024px) {
-    
+    .edit-img-container{
+      height: 150px;
+      width: 150px;
+      border: 5px solid rgb(236, 239, 241);
+      top: 3%;
+    }
 }
 </style>

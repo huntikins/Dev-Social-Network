@@ -69,55 +69,82 @@ export default {
     height: auto;
     width: 8%;
 }
-/* higher resolution desktops */
-@media (min-width: 1281px) and (max-width: 1380px) {
-    app-slide {
-        width: 20px !important;
-    }
-}
 /* Laptops, Desktops */
 @media (min-width: 1025px) and (max-width: 1280px) {
-    
+    .nav-logo {
+        height: auto;
+        width: 15%;
+    }
 }
 /* Tablets, Ipads (portrait) */
 @media (min-width: 768px) and (max-width: 1024px) {
-    
+    .nav-logo {
+        height: auto;
+        width: 20%;
+    }
 }
 /* Tablets, Ipads (landscape) */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    
+    .nav-logo {
+        height: auto;
+        width: 20%;
+    }
 }
 /* Low Resolution Tablets, Mobiles (Landscape) */
 @media (min-width: 481px) and (max-width: 767px) {
-  
+  .nav-logo {
+        height: auto;
+        width: 30%;
+    }
 }
 /* Most of the Smartphones Mobiles (Portrait) */
 @media (min-width: 320px) and (max-width: 480px) {
-    
+     .nav-logo {
+        height: auto;
+        width: 35%;
+    }
 }
 /*galaxy s5*/
 @media (width: 360px) {
-    
+     .nav-logo {
+        height: auto;
+        width: 35%;
+    }
 }
 /*pixel 2*/
 @media (width: 411px) {
-    
+     .nav-logo {
+        height: auto;
+        width: 35%;
+    }
 }
 /*iphone 5SE*/
 @media (width: 320px) {
-    
+     .nav-logo {
+        height: auto;
+        width: 35%;
+    }
 }
 /*iphone 6/7/8*/
 @media (width: 375px) {
-   
+    .nav-logo {
+        height: auto;
+        width: 35%;
+    }
 }
 /*iphone 6/7/8 Plus*/
 @media (width: 414px) {
-  
+   .nav-logo {
+        height: auto;
+        width: 35%;
+    }
 }
 /*iphone X*/
 @media (width: 375px) {
-    
+     .nav-logo {
+        height: auto;
+        width: 35%;
+    }
 }
 /*iPad pro*/
 @media (width: 1024px) {
