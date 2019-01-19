@@ -10,20 +10,16 @@
               <button class="btn circle-button" @click="editDemographics = true">
                 <i class="fas fa-pencil-alt edit-pencil"></i>
               </button>
-              <h3>{{demographics.firstName + demographics.lastName}}</h3>
+              <h3>{{`${demographics.firstName} ${demographics.lastName}`}}</h3>
               <p>{{demographics.email}}</p>
               <p>{{demographics.zipCode}}</p>
-              <!-- <p>{{demographics.job}}</p> -->
-              <!-- <h3>Ryan Freeman</h3>
-              <p>ryanjfreeman77@gmail.com</p>
-              <p>66215</p>
-              <p>Soleran Support</p>-->
             </div>
           </div>
           <app-demo-form
             :demographics="demographics"
             v-if="editDemographics"
             class="section-wrapper"
+            @save-demo="editDemographics = false"
           />
         </div>
       </section>
@@ -38,14 +34,14 @@
               <h4>Interests</h4>
               <ul>
                 <li v-for="(interest, index) in interests" :key="index">{{interest}}</li>
-                <!-- <li>Dogs</li>
-                <li>Pizzza</li>
-                <li>Javascript</li>
-                <li>React.js :)</li>-->
               </ul>
             </div>
           </div>
-          <app-interests v-if="editInterests" class="section-wrapper"/>
+          <app-interests
+            @save-inter="editInterests = false"
+            v-if="editInterests"
+            class="section-wrapper"
+          />
         </div>
       </section>
 
@@ -58,10 +54,6 @@
               </button>
               <h4>Biography</h4>
               <p>{{biography}}</p>
-              <!-- <p>
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                Section 1.10.32 of "de Finibus Bonorum et
-              </p>-->
             </div>
           </div>
           <app-biography class="section-wrapper" v-if="editBio"/>
@@ -147,6 +139,7 @@ export default {
   overflow-y: scroll;
 }
 #account-management::-webkit-scrollbar-track {
+  box-shadow: none;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #f39121;
@@ -157,6 +150,7 @@ export default {
 }
 #account-management::-webkit-scrollbar-thumb {
   border-radius: 10px;
+  box-shadow: none;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: rgb(61, 192, 236);
 }

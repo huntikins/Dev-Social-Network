@@ -54,7 +54,7 @@
           :value="demographics.job"
         >
       </div>
-      <button class="btn save-button" @click="editBio = false">
+      <button class="btn save-button" @click.prevent="$emit('save-demo') && putDemo()">
         <i class="fas fa-save save-floppy"></i>
       </button>
     </form>
@@ -78,10 +78,10 @@ export default {
     };
   },
   methods: {
-    putDemo(id, demo) {
-      API.putDemo(id, bio)
-        .then()
-        .catch();
+    putDemo(demographics) {
+      API.putDemo(demographics)
+        .then(res => console.log(res))
+        .catch(err => console.error(err));
     }
   }
 };

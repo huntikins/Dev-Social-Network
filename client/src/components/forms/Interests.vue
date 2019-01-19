@@ -14,7 +14,7 @@
           :interests="interest"
         ></textarea>
       </div>
-      <button class="btn save-button" @click="editInterests = false">
+      <button class="btn save-button" @click="putInterests() && $emit('save-inter')">
         <i class="fas fa-save save-floppy"></i>
       </button>
     </form>

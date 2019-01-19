@@ -4,13 +4,13 @@ export default {
     getUserData: () => {
         return axios.get('/api/user');
     },
-    putDemo: (id, demoObj) => {
-        return axios.put('');
+    putDemo: (demoObj) => {
+        return axios.put('/', demoObj);
     },
-    putInterests: (id, interestArr) => {
-        return axios.put('');
+    putInterests: (interestArr) => {
+        return axios.put('/', interestArr);
     },
-    putBio: (id, bio) => {
-        return axios.put('');
+    putBio: (bio) => {
+        return axios.put('/', bio);
     }
 }
