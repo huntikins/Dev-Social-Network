@@ -158,8 +158,16 @@ export default {
   color: rgb(236, 239, 241);
 }
 /* higher resolution desktops */
-@media (min-width: 1281px) {
-    
+@media (min-width: 1281px) and (max-width: 1380px) {
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid #f39121;
+      top: 3%;
+    }
+    #account-management{
+      margin-top: -4vh;
+    }
 }
 /* Laptops, Desktops */
 @media (min-width: 1025px) and (max-width: 1280px) {
