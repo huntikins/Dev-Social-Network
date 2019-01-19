@@ -59,10 +59,10 @@
           <app-biography class="section-wrapper" v-if="editBio"/>
         </div>
       </section>
-      <app-delete-account v-if="purge" @close="purge = false"/>
-      <section class="row justify-content-md-center pb-3">
-        <div class="col-8 text-center">
-          <button class="btn btn-danger" @click="purge = true">Delete Account</button>
+      <app-delete-account v-if="purge"  @close="purge = false"/>
+      <section class="row justify-content-md-center pb-4">
+        <div class="col-8 text-center pb-4">
+            <button class="btn btn-danger" @click="purge = true">Delete Account</button>
         </div>
       </section>
     </div>
@@ -125,7 +125,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #account-root {
   background-color: #f39121;
   height: 100vh;
@@ -134,8 +134,8 @@ export default {
 
 #account-management {
   background-color: rgb(236, 239, 241);
-  height: 88vh;
-  margin-top: 12vh;
+  height: 89vh;
+  margin-top: -7vh;
   overflow-y: scroll;
 }
 #account-management::-webkit-scrollbar-track {
