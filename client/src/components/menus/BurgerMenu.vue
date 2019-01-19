@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="bm-menu" :class="{ right: right, open: isSideBarOpen }" :style="{ width: currentWidth + 'px'}">
+        <div class="bm-menu" :class="{ right: right, open: isSideBarOpen }" :style="{ width: currentWidth + '%'}">
             
             <slot></slot>
             
@@ -84,7 +84,13 @@
       },
       computed: {
         currentWidth: function() {
-          return this.isSideBarOpen ? this.width : 0;
+          if (window.screen.width > 1024){
+            return this.isSideBarOpen ? this.width : 0;
+          } else {
+            this.width = 100
+            return this.isSideBarOpen ? this.width : 0
+          }
+          
         }
       },
       mounted() {
@@ -180,12 +186,9 @@
       opacity: 0;
     }
             /* higher resolution desktops */
-    @media (min-width: 1281px) and (max-width: 1380px){
+    @media (min-width: 1281px) and (max-width: 1600px) {
         .bm-burger-button{
-          top: 25px;
-        }
-        .bm-menu{
-          width: 150px;
+          top: 15px;
         }
     }
     /* Laptops, Desktops */
@@ -201,6 +204,10 @@
           height: 28px;
           left: 30px;
           top: 15px; 
+        }
+         .bm-menu{
+          position: fixed;
+          z-index: 25 !important;
         }
     }
     /* Tablets, Ipads (landscape) */

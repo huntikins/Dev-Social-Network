@@ -24,7 +24,7 @@ export default {
 
 <style>
 .edit-img-container {
-    position: relative;
+    position: absolute;
     z-index: 15;
     top: 2%;
     left: 11%;
@@ -49,7 +49,7 @@ export default {
     height: 100%;
     border-radius: 100%;
     width: 100%;
-    opacity: 0 !important;
+    opacity: 0;
     z-index: 16;
     transition: .5s ease;
     background-color: rgb(61,192,236);
@@ -63,6 +63,7 @@ export default {
     color: white;
     font-size: 3em;
     position: absolute;
+    z-index: 17;
     top: 49%;
     left: 54%;
     -webkit-transform: translate(-50%, -50%);

@@ -41,6 +41,12 @@ export default {
 </script>
 
 <style>
+    .search-results{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
     .search-container {
         height: 30vh;
         margin: 10%;
@@ -79,7 +85,7 @@ export default {
     }
     .search-result-wrapper {
         width: 100%;
-        height: 20vh;
+        height: 100%;
         border-radius: 25px;
         border: 1px solid transparent;
         border-top: none;

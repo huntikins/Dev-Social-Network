@@ -1,6 +1,6 @@
 <template>
     <div class="navbar navbar-light justify-content-end">
-        <app-slide width="285">
+        <app-slide width="15">
             <router-link id="" to="/social" class="menu-link">
                 Social
             </router-link>
@@ -35,7 +35,7 @@ export default {
 <style>
 .navbar {
     background-color: #859595;
-    height: 12vh;
+    height: 10%;
     width: 100vw;
     position: fixed;
     z-index: 4;
@@ -45,6 +45,8 @@ export default {
     font-family: roboto, sans-serif;
     font-weight: bold;
     font-size: 1.5em;
+    position: relative;
+    top: 15vh;
     margin: 10% 2% 2% 10%;
 }
 .menu-link {

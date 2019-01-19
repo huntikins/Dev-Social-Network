@@ -18,11 +18,12 @@ export default {
 
 <style>
 .display-user {
-    position: relative;
-    height: 18.5vh;
+    position: absolute;
+    height: 90%;
+    width: 100%;
     overflow-y: scroll;
     top: 6px;
-    margin: 5% 2% 1% 6%;
+    margin: 5% 2% 1% 4%;
     padding-top: 3%;
 }
 .display-user::-webkit-scrollbar {
