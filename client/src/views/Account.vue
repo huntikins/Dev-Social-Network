@@ -157,4 +157,64 @@ export default {
 .edit-pencil {
   color: rgb(236, 239, 241);
 }
+/* higher resolution desktops */
+@media (min-width: 1281px) and (max-width: 1380px) {
+    .edit-img-container{
+      height: 100px;
+      width: 100px;
+      border: 5px solid #f39121;
+      top: 3%;
+    }
+    #account-management{
+      margin-top: -4vh;
+    }
+}
+/* Laptops, Desktops */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    
+}
+/* Tablets, Ipads (portrait) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+}
+/* Tablets, Ipads (landscape) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+}
+/* Low Resolution Tablets, Mobiles (Landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+  
+}
+/* Most of the Smartphones Mobiles (Portrait) */
+@media (min-width: 320px) and (max-width: 480px) {
+    
+}
+/*galaxy s5*/
+@media (width: 360px) {
+    
+}
+/*pixel 2*/
+@media (width: 411px) {
+    
+}
+/*iphone 5SE*/
+@media (width: 320px) {
+    
+}
+/*iphone 6/7/8*/
+@media (width: 375px) {
+   
+}
+/*iphone 6/7/8 Plus*/
+@media (width: 414px) {
+  
+}
+/*iphone X*/
+@media (width: 375px) {
+    
+}
+/*iPad pro*/
+@media (width: 1024px) {
+    
+}
 </style>
