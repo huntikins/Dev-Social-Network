@@ -10,6 +10,7 @@
 <script>
 import Boomerang from '@/components/profile/Boomerang'
 import DashWrapperS from '@/components/dashboard/social/DashWrapperS'
+
 export default {
     components: {
         appBoomerang: Boomerang,

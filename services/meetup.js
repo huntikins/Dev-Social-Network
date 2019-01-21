@@ -12,13 +12,14 @@ const getEvents = (zip, callback) => {
     let events = [];
     res.data.events.forEach(event => {
       events.push({
+        id:  event.id,
         name: event.name,
         link: event.link,
         local_date: event.local_date,
         local_time: event.local_time,
         city: event.venue ? event.venue.city : undefined,
-        city: event.venue ? event.venue.state : undefined,
-        city: event.group ? event.group.name : undefined
+        state: event.venue ? event.venue.state : undefined,
+        groupName: event.group ? event.group.name : undefined
       });
     });
     callback(events);
@@ -28,10 +29,11 @@ const getEvents = (zip, callback) => {
 
 const getCoordinates = (zip) => {
   console.log(zip)
-  const location = zipcodes.lookup(zip);
+  const { latitude, longitude } = zipcodes.lookup(zip);
+  console.log(`\n\n${'` '.repeat(25)}\n${latitude}\n\n${longitude}\n\n${'` '.repeat(25)}`)
   return {
-    latitude: location.latitude,
-    longitude: location.longitude
+    latitude,
+    longitude
   };
 };
 

@@ -34,15 +34,20 @@ export default {
             } else {
                 this.type = "text"
             }
+            const self = this;
+            console.log(res.data.url);
+            conosle.log(self.url[0]);
             const queryUrl = 'http://api.linkpreview.net/?key=5c3d58afe394c30b8a6aee93efb4be51af5e05ea3ce29&q='
             axios
             .get(queryUrl + this.url[0])
             .then(res => {
                 let content = {
                     title: res.data.title,
-                    url: res.data.url,
+                    url: self.url[0],
                     description: res.data.description,
-                    image: res.data.image
+                    image: res.data.image,
+                    type: self.type,
+                    body: self.content_body
                 }
                 /*axios.post(blah, {
                     body: this.content_body,
