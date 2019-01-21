@@ -6,7 +6,10 @@
 
 <script>
 export default {
-
+    props: ['userId'],
+    created() {
+        console.log(this.userId)
+    }
 }
 </script>
 
