@@ -4,13 +4,14 @@
             <div class="row post-userinfo">
                 <div class="col-1">
                     <!--profilepic-->
-                    <img class="img-fluid" :src="userImage" :alt="userName">
+                    <img v-if="user.picture" class="img-fluid" :src="user.picture" :alt="userName">
+                    <img v-else class="img-fluid" src="@/assets/user-icon.png" :alt="userName">
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
                     <router-link class="post-username" to="/user">{{ userName }}</router-link>
                     <!--date-->
-                    <h3 class="post-date">{{ date }}</h3>
+                    <h3 class="post-date">{{ formattedDate }}</h3>
                 </div>
             </div>
             <div class="row">
@@ -57,29 +58,25 @@
 </template>
 
 <script>
-import Comments from '@/components/dashboard/Comment'
-import linkifyHtml from 'linkifyjs/html'
-import NewComment from '@/components/forms/NewComment'
+import Comments from '@/components/dashboard/Comment';
+import linkifyHtml from 'linkifyjs/html';
+import NewComment from '@/components/forms/NewComment';
+import moment from 'moment';
 export default {
     props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description'],
     data(){
         return{
             clicked: false,
-            comments: this.$props.comments,
             expandComments: false,
             saved: false,
             text: this.$props.body,
-            date: this.$props.date,
-            likes: this.$props.likes,
-            user: this.$props.user,
-            _id: this.$props._id
         }
     },
     computed: {
-        likeCount: () => this.likes ? this.likes.length : 0,
-        commentCount: () => this.comments ? this.comments.length : 0,
-        userName: () => this.user.firstName + ' ' + this.user.lastName,
-        userImage: () => this.user.picture || "@/assets/user-icon.png"
+        likeCount: function() { return this.likes ? this.likes.length : 0; },
+        commentCount: function() { return this.comments ? this.comments.length : 0; },
+        userName: function() { return this.user.firstName + ' ' + this.user.lastName; },
+        formattedDate: function() { return moment(this.date).format("MM/DD/YY - hh:mm a"); }
     },
     components: {
         appPostComments: Comments,

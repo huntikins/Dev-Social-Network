@@ -24,7 +24,8 @@ export default {
     getEventsList: () => eventsApi.get('/')
   },
   posts: {
-    getSocialFeed: () => postsApi.get('/following')
+    getSocialFeed: () => postsApi.get('/following'),
+    createPost: newPost => postsApi.post('/', newPost)
   },
   user: {
     getBasic: () => userApi.get('/'),

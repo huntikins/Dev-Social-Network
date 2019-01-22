@@ -28,9 +28,7 @@ const getEvents = (zip, callback) => {
 };
 
 const getCoordinates = (zip) => {
-  console.log(zip)
   const { latitude, longitude } = zipcodes.lookup(zip);
-  console.log(`\n\n${'` '.repeat(25)}\n${latitude}\n\n${longitude}\n\n${'` '.repeat(25)}`)
   return {
     latitude,
     longitude
