@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col text-center">
                     <!--post likes-->
-                    <span v-if="clicked" @click="unlike()"><i class="fas fa-heart post-icon"></i></span>
+                    <span v-if="liked" @click="unlike()"><i class="fas fa-heart post-icon"></i></span>
                     <span v-else @click="like()"><i class="far fa-heart post-icon"></i></span>
                     <small class="post-icon-text"> {{ likeCount }} Likes</small>
                 </div>
@@ -40,9 +40,8 @@
             <div class="row">
                 <div class="col p-0 m-0">
                     <!--comment section only shown on collapse - external component -->
-                    <app-post-comments :comments="comments"
-                                        v-if="expandComments"/>
-                    <app-new-comment v-if="expandComments" />
+                    <app-post-comments :comments="comments" v-if="expandComments"/>
+                    <app-new-comment v-if="expandComments" :postId="_id" />
                 </div>
             </div>
         </div>
@@ -53,20 +52,19 @@
 import Comments from '@/components/dashboard/Comment';
 import NewComment from '@/components/forms/NewComment';
 import moment from 'moment';
+import api from '../../utils/api.js';
 export default {
-    props: ['user','body','date','likes','comments'],
+    props: ['user','body','date','likes','comments', '_id', 'currentUserId'],
     data(){
         return{
-            clicked: false,
             expandComments: false,
-            saved: false
+            saved: false,
+            liked: this.$props.likes.indexOf(this.currentUserId) > -1,
+            likeCount: this.likes ? this.likes.length : 0,
+            commentCount: this.comments ? this.comments.length : 0,
+            userName: this.user.firstName + ' ' + this.user.lastName,
+            formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : ''
         }
-    },
-    computed: {
-        likeCount: function() { return this.likes ? this.likes.length : 0; },
-        commentCount: function() { return this.comments ? this.comments.length : 0; },
-        userName: function() { return this.user.firstName + ' ' + this.user.lastName; },
-        formattedDate: function() { return this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : ''; }
     },
     components: {
         appPostComments: Comments,
@@ -74,12 +72,20 @@ export default {
     },
     methods: {
         like() {
-            this.clicked = true
-            this.likeCount++
+            const self = this;
+            api.posts.like(this._id).then(res => {
+                console.log(res);
+                self.likeCount++;
+                self.liked = true;
+            });
         },
-        unlike(){
-            this.clicked = false
-            this.likeCount--
+        unlike() {
+            const self = this;
+            api.posts.unlike(this._id).then(res => {
+                console.log(res);
+                self.likeCount--;
+                self.liked = false;
+            });
         },
         addToKB(){
             this.saved = true

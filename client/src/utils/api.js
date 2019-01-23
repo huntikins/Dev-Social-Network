@@ -25,7 +25,10 @@ export default {
   },
   posts: {
     getSocialFeed: () => postsApi.get('/following'),
-    createPost: newPost => postsApi.post('/', newPost)
+    createPost: newPost => postsApi.post('/', newPost),
+    addComment: newComment => postsApi.post('/comment', newComment),
+    like: postId => postsApi.post(`/like/${postId}`),
+    unlike: postId => postsApi.post(`/unlike/${postId}`)
   },
   user: {
     getBasic: () => userApi.get('/'),

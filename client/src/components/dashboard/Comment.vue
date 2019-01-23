@@ -1,17 +1,26 @@
 <template>
     <div class="comment-section">
-        <div class="post-comments" v-for="(comment, index) in comments" :key="index">
+        <div class="post-comments" v-for="comment in comments" :key="comment._id">
             <div class="post-comment-wrapper">
-                <small class="text-muted mr-2">{{ comment.date }}</small>
-                <small><router-link to="/user"  class="post-comment-user">{{ comment.name }}</router-link>: {{ comment.content }}</small>
+                <small class="text-muted mr-2">{{ formatDate(comment.date) }}</small>
+                <small>
+                    <router-link to="/user"  class="post-comment-user">{{ `${comment.user.firstName} ${comment.user.lastName}` }}</router-link>
+                    : {{ comment.body }}
+                </small>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import moment from 'moment';
 export default {
-    props: ['comments']
+    props: ['comments'],
+    methods: {
+        formatDate(date) {
+            return moment(date).format("MM/DD/YY - hh:mm a");
+        }
+    }
 }
 </script>
 

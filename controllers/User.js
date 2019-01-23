@@ -103,8 +103,7 @@ module.exports = {
           path: 'posts',
           populate: [
             { path: 'user' },
-            { path: 'comments.user' },
-            { path: 'likes' }
+            { path: 'comments.user' }
           ]
         }
       })

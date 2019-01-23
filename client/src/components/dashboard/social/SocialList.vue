@@ -2,7 +2,8 @@
     <div class="social-list">
         <div v-for="post in posts" :key="post._id">
             <div v-if="post.type === 'content'">
-               <app-user-post-con 
+               <app-user-post-con
+                    :_id="post._id"
                     :user="post.user"
                     :body="post.body"
                     :url="post.url"
@@ -12,6 +13,7 @@
                     :comments="post.comments"
                     :image="post.image"
                     :description="post.description"
+                    :currentUserId="currentUserId"
                /> 
             </div>
             <div v-else>
@@ -22,6 +24,7 @@
                     :date="post.date"
                     :likes="post.likes"
                     :comments="post.comments"
+                    :currentUserId="currentUserId"
                /> 
             </div>
         </div>
@@ -41,14 +44,22 @@ export default {
     },
     data() {
         return{
-            posts: []
+            posts: [],
+            currentUserId: ''
         }
     },
-    beforeCreate() {
-        api.posts.getSocialFeed().then(res => {
-            console.log(res);
-            this.posts = res.data;
-        });
+    created() {
+        this.getPosts();
+    },
+    methods: {
+        getPosts() {
+            const self = this;
+            api.posts.getSocialFeed().then(res => {
+                console.log(res);
+                self.currentUserId = res.data.currentUserId;
+                self.posts = res.data.posts;
+            });
+        }
     }
 }
 </script>
