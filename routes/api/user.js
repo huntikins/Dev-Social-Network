@@ -65,11 +65,11 @@ router.put(
   }
 );
 
-
-router.put(
+router.post(
   '/s3upload',
   require('connect-ensure-login').ensureLoggedIn('api/auth/fail'),
-  UserController.imageUpload);
+  UserController.imageUpload
+);
 
 
 module.exports = router;
