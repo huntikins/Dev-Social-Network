@@ -7,7 +7,7 @@
             </div>
             <div class="user-stat">
                 <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city }}, {{ location.state }}</span>
-                <span class="stat-item" v-if="jobTitle && jobCompany">
+                <span class="stat-item" v-if="jobTitle || jobCompany">
                     <i class="stat-icon fas fa-building"></i> {{ jobTitle || "Works" }}{{ jobCompany ? ` at ${jobCompany}` : '' }}
                 </span>
                 <div class="stat-item-group">
@@ -57,7 +57,7 @@ export default {
     },
     beforeCreate() {
         const self = this;
-        api.user.getBasic().then(res => {
+        api.currentUser.getBasic().then(res => {
             console.log(res)
             const user = res.data;
             self.firstName = user.firstName;

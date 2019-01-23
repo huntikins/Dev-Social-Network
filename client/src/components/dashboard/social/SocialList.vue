@@ -58,6 +58,7 @@ export default {
                 console.log(res);
                 self.currentUserId = res.data.currentUserId;
                 self.posts = res.data.posts;
+                console.log(self.posts)
             });
         }
     }

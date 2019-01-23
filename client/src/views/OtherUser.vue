@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="profile-content">
-            <app-boomerang-user />
+            <app-boomerang-user :user-id="userId" />
             <app-dash-wrapper-p />
         </div>
     </div>
@@ -11,6 +11,7 @@
 import BoomerangUser from '@/components/profile/BoomerangUser'
 import DashWrapperP from '@/components/dashboard/user/DashWrapperP'
 export default {
+    props: ['userId'],
     components: {
         appBoomerangUser: BoomerangUser,
         appDashWrapperP: DashWrapperP

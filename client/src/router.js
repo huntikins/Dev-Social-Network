@@ -30,8 +30,9 @@ export default new Router({
       component: () => import(/*  */ './views/Account.vue')
     },
     {
-      path: '/user',
+      path: '/user/:userId',
       name: 'user',
+      props: true,
       component: () => import(/*  */ './views/OtherUser.vue')
     },
     {

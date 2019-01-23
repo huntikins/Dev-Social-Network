@@ -31,7 +31,10 @@ router.get(
   (req, res) => {
     UserController.findById(
       req.params.id,
-      (err, user) => res.json(user)
+      (err, user) => res.json({
+        user,
+        currentUser: req.user._id
+      })
     );
   }
 );

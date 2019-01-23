@@ -8,7 +8,7 @@
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
-                    <router-link class="post-username" to="/user">{{ user.name }}</router-link>
+                    <router-link class="post-username" :to="`/user/${user._id}`">{{ userName }}</router-link>
                     <!--date-->
                     <h3 class="post-date">{{ formattedDate }}</h3>
                 </div>

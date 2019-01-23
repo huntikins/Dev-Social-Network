@@ -4,7 +4,7 @@
             <div class="post-comment-wrapper">
                 <small class="text-muted mr-2">{{ formatDate(comment.date) }}</small>
                 <small>
-                    <router-link to="/user"  class="post-comment-user">{{ `${comment.user.firstName} ${comment.user.lastName}` }}</router-link>
+                    <router-link :to="`/user/${comment.user._id}`"  class="post-comment-user">{{ `${comment.user.firstName} ${comment.user.lastName}` }}</router-link>
                     : {{ comment.body }}
                 </small>
             </div>

@@ -11,6 +11,7 @@ const authApi = createApiCall('auth');
 const eventsApi = createApiCall('events');
 const postsApi = createApiCall('posts');
 const userApi = createApiCall('user');
+const socialApi = createApiCall('social');
 
 export default {
   auth: {
@@ -30,8 +31,16 @@ export default {
     like: postId => postsApi.post(`/like/${postId}`),
     unlike: postId => postsApi.post(`/unlike/${postId}`)
   },
-  user: {
+  currentUser: {
     getBasic: () => userApi.get('/'),
     getPopulated: () => userApi.get('/populated')
+  },
+  otherUser: {
+    getBasic: userId => userApi.get(`/${userId}`),
+    getPopulated: userId => userApi.get(`/populated/${userId}`)
+  },
+  social: {
+    follow: userId => socialApi.post(`/follow/${userId}`),
+    unfollow: userId => socialApi.post(`/unfollow/${userId}`)
   }
 }

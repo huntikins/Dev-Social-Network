@@ -1,6 +1,6 @@
 <template>
     <div class="dash-container">
-        <div class="row m-0 p-0">
+        <!-- <div class="row m-0 p-0">
             <div class="social-container">
                 <app-user-feed />
             </div>
@@ -15,7 +15,7 @@
                         />
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
