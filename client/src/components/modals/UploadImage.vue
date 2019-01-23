@@ -45,7 +45,7 @@ export default {
       this.selectedFile = event.target.files[0];
       this.fileName = event.target.files[0].name;
       console.log(event.target.files[0].name);
-    }, 
+    },
     onUpload() {
       const formData = new FormData();
       API.putImage(this.selectedFile)
