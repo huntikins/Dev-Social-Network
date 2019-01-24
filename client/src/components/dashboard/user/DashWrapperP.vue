@@ -2,7 +2,7 @@
     <div class="dash-container">
         <div class="row m-0 p-0">
             <div class="social-container">
-                <app-user-feed />
+                <app-user-feed :user-id="userId" />
             </div>
             <div class="list-container">
                 <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
@@ -23,6 +23,7 @@
 import KbList from '@/components/dashboard/profile/KbList'
 import UserFeed from '@/components/dashboard/profile/UserFeed'
 export default {
+    props: ['userId'],
     components: {
         appKbList: KbList,
         appUserFeed: UserFeed

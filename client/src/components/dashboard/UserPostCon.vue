@@ -4,19 +4,20 @@
             <div class="row post-userinfo">
                 <div class="col-1">
                     <!--profilepic-->
-                    <img class="img-fluid" src="@/assets/user-icon.png" alt="">
+                    <img v-if="user.picture" class="img-fluid" :src="user.picture" :alt="userName">
+                    <img v-else class="img-fluid" src="@/assets/user-icon.png" :alt="userName">
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
-                    <router-link class="post-username" to="/user">{{ user.name }}</router-link>
+                    <router-link class="post-username" :to="`/user/${user._id}`">{{ userName }}</router-link>
                     <!--date-->
-                    <h3 class="post-date">{{ date }}</h3>
+                    <h3 class="post-date">{{ formattedDate }}</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <p class="post-text" v-html="getAnchorTag()"></p>
-                    <div class="media content-media-wrapper img-thumbnail" v-if="image && title && description">
+                    <div class="media content-media-wrapper img-thumbnail" v-if="title && (image || description)">
                         <img :src="image" class="mr-3 img-thumbnail w-25" alt="...">
                         <div class="media-body content-desc">
                             <h5><a :href="url" target="_blank" class="mt-0 content-link">{{ title }}</a></h5>
@@ -28,7 +29,7 @@
             <div class="row">
                 <div class="col text-center">
                     <!--post likes-->
-                    <span v-if="clicked" @click="unlike()"><i class="fas fa-heart post-icon"></i></span>
+                    <span v-if="liked" @click="unlike()"><i class="fas fa-heart post-icon"></i></span>
                     <span v-else @click="like()"><i class="far fa-heart post-icon"></i></span>
                     <small class="post-icon-text"> {{ likeCount }} Likes</small>
                 </div>
@@ -47,7 +48,7 @@
             <div class="row">
                 <div class="col p-0 m-0">
                     <!--comment section only shown on collapse - external component -->
-                    <app-post-comments :comments="comments"
+                    <app-post-comments :comments="_comments"
                                         v-if="expandComments"/>
                     <app-new-comment v-if="expandComments" />
                 </div>
@@ -57,19 +58,23 @@
 </template>
 
 <script>
-import Comments from '@/components/dashboard/Comment'
-import linkifyHtml from 'linkifyjs/html'
-import NewComment from '@/components/forms/NewComment'
+import Comments from '@/components/dashboard/Comment';
+import linkifyHtml from 'linkifyjs/html';
+import NewComment from '@/components/forms/NewComment';
+import moment from 'moment';
+import api from '../../utils/api.js';
 export default {
-    props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description'],
+    props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description', '_id', 'currentUserId'],
     data(){
         return{
-            likeCount: parseInt(this.$props.likes),
-            clicked: false,
-            commentCount: this.$props.comments.length,
+            liked: this.$props.likes.indexOf(this.currentUserId) > -1,
             expandComments: false,
             saved: false,
-            text: this.$props.body
+            text: this.$props.body,
+            likeCount: this.likes ? this.likes.length : 0,
+            commentCount: this.comments ? this.comments.length : 0,
+            userName: this.user.firstName + ' ' + this.user.lastName,
+            formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : ''
         }
     },
     components: {
@@ -77,13 +82,24 @@ export default {
         appNewComment: NewComment
     },
     methods: {
-        like() {
-            this.clicked = true
-            this.likeCount++
+        updateComments() {
+
         },
-        unlike(){
-            this.clicked = false
-            this.likeCount--
+        like() {
+            const self = this;
+            api.posts.like(this._id).then(res => {
+                console.log(res);
+                self.likeCount++;
+                self.liked = true;
+            });
+        },
+        unlike() {
+            const self = this;
+            api.posts.unlike(this._id).then(res => {
+                console.log(res);
+                self.likeCount--;
+                self.liked = false;
+            });
         },
         addToKB(){
             this.saved = true
@@ -93,16 +109,16 @@ export default {
         },
         getAnchorTag(){
             var options = {
-                    className: 'text-link', 
-                    format: function (value, type) {
-                        if (type === 'url' && value.length > 25) {
-                        value = value.slice(0, 25) + '…';
-                        }
-                        return value;
+                className: 'text-link', 
+                format: function (value, type) {
+                    if (type === 'url' && value.length > 25) {
+                    value = value.slice(0, 25) + '…';
                     }
+                    return value;
                 }
+            }
             var str = this.text;
-             return linkifyHtml(str, options);
+            return linkifyHtml(str, options);
         }
     }
 }

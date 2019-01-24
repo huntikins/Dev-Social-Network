@@ -15,11 +15,6 @@ export default new Router({
       component: Home
     },
     {
-      path: '*',
-      name: 'notfound',
-      component: NotFound
-    },
-    {
       path: '/profile',
       name: 'profile',
       component: () => import(/* webpackChunkName: "dashboard" */ './views/Profile.vue')
@@ -35,9 +30,15 @@ export default new Router({
       component: () => import(/*  */ './views/Account.vue')
     },
     {
-      path: '/user',
+      path: '/user/:userId',
       name: 'user',
+      props: true,
       component: () => import(/*  */ './views/OtherUser.vue')
+    },
+    {
+      path: '*',
+      name: 'notfound',
+      component: NotFound
     }
   ]
 })

@@ -6,13 +6,17 @@
 </template>
 
 <script>
-import logo from '@/components/home/Logo'
-import AnimeLogo from '@/components/home/LogoAnime'
+import logo from '@/components/home/Logo';
+import AnimeLogo from '@/components/home/LogoAnime';
+import api from '../utils/api.js';
 export default {
     name: 'home',
     components: {
         appLogo: logo,
         appAnime: AnimeLogo
+    },
+    beforeCreate() {
+        api.auth.test().then(res => res.status === 200 ? this.$router.push('social') : console.log('Not logged in.'));
     }
 }
 </script>
@@ -20,7 +24,7 @@ export default {
 <style  lang="scss">
 .home-content {
     background-color: #859595;
-    height: auto;
+    height: auto; 
     overflow-y: hidden;
 }
 .home-header {

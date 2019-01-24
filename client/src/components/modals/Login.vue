@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import api from '../../utils/auth.js';
+import api from '../../utils/api.js';
 import Loading from '@/components/modals/Loading'
 import ForgotPassword from '@/components/modals/ForgotPassword'
 export default {
@@ -58,11 +58,12 @@ export default {
   methods: {
     submitLogin() {
       const self = this;
-      api.login(this.email, this.password)
+      api.auth.login(self.email, self.password)
         .then(res => {
           if (res.data.success) {
             self.load=true
-            self.$router.push('/social')}
+            self.$router.push('/social')
+          }
           self.message = res.data.message;
         })
         .catch(err => err.response.data.message || '');

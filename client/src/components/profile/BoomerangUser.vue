@@ -2,7 +2,7 @@
 <div>
    <app-nav-top />
    <app-user-img />
-   <app-side-bar-user />
+   <app-side-bar-user :user-id="userId" />
 </div>
 </template>
 
@@ -11,6 +11,7 @@ import NavTop from '@/components/profile/NavTop'
 import UserImage from '@/components/profile/UserImage'
 import SideBarUser from '@/components/profile/SideBarUser'
 export default {
+    props: ['userId'],
     components: {
         appNavTop: NavTop,
         appUserImg: UserImage,
