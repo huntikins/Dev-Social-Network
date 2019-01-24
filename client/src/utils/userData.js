@@ -14,6 +14,6 @@ export default {
         return axios.put('/', bio);
     },
     putImage: (image) => {
-        return axios.post('/api/user/s3upload', image);
+        return axios.post('/api/user/s3upload/', image);
     }
-}
+} 

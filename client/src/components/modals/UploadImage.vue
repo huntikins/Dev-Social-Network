@@ -16,7 +16,9 @@
                 type="file"
                 class="custom-file-input"
                 id="profileImage"
+                name="profileImage"
                 @change="onFileChanged"
+                accept="image/png, image/jpeg"
               >
               <label class="custom-file-label" for="profileImage">{{ fileNameText }}</label>
             </div>
@@ -44,14 +46,13 @@ export default {
     onFileChanged(event) {
       this.selectedFile = event.target.files[0];
       this.fileName = event.target.files[0].name;
-      console.log(event.target.files[0].name);
     },
     onUpload() {
       const formData = new FormData();
-      API.putImage(this.selectedFile)
+      formData.append("profileImage", this.selectedFile, this.fileName);
+      API.putImage(formData)
         .then(res => {
           console.log("img upload res: ", res);
-          // userImage = res;
         })
         .catch(err => console.error(err));
     }
