@@ -50,10 +50,14 @@ export default {
         }
     },
     created() {
-        api.otherUser.getPopulated(this.userId).then(res => {
+        return this.userId ? api.otherUser.getPosts(this.userId).then(res => {
             console.log(res);
             this.currentUserId = res.data.currentUser;
-            this.posts = res.data.otherUser.posts;
+            this.posts = res.data.otherUser;
+        }) : api.currentUser.getPosts().then(res => {
+            console.log(res);
+            this.currentUserId = res.data.currentUser;
+            this.posts = res.data;
         });
     }
 }

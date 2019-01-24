@@ -9,7 +9,7 @@
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
-                    <router-link class="post-username" to="/user">{{ userName }}</router-link>
+                    <router-link class="post-username" :to="`/user/${user._id}`">{{ userName }}</router-link>
                     <!--date-->
                     <h3 class="post-date">{{ formattedDate }}</h3>
                 </div>
@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col">
                     <p class="post-text" v-html="getAnchorTag()"></p>
-                    <div class="media content-media-wrapper img-thumbnail" v-if="image && title && description">
+                    <div class="media content-media-wrapper img-thumbnail" v-if="title && (image || description)">
                         <img :src="image" class="mr-3 img-thumbnail w-25" alt="...">
                         <div class="media-body content-desc">
                             <h5><a :href="url" target="_blank" class="mt-0 content-link">{{ title }}</a></h5>

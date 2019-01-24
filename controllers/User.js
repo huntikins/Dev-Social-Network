@@ -95,6 +95,27 @@ module.exports = {
       })
       .catch(err => console.error(err));
   },
+  getUserPosts: (userId, callback) => {
+    User.findOne({ _id: userId })
+      .populate({
+        path: 'posts',
+        populate: [
+          { path: 'user' },
+          { path: 'comments.user' }
+        ]
+      })
+      .then(result => {
+        let posts = result.posts;
+        posts.sort((post_a, post_b) => {
+          if (post_a.date && post_b.date) {
+            return post_b.date.getTime() - post_a.date.getTime();
+          }
+          else return 0;
+        });
+        callback(posts);
+      })
+      .catch(err => console.error(err));
+  },
   getFollowingPosts: (id, callback) => {
     User.findOne({ _id: id })
       .populate({

@@ -18,6 +18,31 @@ router.get(
 );
 
 router.get(
+  '/posts',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    UserController.getUserPosts(
+      req.user._id,
+      result => res.json(result)
+    );
+  }
+);
+
+router.get(
+  '/posts/:userId',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    UserController.getUserPosts(
+      req.params.userId,
+      result => res.json({
+        currentUser: req.user._id,
+        otherUser: result
+      })
+    );
+  }
+);
+
+router.get(
   '/populated',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {

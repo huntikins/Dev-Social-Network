@@ -33,11 +33,13 @@ export default {
   },
   currentUser: {
     getBasic: () => userApi.get('/'),
-    getPopulated: () => userApi.get('/populated')
+    getPopulated: () => userApi.get('/populated'),
+    getPosts: () => userApi.get('/posts')
   },
   otherUser: {
     getBasic: userId => userApi.get(`/${userId}`),
-    getPopulated: userId => userApi.get(`/populated/${userId}`)
+    getPopulated: userId => userApi.get(`/populated/${userId}`),
+    getPosts: userId => userApi.get(`/posts/${userId}`)
   },
   social: {
     follow: userId => socialApi.post(`/follow/${userId}`),
