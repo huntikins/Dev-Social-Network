@@ -59,7 +59,8 @@ export default {
             following: [],
             bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             followusr: false,
-            _id: null
+            _id: null,
+            currentUserId: null
         }
     },
     computed: {
@@ -79,7 +80,7 @@ export default {
         api.otherUser.getBasic(this.$props.userId).then(res => {
             console.log(res)
             const user = res.data.user;
-            const currentUserId = res.data.currentUser;
+            self.currentUserId = res.data.currentUser;
             self.firstName = user.firstName;
             self.lastName = user.lastName;
             self.jobTitle = user.jobTitle || '';
@@ -90,7 +91,7 @@ export default {
             self.followers = user.followers || [];
             self.following = user.following || [];
             self.bio = user.bio || '';
-            self.followusr = user.followers.indexOf(currentUserId) > -1;
+            self.followusr = user.followers.indexOf(self.currentUserId) > -1;
             self._id = user._id;
         });
     },
@@ -98,10 +99,14 @@ export default {
         follow(){
             api.social.follow(this._id).then(res => console.log(res));
             this.followusr = true;
+            this.followers.push(this.currentUserId);
+            if (this._id === this.currentUserId) this.following.push(this.currentUserId);
         },
         unfollow(){
             api.social.unfollow(this._id).then(res => console.log(res));
             this.followusr = false;
+            this.followers.splice(this.followers.indexOf(this.currentUserId), 1);
+            if (this._id === this.currentUserId) this.following.splice(this.following.indexOf(this.currentUserId), 1);
         }
     }
 }

@@ -77,6 +77,7 @@ module.exports = {
       .populate([{
         path: 'posts',
         populate: [
+          { path: 'user' },
           { path: 'comments.user' },
           { path: 'likes.user' }
         ]

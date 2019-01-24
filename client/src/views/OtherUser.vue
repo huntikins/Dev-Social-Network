@@ -2,7 +2,7 @@
     <div>
         <div class="profile-content">
             <app-boomerang-user :user-id="userId" />
-            <app-dash-wrapper-p />
+            <app-dash-wrapper-p :user-id="userId" />
         </div>
     </div>
 </template>

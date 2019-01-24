@@ -4,22 +4,25 @@ const UserController = require('../../controllers/User');
 const imageUpload = require("../../services/aws_service");
 
 router.get(
-  '/populated',
+  '/populated/:id',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
     UserController.populate(
-      req.user._id,
-      result => res.json(result)
+      req.params.id,
+      result => res.json({
+        currentUser: req.user._id,
+        otherUser: result
+      })
     );
   }
 );
 
 router.get(
-  '/populated/:id',
+  '/populated',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
     UserController.populate(
-      req.params._id,
+      req.user._id,
       result => res.json(result)
     );
   }

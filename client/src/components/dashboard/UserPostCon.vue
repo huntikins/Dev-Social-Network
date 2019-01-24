@@ -67,7 +67,7 @@ export default {
     props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description', '_id', 'currentUserId'],
     data(){
         return{
-            liked: false,
+            liked: this.$props.likes.indexOf(this.currentUserId) > -1,
             expandComments: false,
             saved: false,
             text: this.$props.body,

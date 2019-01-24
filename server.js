@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 8080;
 
 // Connect to database
 require('./config/database').connect();
+require('./models');
 
 // Routes
 const routes = require('./routes');
