@@ -53,4 +53,13 @@ export default {
     border-radius: 25px;
     background-color: rgba(133,149,149, 0.3);
 }
+/* Laptops, Desktops */
+@media (min-width: 1025px) and (max-width: 1600px) {
+    .kb-comments {
+        font-size: .75em;
+    }
+    .kb-post-body{
+        font-size: .75em;
+    }
+}
 </style>

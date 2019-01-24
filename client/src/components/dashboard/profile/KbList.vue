@@ -73,4 +73,13 @@ export default {
 .kb-title:hover {
     color:  white;
 }
+/* Laptops, Desktops */
+@media (min-width: 1025px) and (max-width: 1600px) {
+    .kb-title {
+        font-size: 1em;
+    }
+    .kb-icon {
+        font-size: 1em;
+    }
+}
 </style>

@@ -69,7 +69,7 @@ export default {
         .catch(err => err.response.data.message || '');
       setTimeout(function(){
         this.load = false
-      }, 3000)
+      }, 10000)
     }
   },
   computed: {

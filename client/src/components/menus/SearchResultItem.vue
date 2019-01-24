@@ -18,11 +18,12 @@ export default {
 
 <style>
 .display-user {
-    position: relative;
-    height: 18.5vh;
+    position: absolute;
+    height: 90%;
+    width: 100%;
     overflow-y: scroll;
     top: 6px;
-    margin: 5% 2% 1% 6%;
+    margin: 5% 2% 1% 4%;
     padding-top: 3%;
 }
 .display-user::-webkit-scrollbar {
@@ -59,5 +60,27 @@ export default {
     font-family: roboto, sans-serif;
     font-size: .75em;
     text-align: center;
+}
+/* higher resolution laptops */
+@media (min-width: 1281px) and (max-width: 1600px)  {
+    .result-image {
+        width: 60px;
+        height: 60px;
+    }
+    .result-link {
+        font-size: .5em;
+        text-align: center;
+    }
+}
+/* Laptops, Desktops */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .result-image {
+        width: 100px;
+        height: 100px;
+    }
+    .result-link {
+        font-size: .75em;
+        text-align: center;
+    }
 }
 </style>
