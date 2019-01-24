@@ -1,8 +1,9 @@
 <template>
     <div class="social-list">
-        <div v-for="(post, index) in posts" :key="index">
+        <div v-for="post in posts" :key="post._id">
             <div v-if="post.type === 'content'">
-               <app-user-post-con 
+               <app-user-post-con
+                    :_id="post._id"
                     :user="post.user"
                     :body="post.body"
                     :url="post.url"
@@ -12,15 +13,18 @@
                     :comments="post.comments"
                     :image="post.image"
                     :description="post.description"
+                    :currentUserId="currentUserId"
                /> 
             </div>
-            <div v-if="post.type === 'text'">
+            <div v-else>
                <app-user-post-gen 
+                    :_id="post._id"
                     :user="post.user"
                     :body="post.body"
                     :date="post.date"
                     :likes="post.likes"
                     :comments="post.comments"
+                    :currentUserId="currentUserId"
                /> 
             </div>
         </div>
@@ -29,82 +33,32 @@
 
 <script>
 // this is general text post
-import UserPostGen from '@/components/dashboard/UserPostGen'
+import UserPostGen from '@/components/dashboard/UserPostGen';
 // this is formatted content post
-import UserPostCon from '@/components/dashboard/UserPostCon'
+import UserPostCon from '@/components/dashboard/UserPostCon';
+import api from '../../../utils/api.js';
 export default {
     components: {
         appUserPostGen: UserPostGen,
         appUserPostCon: UserPostCon
     },
-    data(){
+    data() {
         return{
-            posts: [
-                {
-                    user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
-                    body: "Lorem ipsum dolor sit amet, https://github.com/mysqljs/mysql#escaping-query-values consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    url: "post.url",
-                    image: "http://getbootstrap.com/docs/4.2/assets/brand/bootstrap-social.png",
-                    title: "content",
-                    description: "Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.",
-                    date: "post.date",
-                    likes: 0,
-                    comments: [{name: "username", content: "post.comments", date: "commentdate"},{name: "username", content: "post.comments", date: "commentdate"},{name: "username", content: "post.comments", date: "commentdate"},{name: "username", content: "post.comments", date: "commentdate"}],
-                    type: "content"
-                },
-                {
-                    user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    url: "post.url",
-                    image: "https://avatars0.githubusercontent.com/u/39362365?s=400&v=4",
-                    title: "content",
-                    description: "A Social Network with a Purpose, aimed at building a community based on the sharing and collecting of knowledge - huntertrammell/Dev-Social-Network",
-                    date: "post.date",
-                    likes: 0,
-                    comments: [{name: "username", content: "post.comments", date: "commentdate"}],
-                    type: "content"
-                },
-                {
-                    user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    url: "post.url",
-                    title: "text",
-                    date: "post.date",
-                    likes: 0,
-                    comments: [{name: "username", content: "post.comments", date: "commentdate"}],
-                    type: "text"
-                },
-                {
-                    user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    url: "post.url",
-                    title: "text",
-                    date: "post.date",
-                    likes: 0,
-                    comments: [{name: "username", content: "post.comments", date: "commentdate"}],
-                    type: "text"
-                },
-                {
-                    user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    url: "post.url",
-                    title: "text",
-                    date: "post.date",
-                    likes: 0,
-                    comments: [{name: "username", content: "post.comments", date: "commentdate"}],
-                    type: "text"
-                },
-                {
-                    user: {name: "John Doe", pic: "url-here", _id: "_id for profile"},
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    url: "post.url",
-                    title: "content",
-                    date: "post.date",
-                    likes: 0,
-                    comments: [{name: "username", content: "post.comments", date: "commentdate"}],
-                    type: "content"
-                },
-            ]
+            posts: [],
+            currentUserId: ''
+        }
+    },
+    created() {
+        this.getPosts();
+    },
+    methods: {
+        getPosts() {
+            const self = this;
+            api.posts.getSocialFeed().then(res => {
+                console.log(res);
+                self.currentUserId = res.data.currentUserId;
+                self.posts = res.data.posts;
+            });
         }
     }
 }

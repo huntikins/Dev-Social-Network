@@ -11,17 +11,17 @@
                 <button class="btn circle-button" @click="editDemographics = true">
                   <i class="fas fa-pencil-alt edit-pencil"></i>
                 </button>
-                <!-- <p>{{user.firstname + user.lastname}}</p>
-                <p>{{user.email}}</p>
-                <p>{{user.zipcode}}</p>
-                <p>{{user.job}}</p>-->
-                <h3>Ryan Freeman</h3>
-                <p>ryanjfreeman77@gmail.com</p>
-                <p>66215</p>
-                <p>Soleran Support</p>
+                <h3>{{`${demographics.firstName} ${demographics.lastName}`}}</h3>
+                <p>{{demographics.email}}</p>
+                <p>{{demographics.zipCode}}</p>
               </div>
             </div>
-            <app-demo-form v-if="editDemographics" class="section-wrapper"/>
+            <app-demo-form
+              :demographics="demographics"
+              v-if="editDemographics"
+              class="section-wrapper"
+              @save-demo="editDemographics = false"
+            />
           </div>
         </section>
 
@@ -34,15 +34,16 @@
                 </button>
                 <h4>Interests</h4>
                 <ul>
-                  <!-- <li v-for="(interest, index) in user.interests" :key="index">{{user.interest}}</li> -->
-                  <li>Dogs</li>
-                  <li>Pizzza</li>
-                  <li>Javascript</li>
-                  <li>React.js :)</li>
+                  <li v-for="(interest, index) in interests" :key="index">{{interest}}</li>
                 </ul>
               </div>
+              <app-interests v-if="editInterests" class="section-wrapper"/>
             </div>
-            <app-interests v-if="editInterests" class="section-wrapper"/>
+            <app-interests
+              @save-inter="editInterests = false"
+              v-if="editInterests"
+              class="section-wrapper"
+            />
           </div>
         </section>
 
@@ -54,22 +55,17 @@
                   <i class="fas fa-pencil-alt edit-pencil"></i>
                 </button>
                 <h4>Biography</h4>
-                <!-- <p>{{user.bio}}</p> -->
-                <p>
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                  Section 1.10.32 of "de Finibus Bonorum et
-                </p>
+                <p>{{biography}}</p>
               </div>
+              <app-biography class="section-wrapper" v-if="editBio"/>
             </div>
-            <app-biography class="section-wrapper" v-if="editBio"/>
-          </div>
-        </section>
-        <app-delete-account v-if="purge"  @close="purge = false"/>
-        <section class="row justify-content-md-center pb-4">
-          <div class="col-8 text-center pb-4">
-              <button class="btn btn-danger" @click="purge = true">Delete Account</button>
-          </div>
-        </section>
+          </section>
+          <app-delete-account v-if="purge"  @close="purge = false"/>
+          <section class="row justify-content-md-center pb-4">
+            <div class="col-8 text-center pb-4">
+                <button class="btn btn-danger" @click="purge = true">Delete Account</button>
+            </div>
+          </section>
       </div>
     </div>
   </div>
@@ -83,7 +79,8 @@ import UserImageEdit from "@/components/profile/UserImageEdit";
 import DemographicForm from "@/components/forms/Demographic";
 import InterestsForm from "@/components/forms/Interests";
 import BiographyForm from "@/components/forms/Biography";
-import DeleteAccount from '@/components/modals/DeleteAccount';
+import API from "@/utils/userData";
+import DeleteAccount from "@/components/modals/DeleteAccount";
 
 export default {
   data() {
@@ -91,6 +88,9 @@ export default {
       editDemographics: false,
       editInterests: false,
       editBio: false,
+      demographics: {},
+      interests: [],
+      biography: "",
       purge: false
     };
   },
@@ -100,8 +100,29 @@ export default {
     appUserImgEdit: UserImageEdit,
     appDemoForm: DemographicForm,
     appInterests: InterestsForm,
-    appBiography: BiographyForm,
-    appDeleteAccount: DeleteAccount
+    appBiography: BiographyForm
+  },
+  methods: {
+    getUserData() {
+      API.getUserData()
+        .then(response => {
+          const res = response.data;
+          this.demographics = {
+            firstName: res.firstName,
+            lastName: res.lastName,
+            email: res.email,
+            zipCode: res.zipCode,
+            jobTitle: res.jobTitle,
+            jobCompany: res.jonCompany
+          };
+          this.interests = res.interests;
+          this.biography = res.bio;
+        })
+        .catch(err => console.error(err));
+    }
+  },
+  created() {
+    this.getUserData();
   }
 };
 </script>
@@ -123,18 +144,20 @@ export default {
   overflow-y: scroll;
 }
 #account-management::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-    background-color: #f39121;
+  box-shadow: none;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f39121;
 }
 #account-management::-webkit-scrollbar {
-	width: 15px;
-	background-color: #f39121;
+  width: 15px;
+  background-color: #f39121;
 }
 #account-management::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: rgb(61,192,236);
+  border-radius: 10px;
+  box-shadow: none;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgb(61, 192, 236);
 }
 
 .section-wrapper {

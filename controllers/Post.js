@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 
 module.exports = {
   create: (post, callback) => {
-    post.date = new Date();
+    post.date = new Date(); 
     Post.create(post)
       .then(result => callback(result))
       .catch(err => console.error(err));
@@ -13,7 +13,7 @@ module.exports = {
       .catch(err => console.error(err));
   },
   addComment: (userId, postId, comment, callback) => {
-    Post.updateOne({
+    Post.findOneAndUpdate({
       _id: postId
     }, {
       $push: {
@@ -23,6 +23,8 @@ module.exports = {
           date: new Date()
         }
       }
+    }, {
+      new: true
     }).then(result => callback(result))
       .catch(err => console.error(err));
   },

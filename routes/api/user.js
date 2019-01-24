@@ -1,7 +1,49 @@
 const router = require('express').Router();
-
 const UserController = require('../../controllers/User');
 const imageUpload = require("../../services/aws_service");
+
+
+router.get(
+  '/populated/:id',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    UserController.populate(
+      req.params.id,
+      result => res.json({
+        currentUser: req.user._id,
+        otherUser: result
+      })
+    );
+  }
+);
+
+router.get(
+  '/posts',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    UserController.getUserPosts(
+      req.user._id,
+      result => res.json({
+        userId: req.user._id,
+        posts: result
+      })
+    );
+  }
+);
+
+router.get(
+  '/posts/:userId',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    UserController.getUserPosts(
+      req.params.userId,
+      result => res.json({
+        currentUser: req.user._id,
+        otherUser: result
+      })
+    );
+  }
+);
 
 router.get(
   '/populated',
@@ -15,23 +57,15 @@ router.get(
 );
 
 router.get(
-  '/populated/:id',
-  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
-  (req, res) => {
-    UserController.populate(
-      req.params._id,
-      result => res.json(result)
-    );
-  }
-);
-
-router.get(
   '/:id',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
     UserController.findById(
       req.params.id,
-      (err, user) => res.json(user)
+      (err, user) => res.json({
+        user,
+        currentUser: req.user._id
+      })
     );
   }
 );
@@ -65,18 +99,26 @@ router.put(
   }
 );
 
-const singleUpload = imageUpload.single('image');
-router.post('/s3upload', (req, res) => {
-  singleUpload(req, res, (err, some) => {
-    if (err) {
-      return res.status(422).send({
-        errors:
-          [{ title: "Image Upload Error", detail: err.message }]
-      });
-    }
-    return res.json({ 'imageUrl': req.file.location });
-  })
-});
+const singleUpload = imageUpload.single('profileImage');
+router.post('/s3upload',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    singleUpload(req, res, (err) => {
+      if (err) {
+        return res.status(422).send({
+          errors:
+            [{ title: "Image Upload Error", detail: err.message }]
+        });
+      }
+      // return res.json({ 'imageUrl': req.file.location });
+      UserController.imageUpload(
+        req.user._id,
+        req.file.location,
+        result => res.json(result)
+      );
+    })
+  });
+
 
 
 module.exports = router;

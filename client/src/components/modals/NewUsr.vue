@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import api from '../../utils/auth.js';
+import api from '../../utils/api.js';
 import Loading from '@/components/modals/Loading'
 export default {
   data() {
@@ -75,7 +75,7 @@ export default {
   methods: {
     createAccount() {
       const self = this;
-      api.createAccount(this.newUser)
+      api.auth.createAccount(this.newUser)
         .then(res => {
           if (res.data.success){
             self.load = true

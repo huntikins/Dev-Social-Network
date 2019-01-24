@@ -11,9 +11,9 @@
                 Account
             </router-link>
             <app-user-search />
-            <router-link id="" to="/" class="logout">
+            <span @click="logout" class="logout">
                 Log Out
-            </router-link>
+            </span>
         </app-slide>
         <a class="navbar-brand text-right" href="#">
             <img class="nav-logo" src="@/assets/nav-logo.png" alt="cerebellum">
@@ -22,12 +22,18 @@
 </template>
 
 <script>
-import Slide from '@/components/menus/BurgerMenu'
-import UserSearch from '@/components/forms/UserSearch'
+import Slide from '@/components/menus/BurgerMenu';
+import UserSearch from '@/components/forms/UserSearch';
+import api from '../../utils/api.js';
 export default {
     components: {
         appSlide: Slide,
         appUserSearch: UserSearch
+    },
+    methods: {
+        logout() {
+            api.auth.logout().then(res => this.$router.push('/'));
+        }
     }
 }
 </script>
@@ -48,6 +54,9 @@ export default {
     position: relative;
     top: 15vh;
     margin: 10% 2% 2% 10%;
+}
+.logout:hover {
+    cursor: pointer;
 }
 .menu-link {
     color: white;

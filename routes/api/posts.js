@@ -89,7 +89,10 @@ router.get(
   (req, res) => {
     controllers.User.getFollowingPosts(
       req.user._id,
-      result => res.json(result)
+      result => res.json({
+        currentUserId: req.user._id,
+        posts: result
+      })
     );
   }
 );

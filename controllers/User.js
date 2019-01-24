@@ -1,24 +1,25 @@
 const User = require("../models/User");
+const singleUpload = require("../services/aws_service").single('image');
 
 module.exports = {
   create: (user, callback) => {
     User.create(user)
-    .then(result => {
-      delete result.password;
-      callback({
-        success: true,
-        user: result
+      .then(result => {
+        delete result.password;
+        callback({
+          success: true,
+          user: result
+        });
+      })
+      .catch(err => {
+        let response = { success: false };
+        if (err.code === 11000) response.message = "There is already an account for that e-mail address."
+        else if (err.name === 'ValidationError') {
+          response.message = err.message;
+          response.errors = err.errors;
+        }
+        callback(response);
       });
-    })
-    .catch(err => {
-      let response = { success: false };
-      if (err.code === 11000) response.message = "There is already an account for that e-mail address."
-      else if (err.name === 'ValidationError') {
-        response.message = err.message;
-        response.errors = err.errors;
-      }
-      callback(response);
-    });
   },
   findByEmail: (email, callback) => {
     User.findOne({ email }, (err, user) => callback(err, user));
@@ -77,6 +78,7 @@ module.exports = {
       .populate([{
         path: 'posts',
         populate: [
+          { path: 'user' },
           { path: 'comments.user' },
           { path: 'likes.user' }
         ]
@@ -94,6 +96,27 @@ module.exports = {
       })
       .catch(err => console.error(err));
   },
+  getUserPosts: (userId, callback) => {
+    User.findOne({ _id: userId })
+      .populate({
+        path: 'posts',
+        populate: [
+          { path: 'user' },
+          { path: 'comments.user' }
+        ]
+      })
+      .then(result => {
+        let posts = result.posts;
+        posts.sort((post_a, post_b) => {
+          if (post_a.date && post_b.date) {
+            return post_b.date.getTime() - post_a.date.getTime();
+          }
+          else return 0;
+        });
+        callback(posts);
+      })
+      .catch(err => console.error(err));
+  },
   getFollowingPosts: (id, callback) => {
     User.findOne({ _id: id })
       .populate({
@@ -103,8 +126,7 @@ module.exports = {
           path: 'posts',
           populate: [
             { path: 'user' },
-            { path: 'comments.user' },
-            { path: 'likes' }
+            { path: 'comments.user' }
           ]
         }
       })
@@ -121,6 +143,19 @@ module.exports = {
         });
         callback(posts);
       })
+      .catch(err => console.error(err));
+  },
+  imageUpload: (id, file, callback) => {
+    User
+      .updateOne({ _id: id }, { picture: file })
+      .then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  checkResetToken: (token, callback) => {
+    User.findOne({
+      passwordResetToken: token,
+      resetTokenExpiration: { $gt: Date.now() }
+    }).then(callback)
       .catch(err => console.error(err));
   }
 }

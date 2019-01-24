@@ -2,21 +2,23 @@
     <div class="profile-info">
         <div class="profile-header">
             <div class="user-name">
-                <h1 class="name-first">{{ user.first_name }}</h1>
-                <h1 class="name-last">{{ user.last_name }}</h1>
+                <h1 class="name-first">{{ firstName }}</h1>
+                <h1 class="name-last">{{ lastName }}</h1>
             </div>
             <div class="user-stat">
-                <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ user.location.city }}, {{ user.location.state }}</span>
-                <span class="stat-item"><i class="stat-icon fas fa-building"></i> {{ user.job_title }} at {{ user.job_company }}</span>
+                <span class="stat-item" v-if="location"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city }}, {{ location.state }}</span>
+                <span class="stat-item" v-if="jobTitle || jobCompany">
+                    <i class="stat-icon fas fa-building"></i> {{ jobTitle || "Works" }}{{ jobCompany ? ` at ${jobCompany}` : '' }}
+                </span>
                 <div class="stat-item-group">
                     <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-users"></i> {{ user.friend_count }} 
+                        <i class="stat-icon-group fas fa-users"></i> {{ friend_count }} 
                     </span>
                     <span class="stat-item-group">
-                        <i class="stat-icon-group far fa-eye"></i> {{ user.following_count }} 
+                        <i class="stat-icon-group far fa-eye"></i> {{ following_count }} 
                     </span>
                     <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-eye"></i> {{ user.follower_count }} 
+                        <i class="stat-icon-group fas fa-eye"></i> {{ follower_count }} 
                     </span>
                 </div>
             </div>
@@ -29,44 +31,82 @@
             <div class="user-interest">
                 <h4 class="interest-title">Interests</h4>
                 <ul class="interest-list">
-                    <li class="interest-list-item" v-for="interest in user.interests" :key="interest">{{ interest }}</li>
+                    <li class="interest-list-item" v-for="interest in interests" :key="interest">{{ interest }}</li>
                 </ul>
             </div>
             <div class="user-profile-bio">
-                <p class="bio-text">{{ user.bio }}</p>
+                <p class="bio-text">{{ bio }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import zipcodes from 'zipcodes'
+import zipcodes from 'zipcodes';
+import api from '../../utils/api.js';
 export default {
+    props: ['userId'],
     data(){
         return {
-            user: {
-                first_name: "Hunter",
-                last_name: "Trammell",
-                location: zipcodes.lookup(66224),
-                job_title: "Developer",
-                job_company: "Chuck E. Cheese",
-                interests: ["Cheese", "Robotic Singers", "Pizza","Cheese", "Robotic Singers", "Pizza"],
-                friend_count: 500,
-                following_count: 675,
-                follower_count: 533,
-                bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            },
-            followusr: false
+            firstName: "Hunter",
+            lastName: "Trammell",
+            jobTitle: "Developer",
+            zipCode: '66224',
+            jobCompany: "Chuck E. Cheese",
+            location: zipcodes.lookup(66224),
+            interests: ["Cheese", "Robotic Singers", "Pizza"],
+            followers: [],
+            following: [],
+            bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            followusr: false,
+            _id: null,
+            currentUserId: null
         }
+    },
+    computed: {
+        friend_count: function() {
+            let count = 0;
+            const self = this;
+            self.followers.forEach(user => {
+                if (self.following.indexOf(user) > -1) count++;
+            });
+            return count;
+        },
+        follower_count: function() { return this.followers.length },
+        following_count: function() { return this.following.length }
+    },
+    created() {
+        const self = this;
+        api.otherUser.getBasic(this.$props.userId).then(res => {
+            console.log(res)
+            const user = res.data.user;
+            self.currentUserId = res.data.currentUser;
+            self.firstName = user.firstName;
+            self.lastName = user.lastName;
+            self.jobTitle = user.jobTitle || '';
+            self.jobCompany = user.jobCompany || '';
+            self.zipCode = user.zipCode;
+            self.location = zipcodes.lookup(parseInt(user.zipCode));
+            self.interests = user.interests || [];
+            self.followers = user.followers || [];
+            self.following = user.following || [];
+            self.bio = user.bio || '';
+            self.followusr = user.followers.indexOf(self.currentUserId) > -1;
+            self._id = user._id;
+        });
     },
     methods: {
         follow(){
-            this.followusr = true
-            console.log(this.followusr)
+            api.social.follow(this._id).then(res => console.log(res));
+            this.followusr = true;
+            this.followers.push(this.currentUserId);
+            if (this._id === this.currentUserId) this.following.push(this.currentUserId);
         },
         unfollow(){
-            this.followusr = false
-            console.log(this.followusr)
+            api.social.unfollow(this._id).then(res => console.log(res));
+            this.followusr = false;
+            this.followers.splice(this.followers.indexOf(this.currentUserId), 1);
+            if (this._id === this.currentUserId) this.following.splice(this.following.indexOf(this.currentUserId), 1);
         }
     }
 }

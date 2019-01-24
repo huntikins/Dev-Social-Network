@@ -1,25 +1,28 @@
 <template>
-    <div class="edit-img-container">
-        <img src="@/assets/user-icon.png" alt="Avatar" class="edit-profile-img img-fluid">
-        <div class="overlay" @click="upload = true">
-            <div class="text"><i class="fas fa-user-edit"></i></div>
-        </div>
-        <app-upload-modal v-if="upload" @close="upload = false"/>
+  <div class="edit-img-container">
+    <img src="@/assets/user-icon.png" alt="Avatar" class="edit-profile-img img-fluid">
+    <div class="overlay" @click="upload = true">
+      <div class="text">
+        <i class="fas fa-user-edit"></i>
+      </div>
     </div>
+    <app-upload-modal v-if="upload" @close="upload = false"/>
+  </div>
 </template>
 
 <script>
-import UploadImage from '@/components/modals/UploadImage'
+import UploadImage from "@/components/modals/UploadImage";
+
 export default {
-    data(){
-        return{
-            upload: false,
-        }
-    },
-    components: {
-        appUploadModal: UploadImage
-    }
-}
+  data() {
+    return {
+      upload: false
+    };
+  },
+  components: {
+    appUploadModal: UploadImage
+  }
+};
 </script>
 
 <style>
@@ -35,9 +38,9 @@ export default {
 }
 
 .edit-profile-img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .overlay {
@@ -56,7 +59,7 @@ export default {
 }
 
 .edit-img-container:hover .overlay {
-    opacity: 1;
+  opacity: 1;
 }
 
 .text {

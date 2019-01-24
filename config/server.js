@@ -9,8 +9,8 @@ require('./auth').configurePassport(passport);
 // Add Middleware
 // General middleware
 app.use(express.static('client/dist'));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: '10mb' }));
 app.use(require('morgan')('combined')); // logs http requests
 // Additional middleware needed for Passport
 app.use(require('cookie-parser')());
