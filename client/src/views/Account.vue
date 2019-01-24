@@ -37,7 +37,6 @@
                   <li v-for="(interest, index) in interests" :key="index">{{interest}}</li>
                 </ul>
               </div>
-              <app-interests v-if="editInterests" class="section-wrapper"/>
             </div>
             <app-interests
               @save-inter="editInterests = false"
@@ -57,15 +56,16 @@
                 <h4>Biography</h4>
                 <p>{{biography}}</p>
               </div>
-              <app-biography class="section-wrapper" v-if="editBio"/>
             </div>
-          </section>
-          <app-delete-account v-if="purge"  @close="purge = false"/>
-          <section class="row justify-content-md-center pb-4">
-            <div class="col-8 text-center pb-4">
-                <button class="btn btn-danger" @click="purge = true">Delete Account</button>
-            </div>
-          </section>
+            <app-biography class="section-wrapper" v-if="editBio"/>
+          </div>
+        </section>
+        <app-delete-account v-if="purge"  @close="purge = false"/>
+        <section class="row justify-content-md-center pb-4">
+          <div class="col-8 text-center pb-4">
+              <button class="btn btn-danger" @click="purge = true">Delete Account</button>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -188,8 +188,8 @@ export default {
 /* higher resolution laptops */
 @media (min-width: 1281px) and (max-width: 1600px)  {
     .edit-img-container{
-      height: 100px;
-      width: 100px;
+      height: 125px;
+      width: 125px;
       border: 5px solid rgb(236, 239, 241);
       top: 3%;
     }
@@ -197,8 +197,8 @@ export default {
 /* Laptops, Desktops */
 @media (min-width: 1025px) and (max-width: 1280px) {
     .edit-img-container{
-      height: 100px;
-      width: 100px;
+      height: 125px;
+      width: 125px;
       border: 5px solid rgb(236, 239, 241);
       top: 3%;
     }

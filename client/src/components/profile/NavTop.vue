@@ -1,6 +1,6 @@
 <template>
     <div class="navbar navbar-light justify-content-end">
-        <app-slide width="15">
+        <app-slide width="17">
             <router-link id="" to="/social" class="menu-link">
                 Social
             </router-link>

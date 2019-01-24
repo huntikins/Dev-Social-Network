@@ -2,8 +2,8 @@
     <div class="comment-section">
         <div class="post-comments" v-for="comment in comments" :key="comment._id">
             <div class="post-comment-wrapper">
-                <small class="text-muted mr-2">{{ formatDate(comment.date) }}</small>
-                <small>
+                <small class="text-muted mr-2 comment-text">{{ formatDate(comment.date) }}</small>
+                <small class="comment-text">
                     <router-link :to="`/user/${comment.user._id}`"  class="post-comment-user">{{ `${comment.user.firstName} ${comment.user.lastName}` }}</router-link>
                     : {{ comment.body }}
                 </small>
@@ -34,8 +34,11 @@ export default {
     text-align: left;
     vertical-align: text-top;
     font-family: roboto, sans-serif;
-    font-size: 1.5em;
+    font-size: .9em;
     margin-left: 25px;
+}
+.comment-text {
+    font-size: .9em;
 }
 .post-comment-user {
     font-family: roboto, sans-serif;

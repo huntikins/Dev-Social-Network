@@ -186,15 +186,12 @@
       opacity: 0;
     }
             /* higher resolution desktops */
-    @media (min-width: 1281px) and (max-width: 1600px) {
+    @media (min-width: 1025px) and (max-width: 1600px) {
         .bm-burger-button{
-          top: 15px;
+          top: 25px;
         }
-    }
-    /* Laptops, Desktops */
-    @media (min-width: 1025px) and (max-width: 1280px) {
-        .bm-burger-button{
-          top: 15px;
+        .bm-cross-button {
+          left: 30px;
         }
     }
     /* Tablets, Ipads (portrait) */

@@ -1,20 +1,20 @@
 <template>
     <div>
         <div class="profile-content">
-            <app-boomerang-user :user-id="userId" />
-            <app-dash-wrapper-p :user-id="userId" />
+            <app-boomerang />
+            <app-dash-wrapper-u :user-id="userId" />
         </div>
     </div>
 </template>
 
 <script>
-import BoomerangUser from '@/components/profile/BoomerangUser'
-import DashWrapperP from '@/components/dashboard/user/DashWrapperP'
+import Boomerang from '@/components/profile/Boomerang'
+import DashWrapperU from '@/components/dashboard/user/DashWrapperU'
 export default {
     props: ['userId'],
     components: {
-        appBoomerangUser: BoomerangUser,
-        appDashWrapperP: DashWrapperP
+        appBoomerang: Boomerang,
+        appDashWrapperU: DashWrapperU
     }
 }
 </script>

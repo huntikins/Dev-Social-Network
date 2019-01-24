@@ -24,4 +24,15 @@ export default {
     top: 2%;
     left: 11%;
 }
+/* higher resolution laptops */
+@media (min-width: 1025px) and (max-width: 1600px)  {
+    .profile-image{
+      height: 125px;
+      width: 125px;
+      border: 5px solid #f39121;
+      position: absolute;
+      top: 3% !important;
+    }
+}
+
 </style>

@@ -107,4 +107,21 @@ textarea#post {
 .post-sumbit-col{
     width: 100%;
 }
+/* higher resolution laptops */
+@media (min-width: 1025px) and (max-width: 1600px)  {
+    .new-post-container {
+        height: 75px;
+    }
+    textarea#post {
+        height: 65px;
+        resize: none;
+        border-radius: 25px 0 0 25px;
+    }
+    .post_body {
+        margin: 5px;
+        padding: 5px;
+        margin-left: 10%;
+        width: 90%;
+    }
+}
 </style>
