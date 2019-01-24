@@ -23,8 +23,8 @@ export default {
 </script>
 
 <style>
-.profile-img-container {
-    position: fixed;
+.edit-img-container {
+    position: relative;
     z-index: 15;
     top: 2%;
     left: 11%;
@@ -37,7 +37,7 @@ export default {
 .profile-image.edit {
     position: absolute;
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 .overlay {
@@ -49,13 +49,13 @@ export default {
     height: 100%;
     border-radius: 100%;
     width: 100%;
-    opacity: 0;
+    opacity: 0 !important;
     z-index: 16;
     transition: .5s ease;
     background-color: rgb(61,192,236);
 }
 
-.profile-img-container:hover .overlay {
+.edit-img-container:hover .overlay {
     opacity: 1;
 }
 
