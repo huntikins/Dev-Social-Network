@@ -145,20 +145,11 @@ module.exports = {
       })
       .catch(err => console.error(err));
   },
-  imageUpload: (req, res) => {
-    singleUpload(req, res, (err, some) => {
-      if (err) {
-        return res.status(422).send({
-          errors:
-            [{ title: "Image Upload Error", detail: err.message }]
-        });
-      }
-      console.log(`imageUrl: ${req.file.location}`);
-      User
-        .updateOne({ _id: req.user._id }, { picture: req.file.location })
-        .then(result => callback(result))
-        .catch(err => console.error(err));
-    });
+  imageUpload: (id, file, callback) => {
+    User
+      .updateOne({ _id: id }, { picture: file })
+      .then(result => callback(result))
+      .catch(err => console.error(err));
   },
   checkResetToken: (token, callback) => {
     User.findOne({
