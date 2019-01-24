@@ -56,8 +56,8 @@ export default {
             this.posts = res.data.otherUser;
         }) : api.currentUser.getPosts().then(res => {
             console.log(res);
-            this.currentUserId = res.data.currentUser;
-            this.posts = res.data;
+            this.currentUserId = res.data.userId;
+            this.posts = res.data.posts;
         });
     }
 }

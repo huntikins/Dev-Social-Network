@@ -23,7 +23,10 @@ router.get(
   (req, res) => {
     UserController.getUserPosts(
       req.user._id,
-      result => res.json(result)
+      result => res.json({
+        userId: req.user._id,
+        posts: result
+      })
     );
   }
 );
