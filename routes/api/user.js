@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const UserController = require('../../controllers/User');
-const imageUpload = require("../../services/aws_service");
+
 
 router.get(
   '/populated/:id',
@@ -99,18 +99,11 @@ router.put(
   }
 );
 
-const singleUpload = imageUpload.single('image');
-router.post('/s3upload', (req, res) => {
-  singleUpload(req, res, (err, some) => {
-    if (err) {
-      return res.status(422).send({
-        errors:
-          [{ title: "Image Upload Error", detail: err.message }]
-      });
-    }
-    return res.json({ 'imageUrl': req.file.location });
-  })
-});
+router.post(
+  '/s3upload',
+  require('connect-ensure-login').ensureLoggedIn('api/auth/fail'),
+  UserController.imageUpload
+);
 
 
 module.exports = router;

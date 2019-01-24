@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 
 module.exports = {
   create: (post, callback) => {
-    post.date = new Date();
+    post.date = new Date(); 
     Post.create(post)
       .then(result => callback(result))
       .catch(err => console.error(err));
