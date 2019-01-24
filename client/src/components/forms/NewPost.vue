@@ -10,50 +10,55 @@
 </template>
 
 <script>
-import axios from 'axios'
-import getUrls from 'get-urls'
-import moment from 'moment'
+import axios from 'axios';
+import getUrls from 'get-urls';
+import moment from 'moment';
+import api from '../../utils/api.js';
 export default {
     data(){
         return{
             content_body: "",
-            url: [],
+            urlArray: [],
             type: ""
         }
     },
     methods: {
         createPost(){
             //passes string into URL detector
-            let urlSet = getUrls(this.content_body)
+            let urlSet = getUrls(this.content_body);
             //converts Set object to an interator
-            let urlItter = urlSet.entries()
-            //gives value of first URL in object
-            this.url.push(urlItter.slice(0,1))
-            if (this.url.length){
-                this.type = "content"
-            } else {
-                this.type = "text"
+            // let urlItter = urlSet.entries()
+            this.urlArray = [];
+            for (let url of urlSet) {
+                this.urlArray.push(url);
             }
-            const queryUrl = 'http://api.linkpreview.net/?key=5c3d58afe394c30b8a6aee93efb4be51af5e05ea3ce29&q='
-            axios
-            .get(queryUrl + this.url[0])
-            .then(res => {
-                let content = {
-                    title: res.data.title,
-                    url: res.data.url,
-                    description: res.data.description,
-                    image: res.data.image
+            const self = this;
+            if (this.urlArray.length) {
+                this.type = "content";
+                const queryUrl = 'http://api.linkpreview.net/?key=5c3d58afe394c30b8a6aee93efb4be51af5e05ea3ce29&q='
+                axios   
+                    .get(queryUrl + self.urlArray[0])
+                    .then(res => {
+                        let post = {
+                            title: res.data.title,
+                            url: self.urlArray[0],
+                            description: res.data.description,
+                            image: res.data.image,
+                            type: self.type,
+                            body: self.content_body
+                        }
+                        api.posts.createPost(post)
+                            .then(res_ => console.log(res_));
+                    });
+            } else {
+                this.type = "text";
+                let post = {
+                    type: self.type,
+                    body: self.content_body
                 }
-                /*axios.post(blah, {
-                    body: this.content_body,
-                    url: content.url,
-                    description: content.description,
-                    image: content.image,
-                    type: this.type,
-                    date: moment().format('LLL')
-                }*/
-            })
-
+                api.posts.createPost(post)
+                    .then(res_ => console.log(res_));
+            }
         }
     }
 }

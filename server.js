@@ -1,11 +1,13 @@
 require('dotenv').config();
 
+// Require server that has been configured w/ middleware
 const app = require('./config/server').app;
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080;
 
 // Connect to database
 require('./config/database').connect();
+require('./models');
 
 // Routes
 const routes = require('./routes');

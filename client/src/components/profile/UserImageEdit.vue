@@ -1,6 +1,6 @@
 <template>
-    <div class="edit-img-container">
-        <img src="@/assets/user-icon.png" alt="Avatar" class="edit-profile-img img-fluid">
+    <div class="profile-img-container">
+        <img src="@/assets/user-icon.png" alt="Avatar" class="profile-image edit img-fluid">
         <div class="overlay" @click="upload = true">
             <div class="text"><i class="fas fa-user-edit"></i></div>
         </div>
@@ -34,7 +34,7 @@ export default {
     border-radius: 100%;
 }
 
-.edit-profile-img {
+.profile-image.edit {
     position: absolute;
     width: 100%;
     height: 100%;

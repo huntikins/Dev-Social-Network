@@ -1,6 +1,6 @@
 <template>
     <div class="list-feed">
-        <div class="event-item" v-for="(event, index) in events" :key="index">
+        <div class="event-item" v-for="event in events" :key="event.id">
             <h3 class="title-wrapper">
                 <i class="meetup-icon fab fa-meetup"></i> 
                 <span class="event-title">{{ event.name }}</span>
@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from 'moment';
+import api from '../../../utils/api.js';
 export default {
     data(){
         return {
@@ -834,11 +835,15 @@ export default {
     },
     filters: {
         formatDate(value){
-            return moment(value, "YYYY-MM-DD HH:mm").format("LLLL")
+            return moment(value, "YYYY-MM-DD HH:mm").format("LLLL");
         },
         caps(value){
-            return value.toUpperCase()
+            return value.toUpperCase();
         }
+    },
+    beforeCreate() {
+        let self = this;
+        api.events.getEventsList().then(res => self.events = res.data);
     }
 }
 </script>

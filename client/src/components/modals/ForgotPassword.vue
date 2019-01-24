@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import api from '../../utils/auth.js';
+import api from '../../utils/api.js';
 export default {
   data() {
     return {
@@ -36,10 +36,10 @@ export default {
     }
   },
   methods: {
-      forgotPassword(){
-        this.message = 'If an account exists with the email provided, your password will be sent via email'
-        //send message
-      }
+      // forgotPassword(){
+      //   this.message = 'If an account exists with the email provided, your password will be sent via email'
+      //   api.auth.
+      // }
   },
   computed: {
     isEmpty() {

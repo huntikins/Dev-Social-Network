@@ -3,22 +3,30 @@
         <form>
             <div class="input-group comment-form-group">
                 <textarea class="form-control comment-field" v-model="newComment"></textarea>
-                <button class="btn comment-button" @click.prevent="createPost()">Submit</button>
+                <button class="btn comment-button" @click.prevent="submitComment()">Submit</button>
             </div>
         </form>
     </div>
 </template>
 
 <script>
+import api from '../../utils/api.js';
 export default {
+    props: ['postId'],
     data(){
         return{
             newComment: ""
         }
     },
     methods: {
-        createPost(){
-            //do something
+        submitComment() {
+            const self = this;
+            api.posts.addComment({
+                postId: self.$props.postId,
+                comment: self.newComment
+            }).then(res => {
+                console.log(res)
+            });
         }
     }
 }
