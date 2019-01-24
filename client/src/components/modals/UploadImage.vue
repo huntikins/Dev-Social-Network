@@ -46,14 +46,13 @@ export default {
     onFileChanged(event) {
       this.selectedFile = event.target.files[0];
       this.fileName = event.target.files[0].name;
-      // console.log(event.target.files[0].name);
     },
     onUpload() {
-      console.log("this.selectedFIle", this.selectedFile);
-      API.putImage(this.selectedFile)
+      const formData = new FormData();
+      formData.append("profileImage", this.selectedFile, this.fileName);
+      API.putImage(formData)
         .then(res => {
           console.log("img upload res: ", res);
-          // userImage = res;
         })
         .catch(err => console.error(err));
     }
