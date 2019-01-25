@@ -6,7 +6,7 @@
         <i class="fas fa-user-edit"></i>
       </div>
     </div>
-    <app-upload-modal v-if="upload" @close="upload = false"/>
+    <app-upload-modal v-if="upload" @close="closeRerender"/>
   </div>
 </template>
 
@@ -21,6 +21,12 @@ export default {
   },
   components: {
     appUploadModal: UploadImage
+  },
+  methods: {
+    closeRerender() {
+      this.upload = false;
+      this.emit = "refresh-image";
+    }
   }
 };
 </script>
