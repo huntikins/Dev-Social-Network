@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="bm-menu" :class="{ right: right, open: isSideBarOpen }" :style="{ width: currentWidth + 'px'}">
+        <div class="bm-menu" :class="{ right: right, open: isSideBarOpen }" :style="{ width: currentWidth + '%'}">
             
             <slot></slot>
             
@@ -84,7 +84,13 @@
       },
       computed: {
         currentWidth: function() {
-          return this.isSideBarOpen ? this.width : 0;
+          if (window.screen.width > 1024){
+            return this.isSideBarOpen ? this.width : 0;
+          } else {
+            this.width = 100
+            return this.isSideBarOpen ? this.width : 0
+          }
+          
         }
       },
       mounted() {
@@ -178,5 +184,82 @@
     }
     .fade-enter, .fade-leave-to {
       opacity: 0;
+    }
+            /* higher resolution desktops */
+    @media (min-width: 1025px) and (max-width: 1600px) {
+        .bm-burger-button{
+          top: 25px;
+        }
+        .bm-cross-button {
+          left: 30px;
+        }
+    }
+    /* Tablets, Ipads (portrait) */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .bm-burger-button{
+          width: 34px;
+          height: 28px;
+          left: 30px;
+          top: 15px; 
+        }
+         .bm-menu{
+          position: fixed;
+          z-index: 25 !important;
+        }
+    }
+    /* Tablets, Ipads (landscape) */
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        
+    }
+    /* Low Resolution Tablets, Mobiles (Landscape) */
+    @media (min-width: 481px) and (max-width: 767px) {
+      .bm-burger-button{
+          width: 34px;
+          height: 28px;
+          left: 20px;
+          top: 17px; 
+        }
+    }
+    /* Most of the Smartphones Mobiles (Portrait) */
+    @media (min-width: 320px) and (max-width: 480px) {
+        .bm-burger-button{
+          width: 32px;
+          height: 26px;
+          left: 20px;
+          top: 17px; 
+        }
+    }
+    /*galaxy s5*/
+    @media (width: 360px) {
+        .bm-burger-button{
+          width: 32px;
+          height: 26px;
+          left: 20px;
+          top: 17px; 
+        }
+    }
+    /*pixel 2*/
+    @media (width: 411px) {
+        
+    }
+    /*iphone 5SE*/
+    @media (width: 320px) {
+        
+    }
+    /*iphone 6/7/8*/
+    @media (width: 375px) {
+      
+    }
+    /*iphone 6/7/8 Plus*/
+    @media (width: 414px) {
+      
+    }
+    /*iphone X*/
+    @media (width: 375px) {
+        
+    }
+    /*iPad pro*/
+    @media (width: 1024px) {
+        
     }
 </style>

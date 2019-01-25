@@ -2,8 +2,8 @@
     <div class="profile-info">
         <div class="profile-header">
             <div class="user-name">
-                <h1 class="name-first">{{ firstName }}</h1>
-                <h1 class="name-last">{{ lastName }}</h1>
+                <h1 class="name-first">{{ firstName | firstCap }}</h1>
+                <h1 class="name-last">{{ lastName | firstCap }}</h1>
             </div>
             <div class="user-stat">
                 <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city }}, {{ location.state }}</span>
@@ -83,6 +83,12 @@ export default {
         },
         follower_count: function() { return this.followers.length },
         following_count: function() { return this.following.length }
+    },
+    filters: {
+        firstCap(value){
+            value = value.toString()
+            return value.charAt(0).toUpperCase() + value.slice(1)
+        }
     }
 }
 </script>
@@ -91,7 +97,6 @@ export default {
 .profile-info {
     height: 87vh;
     width: 14%;
-    margin-top: 12vh;
     background-color: #f39121; 
     position: fixed;
 }
@@ -193,5 +198,86 @@ export default {
     font-family: roboto, sans-serif;
     color: white;
     padding: 4px;
+}
+/* higher resolution laptops */
+@media (min-width: 1025px) and (max-width: 1600px)  {
+    .profile-info {
+        height: 87vh;
+        background-color: #f39121; 
+    }
+    .bio-text {
+        font-size: .75em;
+    }
+    .interest-list-item{
+        font-size: .75em;
+    }
+    .user-name{
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+    .name-first{
+        font-family: alternate-gothic-no-1-d, sans-serif;
+        font-size: 3em;
+        padding: 0;
+        margin: 0;
+        line-height: .75;
+    }
+    .stat-item-group{
+        font-size: .85em; 
+    }
+    .stat-item {
+        font-size: .70em;
+    }
+    .name-last {
+        font-family: alternate-gothic-no-1-d, sans-serif;
+        font-size: 3em;
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+    }
+}
+/* Tablets, Ipads (portrait) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+}
+/* Tablets, Ipads (landscape) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+}
+/* Low Resolution Tablets, Mobiles (Landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+
+}
+/* Most of the Smartphones Mobiles (Portrait) */
+@media (min-width: 319px) and (max-width: 480px) {
+
+}
+/*galaxy s5*/
+@media (width: 360px) {
+
+}
+/*pixel 2*/
+@media (width: 411px) {
+
+}
+/*iphone 5SE*/
+@media (width: 320px) {
+ 
+}
+/*iphone 6/7/8*/
+@media (width: 375px) {
+
+}
+/*iphone 6/7/8 Plus*/
+@media (width: 414px) {
+
+}
+/*iphone X*/
+@media (width: 375px) {
+
+}
+/*iPad pro*/
+@media (width: 1024px) {
+
 }
 </style>

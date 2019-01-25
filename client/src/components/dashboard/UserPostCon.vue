@@ -2,7 +2,7 @@
     <div class="post-wrapper" title="">
         <div class="content-bottom">
             <div class="row post-userinfo">
-                <div class="col-1">
+                <div class="col-1 post-img-container">
                     <!--profilepic-->
                     <img v-if="user.picture" class="img-fluid" :src="user.picture" :alt="userName">
                     <img v-else class="img-fluid" src="@/assets/user-icon.png" :alt="userName">
@@ -18,7 +18,7 @@
                 <div class="col">
                     <p class="post-text" v-html="getAnchorTag()"></p>
                     <div class="media content-media-wrapper img-thumbnail" v-if="title && (image || description)">
-                        <img :src="image" class="mr-3 img-thumbnail w-25" alt="...">
+                        <img :src="image" class="mr-3 img-thumbnail desc-image" alt="...">
                         <div class="media-body content-desc">
                             <h5><a :href="url" target="_blank" class="mt-0 content-link">{{ title }}</a></h5>
                             {{ description }}
@@ -156,7 +156,7 @@ export default {
 .content-link {
     color: #3dc0ec;
     font-family: roboto, sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
 }
 .content-link:hover {
     color: #3dc0ec;
@@ -167,6 +167,10 @@ export default {
     font-family: roboto, sans-serif;
     text-align: left;
     color: black;
+    font-size: .75em;
+}
+.desc-image {
+    width: 15% !important;
 }
 .content-top{
     padding: 0 !important;
@@ -211,5 +215,20 @@ export default {
 }
 .comments:hover{
     text-decoration: none;
+}
+/* higher resolution laptops */
+@media (min-width: 1025px) and (max-width: 1600px)  {
+    .post-img-container {
+        padding: 0 !important;
+    }
+    .post-userinfo {
+        margin-left: 1px !important;
+    }
+    .post-icon-text {
+        font-size: .75em;
+    }
+    .post-icon {
+        font-size: .75em;
+    }
 }
 </style>
