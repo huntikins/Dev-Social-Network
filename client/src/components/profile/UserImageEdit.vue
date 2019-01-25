@@ -31,7 +31,9 @@ export default {
   },
   methods: {
     closeRerender(value) {
-      this.userImage = value;
+      if (value.indexOf("user-image") > -1) {
+        this.userImage = value;
+      }
       this.upload = false;
       // this.$emit = "refresh-image";
       // this.$forceUpdate();
@@ -42,7 +44,7 @@ export default {
 
 <style>
 .edit-img-container {
-  position: relative;
+  position: absolute;
   z-index: 15;
   top: 2%;
   left: 11%;
@@ -51,13 +53,11 @@ export default {
   border: 10px solid #f39121;
   border-radius: 100%;
 }
-
 .edit-profile-img {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-
 .overlay {
   position: absolute;
   top: 0;
@@ -67,20 +67,19 @@ export default {
   height: 100%;
   border-radius: 100%;
   width: 100%;
-  opacity: 0 !important;
+  opacity: 0;
   z-index: 16;
   transition: 0.5s ease;
   background-color: rgb(61, 192, 236);
 }
-
 .edit-img-container:hover .overlay {
   opacity: 1;
 }
-
 .text {
   color: white;
   font-size: 3em;
   position: absolute;
+  z-index: 17;
   top: 49%;
   left: 54%;
   -webkit-transform: translate(-50%, -50%);
