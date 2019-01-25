@@ -1,6 +1,12 @@
 <template>
-  <div class="edit-img-container">
-    <img src="@/assets/user-icon.png" alt="Avatar" class="edit-profile-img img-fluid">
+  <div :key="userImage" class="edit-img-container">
+    <img
+      v-if="userImage === null"
+      src="@/assets/user-icon.png"
+      alt="Avatar"
+      class="edit-profile-img img-fluid"
+    >
+    <img v-else :scr="userImage" alt="Avatar" class="edit-profile-img img-fluid">
     <div class="overlay" @click="upload = true">
       <div class="text">
         <i class="fas fa-user-edit"></i>
@@ -16,18 +22,26 @@ import UploadImage from "@/components/modals/UploadImage";
 export default {
   data() {
     return {
-      upload: false
+      upload: false,
+      userImage: null
     };
   },
   components: {
     appUploadModal: UploadImage
   },
   methods: {
-    closeRerender() {
+    closeRerender(value) {
+      this.userImage = value;
       this.upload = false;
-      this.emit = "refresh-image";
+      // this.$emit = "refresh-image";
+      // this.$forceUpdate();
     }
-  }
+  },
+  // computed: {
+  //   updateImage() {
+  //     return !this.userImage === "" ? this.userImage : "@/assets/user-icon.png";
+  //   }
+  // }
 };
 </script>
 
