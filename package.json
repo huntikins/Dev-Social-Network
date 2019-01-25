@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "serve": "node server.js",
     "start": "nodemon server.js",
     "install": "cd client && yarn install",
     "build": "cd client && yarn build && cd .. && nodemon server.js",
