@@ -23,8 +23,12 @@
               <label class="custom-file-label" for="profileImage">{{ fileNameText }}</label>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer" v-if="!hasUploaded">
             <button class="btn btn-light modal-default-button" @click="onUpload">Save</button>
+          </div>
+          <div class="modal-footer" v-if="hasUploaded">
+            <button class="btn btn-light modal-default-button" @click="emitLink">Confirm</button>
+            <button class="btn btn-light modal-default-button">Upload New</button>
           </div>
         </div>
       </div>
@@ -39,7 +43,9 @@ export default {
   data() {
     return {
       selectedFile: null,
-      fileName: null
+      fileName: null,
+      profileImage: null,
+      hasUploaded: false
     };
   },
   methods: {
@@ -52,18 +58,22 @@ export default {
       formData.append("profileImage", this.selectedFile, this.fileName);
       API.putImage(formData)
         .then(res => {
-          console.log("img upload res: ", res);
+          // $emit(res.data.picture);
+          this.profileImage = res.data.picture;
+          this.hasUploaded = true;
+          this.fileName = null;
+          console.log("img upload res: ", res.data.picture);
         })
         .catch(err => console.error(err));
+    },
+    emitLink() {
+      this.$emit('close', this.profileImage);
     }
   },
   computed: {
     fileNameText: function() {
       return this.fileName ? this.fileName : "Upload Image";
     }
-    // setUserImage: function() {
-    //   return this.userImage === "" ? "@/assets/logo-brain.svg" : this.userImage;
-    // }
   }
 };
 </script>

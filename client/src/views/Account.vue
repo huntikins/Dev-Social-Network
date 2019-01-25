@@ -1,7 +1,7 @@
 <template>
   <div class="account-page">
     <app-nav-top/>
-    <app-user-img-edit/>
+    <app-user-img-edit @refresh-image="accountKey++"/>
     <div id="account-root">
       <div id="account-management" class="container">
         <section class="row justify-content-md-center">
@@ -60,10 +60,10 @@
             <app-biography class="section-wrapper" v-if="editBio"/>
           </div>
         </section>
-        <app-delete-account v-if="purge"  @close="purge = false"/>
+        <app-delete-account v-if="purge" @close="purge = false"/>
         <section class="row justify-content-md-center pb-4">
           <div class="col-8 text-center pb-4">
-              <button class="btn btn-danger" @click="purge = true">Delete Account</button>
+            <button class="btn btn-danger" @click="purge = true">Delete Account</button>
           </div>
         </section>
       </div>
@@ -85,6 +85,7 @@ import DeleteAccount from "@/components/modals/DeleteAccount";
 export default {
   data() {
     return {
+      accountKey: 0,
       editDemographics: false,
       editInterests: false,
       editBio: false,
@@ -159,7 +160,6 @@ export default {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: rgb(61, 192, 236);
 }
-
 .section-wrapper {
   width: 60%;
   margin: 30px auto;
@@ -181,7 +181,6 @@ export default {
   right: 0%;
   left: 98%;
 }
-
 .edit-pencil {
   color: rgb(236, 239, 241);
 }
