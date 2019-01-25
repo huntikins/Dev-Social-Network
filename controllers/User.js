@@ -147,7 +147,7 @@ module.exports = {
   },
   imageUpload: (id, file, callback) => {
     User
-      .findByIdAndUpdate({ _id: id }, { picture: file })
+      .findByIdAndUpdate({ _id: id }, { picture: file }, { new: true })
       .then(result => callback(result))
       .catch(err => console.error(err));
   },
