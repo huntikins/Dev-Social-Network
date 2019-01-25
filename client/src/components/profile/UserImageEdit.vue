@@ -44,16 +44,6 @@ export default {
 
 <style>
 .edit-img-container {
-<<<<<<< HEAD
-  position: absolute;
-  z-index: 15;
-  top: 2%;
-  left: 11%;
-  height: 175px;
-  width: 175px;
-  border: 10px solid #f39121;
-  border-radius: 100%;
-=======
     position: absolute;
     z-index: 15;
     top: 2%;
@@ -62,7 +52,6 @@ export default {
     width: 175px;
     border: 10px solid #f39121;
     border-radius: 100%;
->>>>>>> master
 }
 .edit-profile-img {
   position: absolute;
@@ -70,20 +59,6 @@ export default {
   height: 100%;
 }
 .overlay {
-<<<<<<< HEAD
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  border-radius: 100%;
-  width: 100%;
-  opacity: 0;
-  z-index: 16;
-  transition: 0.5s ease;
-  background-color: rgb(61, 192, 236);
-=======
     position: absolute;
     top: 0;
     bottom: 0;
@@ -96,24 +71,11 @@ export default {
     z-index: 16;
     transition: .5s ease;
     background-color: rgb(61,192,236);
->>>>>>> master
 }
 .edit-img-container:hover .overlay {
   opacity: 1;
 }
 .text {
-<<<<<<< HEAD
-  color: white;
-  font-size: 3em;
-  position: absolute;
-  z-index: 17;
-  top: 49%;
-  left: 54%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
-=======
     color: white;
     font-size: 3em;
     position: absolute;
@@ -124,6 +86,5 @@ export default {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
->>>>>>> master
 }
 </style>
