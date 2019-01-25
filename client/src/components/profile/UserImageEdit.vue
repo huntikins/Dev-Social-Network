@@ -36,12 +36,7 @@ export default {
       // this.$emit = "refresh-image";
       // this.$forceUpdate();
     }
-  },
-  // computed: {
-  //   updateImage() {
-  //     return !this.userImage === "" ? this.userImage : "@/assets/user-icon.png";
-  //   }
-  // }
+  }
 };
 </script>
 
