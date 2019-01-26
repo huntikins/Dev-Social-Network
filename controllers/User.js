@@ -108,10 +108,9 @@ module.exports = {
       .then(result => {
         let posts = result.posts;
         posts.sort((post_a, post_b) => {
-          if (post_a.date && post_b.date) {
-            return post_b.date.getTime() - post_a.date.getTime();
-          }
-          else return 0;
+          const post_aTime = post_a.date ? post_a.date.getTime() : 0;
+          const post_bTime = post_b.date ? post_b.date.getTime() : 0;
+          return post_bTime - post_aTime;
         });
         callback(posts);
       })
@@ -136,10 +135,9 @@ module.exports = {
           Array.prototype.push.apply(posts, user.posts);
         });
         posts.sort((post_a, post_b) => {
-          if (post_a.date && post_b.date) {
-            return post_b.date.getTime() - post_a.date.getTime();
-          }
-          else return 0;
+          const post_aTime = post_a.date ? post_a.date.getTime() : 0;
+          const post_bTime = post_b.date ? post_b.date.getTime() : 0;
+          return post_bTime - post_aTime;
         });
         callback(posts);
       })
