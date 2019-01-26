@@ -1,6 +1,7 @@
 <template>
     <div>
-        <img  class="profile-image img-fluid" src="@/assets/user-icon.png" alt="">
+        <img v-if="userId" class="img-fluid profile-image" :src="user.picture" :alt="userName">
+        <img v-else class="img-fluid profile-image" src="@/assets/user-icon.png" :alt="userName">
     </div>
 </template>
 
@@ -9,6 +10,7 @@ export default {
     props: ['userId'],
     created() {
         console.log(this.userId)
+        //get profile image
     }
 }
 </script>
