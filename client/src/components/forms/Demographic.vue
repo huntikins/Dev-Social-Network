@@ -10,8 +10,11 @@
             class="form-control"
             id="first-name"
             placeholder="Gary"
-            :value="demographics.firstName"
+            v-model="demographics.firstName"
+            v-validate="'required'"
+            name="first-name"
           >
+          <small v-if="errors.first('first-name')" class="account-form-error">First name is required.</small>
         </div>
         <div class="form-group name-div col">
           <label for="last-name">Last Name</label>
@@ -20,20 +23,23 @@
             class="form-control"
             id="last-name"
             placeholder="Gygax"
-            :value="demographics.lastName"
+            v-model="demographics.lastName"
+            v-validate="'required'"
+            name="last-name"
           >
+          <small v-if="errors.first('last-name')" class="account-form-error">Last name is required.</small>
         </div>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="email">Email</label>
         <input
           type="email"
           class="form-control"
           id="email"
           placeholder="youremail@gmail.com"
-          :value="demographics.email"
+          v-model="demographics.email"
         >
-      </div>
+      </div> -->
       <div class="form-group">
         <label for="zip-code">Zip Code</label>
         <input
@@ -41,20 +47,33 @@
           class="form-control"
           id="zip-code"
           placeholder="55555"
-          :value="demographics.zipCode"
+          v-validate="'required|numeric|digits:5'"
+          v-model="demographics.zipCode"
+          name="zipcode"
         >
+        <small v-if="errors.first('zipcode')" class="account-form-error">A 5 digit zipcode is required.</small>
       </div>
       <div class="form-group">
-        <label for="job">Job</label>
+        <label for="job-title">Job Title</label>
         <input
           type="text"
           class="form-control"
-          id="job"
+          id="job-title"
           placeholder="Badass"
-          :value="demographics.job"
+          v-model="demographics.jobTitle"
         >
       </div>
-      <button class="btn save-button" @click.prevent="$emit('save-demo') && putDemo()">
+      <div class="form-group">
+        <label for="job-company">Job Company</label>
+        <input
+          type="text"
+          class="form-control"
+          id="job-company"
+          placeholder="Code Company"
+          v-model="demographics.jobCompany"
+        >
+      </div>
+      <button class="btn save-button" @click.prevent="submitForm()" :disabled="errors.any()">
         <i class="fas fa-save save-floppy"></i>
       </button>
     </form>
@@ -63,25 +82,35 @@
 
 <script>
 import API from "@/utils/userData";
+import api from '../../utils/api.js';
 
 export default {
-  props: ["demographics"],
+  props: ["demInfo"],
   data() {
     return {
       demographics: {
-        firstName: this.$props.demographics.firstName,
-        lastName: this.$props.demographics.lastName,
-        email: this.$props.demographics.email,
-        job: this.$props.demographics.job,
-        zipCode: this.$props.demographics.zipCode
+        firstName: this.$props.demInfo.firstName,
+        lastName: this.$props.demInfo.lastName,
+        jobTitle: this.$props.demInfo.jobTitle,
+        jobCompany: this.$props.demInfo.jobCompany,
+        zipCode: this.$props.demInfo.zipCode,
+        email: this.$props.demInfo.email
       }
     };
   },
   methods: {
-    putDemo(demographics) {
-      API.putDemo(demographics)
-        .then(res => console.log(res))
-        .catch(err => console.error(err));
+    submitForm() {
+      console.log(this.demographics)
+      this.demographics.jobTitle = this.demographics.jobTitle || '';
+      this.demographics.jobCompany = this.demographics.jobCompany || '';
+      api.currentUser.updateInfo(this.demographics)
+        .then(res => {
+          console.log(res);
+          if (res.data.nModified === 1) {
+            this.$emit('update-demographics', this.demographics);
+          }
+          else this.$emit('close');
+        });
     }
   }
 };

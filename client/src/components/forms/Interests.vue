@@ -4,6 +4,7 @@
       <div class="form-group">
         <label for="interest-list">
           <h4>Interests</h4>
+          <!-- <small>(Must be a comma separated list.)</small> -->
         </label>
         <textarea
           class="form-control"
@@ -11,10 +12,10 @@
           id="interest-list"
           rows="6"
           placeholder="Comma Separated List"
-          :interests="interest"
+          v-model="text"
         ></textarea>
       </div>
-      <button class="btn save-button" @click="putInterests() && $emit('save-inter')">
+      <button class="btn save-button" @click.prevent="submit">
         <i class="fas fa-save save-floppy"></i>
       </button>
     </form>
@@ -23,19 +24,39 @@
 
 
 <script>
-import API from "@/utils/userData";
+// import API from "@/utils/userData";
+import api from '../../utils/api.js';
 
 export default {
   props: ["interests"],
   data() {
     return {
-      interests: this.$props.interests.interests.toString()
+      text: this.stringify(this.$props.interests)
     };
   },
   methods: {
-    putInterests(currentID, interests) {
-      API.putInterests();
+    stringify(array) {
+      console.log('test')
+      return array.join(', ');
+    },
+    arrayify(string) {
+      return string.split(',').map(subString => subString.trim());
+    },
+    submit() {
+      const updatedInterests = this.arrayify(this.text);
+      api.currentUser.updateInfo({ interests: updatedInterests })
+        .then(res => {
+          if (res.data.nModified === 1) {
+            this.$emit('update-interests', updatedInterests);
+          }
+          else this.$emit('close');
+        });
     }
+
+  },
+  mounted() {
+    console.log('mounted')
+    console.log(this.text)
   }
 };
 </script>

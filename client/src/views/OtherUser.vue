@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="profile-content">
-            <app-boomerang />
+            <app-boomerang :user-id="userId" />
             <app-dash-wrapper-u :user-id="userId" />
         </div>
     </div>
