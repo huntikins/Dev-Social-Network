@@ -83,7 +83,7 @@ export default {
           } 
           self.message = res.data.message;
         })
-        .catch(err => err.response.data.message || '');
+        .catch(err => self.message = err.response.data.message || '');
       setTimeout(function(){
         this.load = false
       }, 10000)

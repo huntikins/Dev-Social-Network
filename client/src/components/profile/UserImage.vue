@@ -1,16 +1,31 @@
 <template>
     <div>
-        <img v-if="userId" class="img-fluid profile-image" :src="user.picture" :alt="userName">
-        <img v-else class="img-fluid profile-image" src="@/assets/user-icon.png" :alt="userName">
+        <img v-if="image" class="profile-image img-fluid" :src="image" alt="Profile picture">
+        <img v-else class="profile-image img-fluid" src="@/assets/user-icon.png" alt="No image for user">
     </div>
 </template>
 
 <script>
+import api from '../../utils/api.js';
+
 export default {
     props: ['userId'],
+    data() {
+        return {
+            image: undefined
+        }
+    },
     created() {
-        console.log(this.userId)
-        //get profile image
+        if (!this.$props.userId) {
+            api.currentUser.getImage().then(res => {
+                console.log('current user')
+                this.image = res.data.image;
+            });
+        }
+        else api.otherUser.getImage(this.$props.userId).then(res => {
+            console.log(res);
+            this.image = res.data.image;
+        });
     }
 }
 </script>

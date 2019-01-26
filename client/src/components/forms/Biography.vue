@@ -6,14 +6,14 @@
           <h4>Biography</h4>
         </label>
         <textarea
-          :value="biography"
+          v-model="text"
           class="form-control"
           name="biography"
           id="interest-list"
           rows="6"
         >Your Story</textarea>
       </div>
-      <button class="btn save-button" @click="editBio = true">
+      <button class="btn save-button" @click.prevent="submit">
         <i class="fas fa-save save-floppy"></i>
       </button>
     </form>
@@ -22,20 +22,25 @@
 
 
 <script>
-import API from "@/utils/userData";
+// import API from "@/utils/userData";
+import api from '../../utils/api.js';
 
 export default {
   props: ["biography"],
   data() {
     return {
-      biography: this.$props.biography.biography
+      text: this.$props.biography
     };
   },
   methods: {
-    putBio(id, bio) {
-      API.putBio(id, bio)
-        .then()
-        .catch();
+    submit() {
+      const newBio = this.text;
+      api.currentUser.updateInfo({ bio: newBio })
+        .then(res => {
+          console.log(res);
+          if (res.data.nModified === 1) this.$emit('update', newBio);
+          else this.$emit('close');
+        });
     }
   }
 };
