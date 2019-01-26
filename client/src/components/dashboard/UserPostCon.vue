@@ -1,5 +1,11 @@
 <template>
     <div class="post-wrapper" title="">
+        <app-save-article v-if="createKB" 
+                        @close="createKB=false" 
+                        :url="url" 
+                        :title="title" 
+                        :comments="_comments"
+                        :body="body"/>
         <div class="content-bottom">
             <div class="row post-userinfo">
                 <div class="col-1 post-img-container">
@@ -62,6 +68,7 @@ import Comments from '@/components/dashboard/Comment';
 import linkifyHtml from 'linkifyjs/html';
 import NewComment from '@/components/forms/NewComment';
 import moment from 'moment';
+import SaveToKb from '@/components/modals/SaveArticle'
 import api from '../../utils/api.js';
 export default {
     props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description', '_id', 'currentUserId'],
@@ -74,12 +81,14 @@ export default {
             likeCount: this.likes ? this.likes.length : 0,
             commentCount: this.comments ? this.comments.length : 0,
             userName: this.user.firstName + ' ' + this.user.lastName,
-            formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : ''
+            formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : '',
+            createKB: false
         }
     },
     components: {
         appPostComments: Comments,
-        appNewComment: NewComment
+        appNewComment: NewComment,
+        appSaveArticle: SaveToKb
     },
     methods: {
         updateComments() {
@@ -103,6 +112,7 @@ export default {
         },
         addToKB(){
             this.saved = true
+            this.createKB = true
         },
         removeFromKB(){
             this.saved = false

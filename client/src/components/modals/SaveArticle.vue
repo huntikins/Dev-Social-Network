@@ -13,8 +13,20 @@
             <h1 class="modal-header-text m-auto py-4">Save this article to your Knowledge Base</h1>
             <!--add form-->
             <form>
-                <!--title input-->
-                <!--save comments-->
+              <div class="form-group">
+                <input type="text" placeholder="Title" v-model="kBTitle" class="form-control create-comment-title">
+              </div>
+              <div class="custom-control custom-switch">
+                <app-toggle class="comment-toggle"
+                  v-model="saveComments" 
+                  :value="true"
+                  :sync="true"
+                  color="#3dc0ec"
+                  height="35"
+                  width="175"
+                  fontSize="15"
+                  :labels="{checked: 'Keep Comments', unchecked: 'Ignore Comments'}"/>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -27,15 +39,44 @@
 </template>
 
 <script>
+import { ToggleButton } from 'vue-js-toggle-button'
 export default {
+  props: ['title', 'url', 'comments', 'body' ],
   data() {
     return {
-      
+        kBTitle: this.$props.title,
+        saveComments: false,
+        comments: []
     };
+  },
+  components: {
+    appToggle: ToggleButton
   },
   methods: {
       saveToKB(){
-          //dosometing
+        /*
+          if (saveComments){
+            if(this.$props.comments){
+              //push user, date, body of comment into array
+              let comments = this.$props.comments
+              comments.forEach(comment =>{
+                  this.comments.push({
+                    user: comments.user.firstName + '' + comments.user.lastName,
+                    date: comments.date,
+                    body: comments.body
+                  })
+                }
+              )
+            }
+          }
+          var newKB = {
+            title: this.kBTitle,
+            url: this.$props.url,
+            body: this.$props.body,
+            comments: this.comments
+          }
+          //push newKB into db
+          */
       }
   }
 };
@@ -44,6 +85,41 @@ export default {
 <style>
 .modal-image {
   width: 95px;
+}
+.comment-toggle {
+  left: 29%;
+}
+input.create-comment-title{
+  background-color: rgb(133,149,149);
+  border: 1px solid #ffffff;
+  border-radius: 100px;
+  text-align: center;
+  color: white;
+  font-family: roboto, sans-serif;
+}
+input.create-comment-title::placeholder {
+  color: white !important;
+  text-align: center;
+  font-family: roboto, sans-serif;
+}
+input.create-comment-title:focus::placeholder {
+  opacity: 0;
+}
+input.create-comment-title:focus {
+  background-color: white;
+  text-align: center;
+  color: black;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  font-family: roboto, sans-serif;
+}
+.save-comments {
+  font-size: .75em;
+  padding-right: 10px;
+  margin-top: 10px;
 }
 .modal-mask {
   position: fixed;
@@ -68,7 +144,7 @@ export default {
 }
 
 .modal-container-save {
-  width: 300px;
+  width: 600px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #859595 !important;
