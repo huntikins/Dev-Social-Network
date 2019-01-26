@@ -9,7 +9,8 @@
             <div class="row post-userinfo">
                 <div class="col-1 post-img-container ">
                     <!--profilepic-->
-                    <img class="img-fluid" src="@/assets/user-icon.png" alt="">
+                    <img v-if="user.picture" class="img-fluid user-prof-img" :src="user.picture" :alt="userName">
+                    <img v-else class="img-fluid user-prof-img" src="@/assets/user-icon.png" :alt="userName">
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
@@ -133,6 +134,15 @@ export default {
 .post-username:hover {
     color: #3dc0ec;
     text-decoration: none;
+}
+.post-userinfo {
+    padding: 5px 1px 5px 5px;
+    margin-top: 10px;
+}
+.user-prof-img{
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
 }
 .post-date {
     font-family: roboto, sans-serif;
