@@ -1,7 +1,7 @@
 <template>
   <div class="account-page">
     <app-nav-top/>
-    <app-user-img-edit/>
+    <app-user-img-edit :userId="userId"/>
     <div id="account-management" class="container">
       <section class="row justify-content-md-center">
         <div class="col-10">
@@ -105,7 +105,8 @@ export default {
       interests: [],
       biography: "",
       purge: false,
-      image: ""
+      image: "",
+      userId: ""
     };
   },
   /*  props: ["user"],*/
@@ -121,7 +122,6 @@ export default {
     getUserData() {
       api.currentUser.getBasic().then(res => {
         const resData = res.data;
-        console.log(resData);
         this.demographics = {
           firstName: resData.firstName,
           lastName: resData.lastName,
@@ -132,12 +132,11 @@ export default {
         };
         this.interests = resData.interests || [];
         this.biography = resData.bio || "";
-        console.log(this.interests);
-        console.log(this);
+        this.userId = resData._id;
       });
     },
     updateDemographicsDisplay(updatedDemo) {
-      console.log("updating");
+      console.log("Account: updating");
       this.demographics = updatedDemo;
       this.editDemographics = false;
     },
@@ -152,7 +151,7 @@ export default {
   },
   created() {
     this.getUserData();
-    console.log("account created(): ", this.image);
+    console.log("Account: created(): ", this.image);
   },
   beforeCreate() {}
 };

@@ -1,63 +1,55 @@
 <template>
-  <div :key="userImage" class="edit-img-container">
-    <img
-      v-if="userImage"
-      src="@/assets/user-icon.png"
-      alt="Avatar"
-      class="edit-profile-img img-fluid"
-    >
-    <img v-else :scr="userImage" alt="Avatar" class="edit-profile-img img-fluid">
-    <div class="overlay" @click="upload = true">
+  <div :key="compKey" class="edit-img-container">
+    <img v-if="userImage" :scr="userImage" alt="Avatar" class="edit-profile-img img-fluid">
+    <img v-else src="@/assets/user-icon.png" alt="Avatar" class="edit-profile-img img-fluid">
+    <div class="overlay" @click="isUploading = true">
       <div class="text">
         <i class="fas fa-user-edit"></i>
       </div>
     </div>
-    <app-upload-modal v-if="upload" @close="closeReRender"/>
+    <app-upload-modal v-if="isUploading" @close="closeReRender"/>
   </div>
 </template>
 
 <script>
 import UploadImage from "@/components/modals/UploadImage";
 import { userInfo } from "os";
+import API from "../../utils/api.js";
 
 export default {
   data() {
     return {
-      upload: false,
-      userImage: null
+      compKey: 0,
+      isUploading: false,
+      userImage: undefined,
     };
   },
-  props: ["image", "getUserData"],
+  props: ["userId"],
   components: {
     appUploadModal: UploadImage
   },
   methods: {
     closeReRender(value) {
+      this.isUploading = false;
       this.userImage = value;
-      this.upload = false;
+      this.compKey++;
+      console.log("closeReRender: ", value);
     },
     setImage() {
-      this.upload = false;
-      console.log("setImage: ", this.$props.image);
-      if (this.$props.image) {
-        this.userImage = this.$props.image;
-      } else {
-        this.userImage = "../../assets/user-icon.png";
-      }
+      API.currentUser
+        .getImage()
+        .then(res => {
+          this.userImage = res.data.image;
+        })
+        .catch(err => console.error(err));
+      console.log("alt image: ", this.altImage);
     }
   },
   created() {
-    console.log("created() image: ", this.$props.image);
-  },
-  beforeMount() {
-    console.log("beforeMount() image: ", this.$props.image);
     this.setImage();
   },
   updated() {
-    console.log("updated(): ", this.userImage);
-  },
-  beforeUpdate() {
-    // this.$props.getUserData();
+    console.log("updated(): ", this.userImage, this.altImage);
   }
 };
 </script>
