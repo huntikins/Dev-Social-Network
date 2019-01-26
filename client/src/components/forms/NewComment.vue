@@ -62,4 +62,15 @@ export default {
     .comment-form-group{
         padding: 15px;
     }
+    /* higher resolution laptops */
+    @media (min-width: 1025px) and (max-width: 1600px)  {
+        .comment-form-group {
+            height: 70px;
+        }
+        .comment-button{
+            width: 100px;
+            height: 40px;
+            font-size: 1em;
+        }
+    }
 </style>

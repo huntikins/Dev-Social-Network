@@ -1,11 +1,18 @@
 <template>
     <div class="post-wrapper" title="">
+        <app-save-article v-if="createKB" 
+                        @close="createKB=false" 
+                        :url="url" 
+                        :title="title" 
+                        :comments="_comments"
+                        :body="body"
+                        :currentUserId="currentUserId"/>
         <div class="content-bottom">
             <div class="row post-userinfo">
                 <div class="col-1 post-img-container">
                     <!--profilepic-->
-                    <img v-if="user.picture" class="img-fluid" :src="user.picture" :alt="userName">
-                    <img v-else class="img-fluid" src="@/assets/user-icon.png" :alt="userName">
+                    <img v-if="user.picture" class="img-fluid user-prof-img" :src="user.picture" :alt="userName">
+                    <img v-else class="img-fluid user-prof-img" src="@/assets/user-icon.png" :alt="userName">
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
@@ -62,6 +69,7 @@ import Comments from '@/components/dashboard/Comment';
 import linkifyHtml from 'linkifyjs/html';
 import NewComment from '@/components/forms/NewComment';
 import moment from 'moment';
+import SaveToKb from '@/components/modals/SaveArticle'
 import api from '../../utils/api.js';
 export default {
     props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description', '_id', 'currentUserId'],
@@ -74,12 +82,14 @@ export default {
             likeCount: this.likes ? this.likes.length : 0,
             commentCount: this.comments ? this.comments.length : 0,
             userName: this.user.firstName + ' ' + this.user.lastName,
-            formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : ''
+            formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : '',
+            createKB: false
         }
     },
     components: {
         appPostComments: Comments,
-        appNewComment: NewComment
+        appNewComment: NewComment,
+        appSaveArticle: SaveToKb
     },
     methods: {
         updateComments() {
@@ -103,6 +113,7 @@ export default {
         },
         addToKB(){
             this.saved = true
+            this.createKB = true
         },
         removeFromKB(){
             this.saved = false
@@ -138,6 +149,16 @@ export default {
 .post-userinfo {
     padding: 5px 1px 5px 5px;
     margin-top: 10px;
+}
+.user-prof-img{
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+}
+.post-img-container {
+    border-radius: 100%;
+    height: 100%;
+    width: 100%;
 }
 .post-details {
     margin-top: 10px;
