@@ -13,7 +13,8 @@
             <h1 class="modal-header-text m-auto py-4">Save this article to your Knowledge Base</h1>
             <!--add form-->
             <form>
-              <div class="form-group">
+              <div class="form-group text-center">
+                <small class="modal-input-lable">Create a title for your KB Entry</small>
                 <input type="text" placeholder="Title" v-model="kBTitle" class="form-control create-comment-title">
               </div>
               <div class="custom-control custom-switch">
@@ -41,7 +42,7 @@
 <script>
 import { ToggleButton } from 'vue-js-toggle-button'
 export default {
-  props: ['title', 'url', 'comments', 'body' ],
+  props: ['title', 'url', 'comments', 'body', 'currentUserId' ],
   data() {
     return {
         kBTitle: this.$props.title,
@@ -55,6 +56,7 @@ export default {
   methods: {
       saveToKB(){
         /*
+
           if (saveComments){
             if(this.$props.comments){
               //push user, date, body of comment into array
@@ -71,11 +73,15 @@ export default {
           }
           var newKB = {
             title: this.kBTitle,
-            url: this.$props.url,
+            url: if(this.$props.url){
+                    this.$props.url
+                  }else{
+                    ""
+                  },
             body: this.$props.body,
             comments: this.comments
           }
-          //push newKB into db
+          //push newKB into db under this.$props.currentUserId (the person who is logged in)
           */
       }
   }
@@ -137,6 +143,11 @@ input.create-comment-title:focus {
   font-family: "roboto", "sans-serif";
   text-align: center;
   font-size: 1.5em;
+}
+.modal-input-lable{
+  color: white;
+  font-family: "roboto", "sans-serif";
+  padding-bottom: 4px;
 }
 .modal-wrapper {
   display: table-cell;

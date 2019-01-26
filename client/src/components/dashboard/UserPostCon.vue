@@ -5,7 +5,8 @@
                         :url="url" 
                         :title="title" 
                         :comments="_comments"
-                        :body="body"/>
+                        :body="body"
+                        :currentUserId="currentUserId"/>
         <div class="content-bottom">
             <div class="row post-userinfo">
                 <div class="col-1 post-img-container">
