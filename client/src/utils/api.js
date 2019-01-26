@@ -34,7 +34,8 @@ export default {
   currentUser: {
     getBasic: () => userApi.get('/'),
     getPopulated: () => userApi.get('/populated'),
-    getPosts: () => userApi.get('/posts')
+    getPosts: () => userApi.get('/posts'),
+    updateInfo: updatedInfo => userApi.put('/', updatedInfo)
   },
   otherUser: {
     getBasic: userId => userApi.get(`/${userId}`),

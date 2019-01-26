@@ -13,13 +13,16 @@
               <h3>{{`${demographics.firstName} ${demographics.lastName}`}}</h3>
               <p>{{demographics.email}}</p>
               <p>{{demographics.zipCode}}</p>
+              <p>{{demographics.jobTitle || 'No job title.'}}</p>
+              <p>{{`at ${demographics.jobCompany}` || 'No job company.'}}</p>
             </div>
           </div>
           <app-demo-form
-            :demographics="demographics"
+            :dem-info="demographics"
             v-if="editDemographics"
             class="section-wrapper"
-            @save-demo="editDemographics = false"
+            @update-demographics="updateDemographicsDisplay"
+            @close="editDemographics = false"
           />
         </div>
       </section>
@@ -38,9 +41,11 @@
             </div>
           </div>
           <app-interests
-            @save-inter="editInterests = false"
             v-if="editInterests"
             class="section-wrapper"
+            :interests="interests"
+            @close="editInterests = false"
+            @update-interests="updateInterestsDisplay"
           />
         </div>
       </section>
@@ -56,7 +61,13 @@
               <p>{{biography}}</p>
             </div>
           </div>
-          <app-biography class="section-wrapper" v-if="editBio"/>
+          <app-biography
+            class="section-wrapper"
+            v-if="editBio"
+            :biography="biography"
+            @close="editBio = false"
+            @update="updateBioDisplay"
+          />
         </div>
       </section>
       <app-delete-account v-if="purge"  @close="purge = false"/>
@@ -78,6 +89,7 @@ import DemographicForm from "@/components/forms/Demographic";
 import InterestsForm from "@/components/forms/Interests";
 import BiographyForm from "@/components/forms/Biography";
 import API from "@/utils/userData";
+import api from "@/utils/api";
 import DeleteAccount from "@/components/modals/DeleteAccount";
 
 export default {
@@ -98,25 +110,41 @@ export default {
     appUserImgEdit: UserImageEdit,
     appDemoForm: DemographicForm,
     appInterests: InterestsForm,
-    appBiography: BiographyForm
+    appBiography: BiographyForm,
+    appDeleteAccount: DeleteAccount
   },
   methods: {
     getUserData() {
-      API.getUserData()
-        .then(response => {
-          const res = response.data;
+      api.currentUser.getBasic()
+        .then(res => {
+          const resData = res.data;
+          console.log(resData)
           this.demographics = {
-            firstName: res.firstName,
-            lastName: res.lastName,
-            email: res.email,
-            zipCode: res.zipCode,
-            jobTitle: res.jobTitle,
-            jobCompany: res.jonCompany
+            firstName: resData.firstName,
+            lastName: resData.lastName,
+            email: resData.email,
+            zipCode: resData.zipCode,
+            jobTitle: resData.jobTitle || '',
+            jobCompany: resData.jobCompany || ''
           };
-          this.interests = res.interests;
-          this.biography = res.bio;
-        })
-        .catch(err => console.error(err));
+          this.interests = resData.interests || [];
+          this.biography = resData.bio || '';
+          console.log(this.interests);
+          console.log(this)
+        });
+    },
+    updateDemographicsDisplay(updatedDemo) {
+      console.log('updating')
+      this.demographics = updatedDemo;
+      this.editDemographics = false;
+    },
+    updateInterestsDisplay(updatedInterests) {
+      this.interests = updatedInterests;
+      this.editInterests = false;
+    },
+    updateBioDisplay(updatedBio) {
+      this.biography = updatedBio;
+      this.editBio = false;
     }
   },
   created() {
