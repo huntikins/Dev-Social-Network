@@ -7,7 +7,13 @@
             <i class="fas fa-times"></i>
           </span>
           <div class="modal-header m-0 p-0">
-            <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
+            <img
+              v-if="profileImage"
+              :src="profileImage"
+              class="modal-image m-auto p-0"
+              alt="Preview Image"
+            >
+            <img v-else :src="defaultBrain" class="modal-image m-auto p-0" alt="cerebellum">
           </div>
           <div class="modal-body m-0 p-0">
             <h1 class="modal-header-text m-auto py-4">Choose a new picture</h1>
@@ -28,7 +34,7 @@
           </div>
           <div class="modal-footer" v-if="hasUploaded">
             <button class="btn btn-light modal-default-button" @click="emitLink">Confirm</button>
-            <button class="btn btn-light modal-default-button">Upload New</button>
+            <button class="btn btn-light modal-default-button" @click="reSet">New</button>
           </div>
         </div>
       </div>
@@ -38,10 +44,12 @@
 
 <script>
 import API from "@/utils/userData";
+import Brain from "@/assets/logo-brain.svg"; /*Had to do this because @/ file paths are compiled after component renders */
 
 export default {
   data() {
     return {
+      defaultBrain: Brain,
       selectedFile: null,
       fileName: null,
       profileImage: null,
@@ -58,7 +66,6 @@ export default {
       formData.append("profileImage", this.selectedFile, this.fileName);
       API.putImage(formData)
         .then(res => {
-          // $emit(res.data.picture);
           this.profileImage = res.data.picture;
           this.hasUploaded = true;
           this.fileName = null;
@@ -67,7 +74,12 @@ export default {
         .catch(err => console.error(err));
     },
     emitLink() {
-      this.$emit('close', this.profileImage);
+      this.$emit("close", this.profileImage);
+    },
+    reSet() {
+      this.fileName = null;
+      this.profileImage = null;
+      this.hasUploaded = false;
     }
   },
   computed: {
