@@ -1,7 +1,7 @@
 <template>
 <div>
    <app-nav-top />
-   <app-user-img />
+   <app-user-img :user-id="userId" />
    <app-side-bar-user :user-id="userId" />
 </div>
 </template>

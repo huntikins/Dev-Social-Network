@@ -35,12 +35,14 @@ export default {
     getBasic: () => userApi.get('/'),
     getPopulated: () => userApi.get('/populated'),
     getPosts: () => userApi.get('/posts'),
-    updateInfo: updatedInfo => userApi.put('/', updatedInfo)
+    updateInfo: updatedInfo => userApi.put('/', updatedInfo),
+    getImage: () => userApi.get('/image')
   },
   otherUser: {
     getBasic: userId => userApi.get(`/${userId}`),
     getPopulated: userId => userApi.get(`/populated/${userId}`),
-    getPosts: userId => userApi.get(`/posts/${userId}`)
+    getPosts: userId => userApi.get(`/posts/${userId}`),
+    getImage: userId => userApi.get('/image')
   },
   social: {
     follow: userId => socialApi.post(`/follow/${userId}`),

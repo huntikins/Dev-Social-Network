@@ -4,7 +4,8 @@
             <div class="row post-userinfo">
                 <div class="col-1">
                     <!--profilepic-->
-                    <img class="img-fluid" src="@/assets/user-icon.png" alt="">
+                    <img v-if="user.picture" class="img-fluid" :src="user.picture" :alt="userName">
+                    <img v-else class="img-fluid" src="@/assets/user-icon.png" :alt="userName">
                 </div>
                 <div class="col post-details">
                     <!--username w link to profile @click--> 
