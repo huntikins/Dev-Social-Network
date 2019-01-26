@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "serve": "node server.js",
     "install": "cd client && yarn install",
     "build": "cd client && yarn build && cd .. && nodemon server.js",
+    "postinstall": "cd client && yarn install",
+    "heroku-postinstall": "yarn install && yarn postinstall",
     "dev": "cd client && yarn serve"
   },
   "repository": "https://github.com/huntertrammell/Dev-Social-Network.git",

@@ -42,7 +42,7 @@ export default {
     getBasic: userId => userApi.get(`/${userId}`),
     getPopulated: userId => userApi.get(`/populated/${userId}`),
     getPosts: userId => userApi.get(`/posts/${userId}`),
-    getImage: userId => userApi.get('/image')
+    getImage: userId => userApi.get(`/image${userId}`)
   },
   social: {
     follow: userId => socialApi.post(`/follow/${userId}`),

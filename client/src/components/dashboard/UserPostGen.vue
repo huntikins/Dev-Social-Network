@@ -2,7 +2,7 @@
     <div class="post-wrapper" title="">
         <div class="content-bottom">
             <div class="row post-userinfo">
-                <div class="col-1">
+                <div class="col-1 post-img-container ">
                     <!--profilepic-->
                     <img v-if="user.picture" class="img-fluid" :src="user.picture" :alt="userName">
                     <img v-else class="img-fluid" src="@/assets/user-icon.png" :alt="userName">
@@ -147,5 +147,20 @@ export default {
 }
 .comments:hover{
     text-decoration: none;
+}
+/* higher resolution laptops */
+@media (min-width: 1025px) and (max-width: 1600px)  {
+    .post-img-container {
+        padding: 0 !important;
+    }
+    .post-userinfo {
+        margin-left: 1px !important;
+    }
+    .post-icon-text{
+        font-size: .75em;
+    }
+    .post-icon {
+        font-size: .75em;
+    }
 }
 </style>

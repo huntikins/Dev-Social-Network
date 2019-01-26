@@ -36,6 +36,12 @@ export default new Router({
       component: () => import(/*  */ './views/OtherUser.vue')
     },
     {
+      path: '/reset/password/:id',
+      name: 'reset',
+      props: true,
+      component: () => import(/*  */ './views/ResetPassword.vue')
+    },
+    {
       path: '*',
       name: 'notfound',
       component: NotFound

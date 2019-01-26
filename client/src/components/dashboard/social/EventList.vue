@@ -914,4 +914,16 @@ export default {
     border: 2px solid rgb(61,192,236);
     border-right: none;
 }
+/* Laptops, Desktops */
+@media (min-width: 1025px) and (max-width: 1600px) {
+    .meetup-icon {
+        font-size: 2em;
+    }
+    .event-title{
+        font-size: 1em;
+    }
+    .event-date {
+        font-size: .70em;
+    }
+}
 </style>

@@ -1,10 +1,13 @@
 <template>
     <div class="dash-container">
         <div class="row m-0 p-0">
-            <div class="social-container">
-                <app-user-feed :user-id="userId" />
+            <div class="side-container col-2">
+                <app-side-bar-user :user-id="userId" />
             </div>
-            <div class="list-container">
+            <div class="social-container col-7">
+                <app-user-feed  :user-id="userId"/>
+            </div>
+            <div class="list-container col-3">
                 <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
                     <app-kb-list 
                         v-for="(article, index) in kbArticles" :key="index"
@@ -22,12 +25,14 @@
 <script>
 import KbList from '@/components/dashboard/profile/KbList'
 import UserFeed from '@/components/dashboard/profile/UserFeed'
+import SideBarUser from '@/components/profile/SideBarUser';
 export default {
-    props: ['userId'],
     components: {
         appKbList: KbList,
-        appUserFeed: UserFeed
+        appUserFeed: UserFeed,
+        appSideBarUser: SideBarUser
     },
+    props: ['userId'],
     data(){
         return{
             kbArticles: [
@@ -112,15 +117,13 @@ export default {
 <style>
 .dash-container {
     position: absolute;
-    width: 86%;
+    width: 100%;
     padding: 0;
-    left: 14% !important;
-    border-left: 10px solid #f39121;
     overflow-y: scroll;
     overflow-x: hidden;
     height: 100%;
     background-color: #f39121;
-    margin-top: 13vh;
+    margin-top: 10vh;
 }
 .dash-container::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -139,12 +142,19 @@ export default {
 .social-container {
     position: relative;
     height: 100%;
-    width: 65%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.side-container {
+    position: relative;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
 }
 .list-container {
     position: relative;
     height: 100% !important;
-    width: 35%;
     margin-top: 10px;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
 }
 </style>

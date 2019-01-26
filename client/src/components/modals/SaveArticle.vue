@@ -2,7 +2,7 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container-upload">
+        <div class="modal-container-save">
           <span class="modal-close" @click="$emit('close')">
             <i class="fas fa-times"></i>
           </span>
@@ -10,25 +10,15 @@
             <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
           </div>
           <div class="modal-body m-0 p-0">
-            <h1 class="modal-header-text m-auto py-4">Choose a new picture</h1>
-            <div class="custom-file">
-              <input
-                type="file"
-                class="custom-file-input"
-                id="profileImage"
-                name="profileImage"
-                @change="onFileChanged"
-                accept="image/png, image/jpeg"
-              >
-              <label class="custom-file-label" for="profileImage">{{ fileNameText }}</label>
-            </div>
+            <h1 class="modal-header-text m-auto py-4">Save this article to your Knowledge Base</h1>
+            <!--add form-->
+            <form>
+                <!--title input-->
+                <!--save comments-->
+            </form>
           </div>
-          <div class="modal-footer" v-if="!hasUploaded">
-            <button class="btn btn-light modal-default-button" @click="onUpload">Save</button>
-          </div>
-          <div class="modal-footer" v-if="hasUploaded">
-            <button class="btn btn-light modal-default-button" @click="emitLink">Confirm</button>
-            <button class="btn btn-light modal-default-button">Upload New</button>
+          <div class="modal-footer">
+            <button class="btn btn-light modal-default-button" @click="saveToKB">Save</button>
           </div>
         </div>
       </div>
@@ -37,43 +27,16 @@
 </template>
 
 <script>
-import API from "@/utils/userData";
-
 export default {
   data() {
     return {
-      selectedFile: null,
-      fileName: null,
-      profileImage: null,
-      hasUploaded: false
+      
     };
   },
   methods: {
-    onFileChanged(event) {
-      this.selectedFile = event.target.files[0];
-      this.fileName = event.target.files[0].name;
-    },
-    onUpload() {
-      const formData = new FormData();
-      formData.append("profileImage", this.selectedFile, this.fileName);
-      API.putImage(formData)
-        .then(res => {
-          // $emit(res.data.picture);
-          this.profileImage = res.data.picture;
-          this.hasUploaded = true;
-          this.fileName = null;
-          console.log("img upload res: ", res.data.picture);
-        })
-        .catch(err => console.error(err));
-    },
-    emitLink() {
-      this.$emit('close', this.profileImage);
-    }
-  },
-  computed: {
-    fileNameText: function() {
-      return this.fileName ? this.fileName : "Upload Image";
-    }
+      saveToKB(){
+          //dosometing
+      }
   }
 };
 </script>
@@ -104,7 +67,7 @@ export default {
   vertical-align: middle;
 }
 
-.modal-container-upload {
+.modal-container-save {
   width: 300px;
   margin: 0px auto;
   padding: 20px 30px;
