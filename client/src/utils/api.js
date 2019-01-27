@@ -36,7 +36,8 @@ export default {
     getPopulated: () => userApi.get('/populated'),
     getPosts: () => userApi.get('/posts'),
     updateInfo: updatedInfo => userApi.put('/', updatedInfo),
-    getImage: () => userApi.get('/image')
+    getImage: () => userApi.get('/image'),
+    deleteAccount: password => userApi.delete('/', { data: { password } })
   },
   otherUser: {
     getBasic: userId => userApi.get(`/${userId}`),

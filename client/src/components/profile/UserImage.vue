@@ -1,12 +1,12 @@
 <template>
   <div>
-    <img v-if="image" class="profile-image img-fluid" :src="image" alt="Profile picture">
+    <img v-if="image" class="profile-image img-fluid" :src="image" alt="Profile picture" />
     <img
       v-else
       class="profile-image img-fluid"
       src="@/assets/user-icon.png"
       alt="No image for user"
-    >
+    />
   </div>
 </template>
 

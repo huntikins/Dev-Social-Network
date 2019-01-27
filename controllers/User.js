@@ -3,9 +3,12 @@ const singleUpload = require("../services/aws_service").single('image');
 
 module.exports = {
   create: (user, callback) => {
+    user.lowerCaseEmail = user.email.toLowerCase();
     User.create(user)
       .then(result => {
-        delete result.password;
+        result.password = undefined;
+        result.lowerCaseEmail = undefined;
+        console.log(result);
         callback({
           success: true,
           user: result
@@ -22,7 +25,7 @@ module.exports = {
       });
   },
   findByEmail: (email, callback) => {
-    User.findOne({ email }, (err, user) => callback(err, user));
+    User.findOne({ lowerCaseEmail: email.toLowerCase() }, (err, user) => callback(err, user));
   },
   findById: (id, callback) => {
     User.findById(id, (err, user) => {
@@ -30,8 +33,11 @@ module.exports = {
       callback(err, user);
     });
   },
-  delete: (id, callback) => {
-    User.deleteOne({ _id: id })
+  delete: (id, password, callback) => {
+    console.log('-------------------\n');
+    console.log(id)
+    console.log(password)
+    User.deleteOne({ _id: id, password: password })
       .then(result => callback(result))
       .catch(err => console.error(err));
   },

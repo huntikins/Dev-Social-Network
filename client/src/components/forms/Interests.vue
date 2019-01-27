@@ -40,7 +40,10 @@ export default {
       return array.join(', ');
     },
     arrayify(string) {
-      return string.split(',').map(subString => subString.trim());
+      const array = string.split(',').map(subString => subString.trim());
+      const cleanedArray = [];
+      array.forEach(el => (el !== '' && cleanedArray.indexOf(el) < 0) ? cleanedArray.push(el) : null);
+      return cleanedArray;
     },
     submit() {
       const updatedInterests = this.arrayify(this.text);
@@ -52,7 +55,6 @@ export default {
           else this.$emit('close');
         });
     }
-
   },
   mounted() {
     console.log('mounted')

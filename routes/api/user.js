@@ -71,8 +71,6 @@ router.get(
   '/image',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
-    console.log('-'.repeat(40) + '\n\n')
-    console.log(req.user._id)
     UserController.findById(
       req.user._id,
       (err, result) => res.json({ image: result.picture })
@@ -106,6 +104,7 @@ router.delete(
   (req, res) => {
     UserController.delete(
       req.user._id,
+      req.body.password,
       result => res.json(result)
     );
   }
