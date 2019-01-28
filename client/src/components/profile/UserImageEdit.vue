@@ -1,6 +1,6 @@
 <template>
   <div :key="compKey" class="edit-img-container">
-    <img v-if="userImage" :scr="userImage" alt="Avatar" class="edit-profile-img img-fluid">
+    <img v-if="userImage" :src="userImage" alt="Avatar" class="edit-profile-img img-fluid">
     <img v-else src="@/assets/user-icon.png" alt="Avatar" class="edit-profile-img img-fluid">
     <div class="overlay" @click="isUploading = true">
       <div class="text">
@@ -60,15 +60,18 @@ export default {
   z-index: 15;
   top: 2%;
   left: 11%;
-  height: 175px;
   width: 175px;
+  height: 175px;
   border: 10px solid #f39121;
   border-radius: 100%;
+  background: white;
 }
 .edit-profile-img {
   position: absolute;
+  overflow: hidden;
   width: 100%;
   height: 100%;
+  border-radius: 100%;
 }
 .overlay {
   position: absolute;
