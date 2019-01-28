@@ -166,6 +166,8 @@ export default {
 <style>
 .account-page {
   position: relative;
+  background-color: #f39121;
+  overflow: hidden;
 }
 #account-root {
   background-color: #f39121;
@@ -178,6 +180,7 @@ export default {
   margin-top: 4%;
   padding: 2% 0 5% 0;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 #account-management::-webkit-scrollbar-track {
   box-shadow: none;

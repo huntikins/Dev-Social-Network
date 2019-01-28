@@ -27,10 +27,23 @@
                     <!--date-->
                     <h3 class="post-date">{{ formattedDate }}</h3>
                 </div>
+                <div class="col-1" v-if="user._id === currentUserId && (edit || remove) === false">
+                    <!--insert menu component here-->
+                    <app-update-post @edit="editPost" @remove="deletePost"/>
+                </div>
+                <div class="col-3" v-if="remove === true">
+                    <button class="btn btn-danger" @click="purgePost">Delete Post</button>
+                </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <p class="post-text" v-html="getAnchorTag()"></p>
+                    <div class="input-group edit-post-group" v-if="edit">
+                        <textarea class="edit-post-text form-control" v-model="updatedPost"></textarea>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary edit-post-button" type="button" @click="updatePost">Update</button>
+                        </div>
+                    </div>
+                    <p v-else class="post-text" v-html="getAnchorTag()"></p>
                     <div class="media content-media-wrapper img-thumbnail" v-if="title && (image || description)">
                         <img :src="image" class="mr-3 img-thumbnail desc-image" alt="...">
                         <div class="media-body content-desc">
@@ -63,7 +76,8 @@
                 <div class="col p-0 m-0">
                     <!--comment section only shown on collapse - external component -->
                     <app-post-comments :comments="comments"
-                                        v-if="expandComments"/>
+                                        v-if="expandComments"
+                                        :currentUserId="currentUserId"/>
                     <app-new-comment v-if="expandComments" :postId="_id" />
                 </div>
             </div>
@@ -78,6 +92,7 @@ import NewComment from '@/components/forms/NewComment';
 import moment from 'moment';
 import SaveToKb from '@/components/modals/SaveArticle'
 import api from '../../utils/api.js';
+import UpdatePost from '@/components/menus/UpdatePost'
 export default {
     props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description', '_id', 'currentUserId', 'currentUserKB'],
     data(){
@@ -89,13 +104,17 @@ export default {
             commentCount: this.comments ? this.comments.length : 0,
             userName: this.user.firstName + ' ' + this.user.lastName,
             formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : '',
-            createKB: false
+            createKB: false,
+            edit: false,
+            remove: false,
+            updatedPost: this.$props.body
         }
     },
     components: {
         appPostComments: Comments,
         appNewComment: NewComment,
-        appSaveArticle: SaveToKb
+        appSaveArticle: SaveToKb,
+        appUpdatePost: UpdatePost
     },
     methods: {
         updateComments() {
@@ -136,6 +155,24 @@ export default {
             }
             var str = this.$props.body;
             return linkifyHtml(str, options);
+        },
+        editPost(){
+            this.edit = true
+            console.log(this.edit)
+        },
+        deletePost(){
+            this.remove = true
+            console.log(this.remove)
+        },
+        updatePost() {
+            //send this.body to db as the new text to be rerendered
+            this.edit = false
+            this.remove = false
+        },
+        purgePost(){
+            //remove this post from DB forever
+            this.edit = false
+            this.remove = false
         }
     },
     created() {
@@ -172,8 +209,35 @@ export default {
     height: 100%;
     width: 100%;
 }
+.btn-danger {
+  border-radius: 100px;
+  font-family: roboto, sans-serif;
+}
 .post-details {
     margin-top: 10px;
+}
+textarea.edit-post-text{
+    resize: none;
+}
+textarea.edit-post-text:focus{
+    outline: none;
+    box-shadow: none;
+}
+.edit-post-group {
+    width: 96.5%;
+    margin: 10px 30px 25px 10px;
+}
+.edit-post-button {
+    background-color: #3dc0ec;
+    color: white;
+    border: none;
+    font-family: roboto, sans-serif;
+}
+.edit-post-button:focus {
+    background-color: #859595;
+}
+.edit-post-button:hover {
+    background-color: #859595;
 }
 .text-link {
     color: #3dc0ec;

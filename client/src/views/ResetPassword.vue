@@ -1,19 +1,22 @@
 <template>
     <div class="reset-page">
         <div class="container mt-4">
-            <div class="text-center">
-                <img class="reset-logo" src="@/assets/logo-brain.svg" alt="cerebellum">
+            <div class="text-center mt-4">
+                <img class="reset-logo mt-4" src="@/assets/logo-brain.svg" alt="cerebellum">
             </div>
             <div class="reset-title mt-4">
                 <h1 class="reset-title-text mt-4">reset password</h1>
             </div>
             <div class="reset-form">
-                <div class="form-group">
-                    <input type="password" placeholder="create new password" v-model="password" class="form-control reset-password-field">
+                <div class="form-row">
+                    <div class=" form-group col-6 mx-auto my-4 text-center">
+                        <input v-validate="'required|min:8'" type="password" name="password" placeholder="create new password" v-model="password" class="form-control reset-password-field">
+                        <small class="home-body">{{ errors.first('password') }}</small>
+                    </div>
                 </div>
             </div>
-            <div class="sumbit-reset-">
-
+            <div class="sumbit-reset text-center my-4">
+                <button class="btn btn-light modal-default-button" @click.prevent="resetPassword" :disabled="errors.any() || isEmpty" type="submit" form="login-form">RESET</button>
             </div>
         </div>
     </div>
@@ -24,6 +27,16 @@ export default {
     data(){
         return{
             password: ''
+        }
+    },
+    computed: {
+        isEmpty() {
+        return !this.password;
+        }
+    },
+    methods: {
+        resetPassword(){
+            //reset password in db & login
         }
     }
 }
