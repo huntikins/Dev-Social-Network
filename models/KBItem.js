@@ -33,7 +33,8 @@ const KBItemSchema = new Schema({
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User'
-    }
+    },
+    date: Date
   }]
 });
 

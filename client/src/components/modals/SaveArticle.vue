@@ -61,7 +61,7 @@
 import { ToggleButton } from 'vue-js-toggle-button';
 import api from '../../utils/api';
 export default {
-  props: ['title', 'url', 'comments', 'body', 'postId', 'type', 'date', 'poster' ],
+  props: ['title', 'url', 'comments', 'body', 'postId', 'type', 'date', 'poster', 'image'],
   data() {
     return {
       kBTitle: this.$props.title,
@@ -86,7 +86,9 @@ export default {
         };
         if (this.saveComments) kbItem.comments = this.$props.comments;
         if (this.$props.type === 'content') {
-
+          kbItem.url = this.$props.url;
+          kbItem.description = this.$props.description || '';
+          if (this.$props.image) kbItem.image = this.$props.image;
         }
         this.disableSubmit = true;
         api.knowledgeBase.add(kbItem)

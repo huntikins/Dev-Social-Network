@@ -62,6 +62,27 @@ router.get(
 );
 
 router.get(
+  '/kbItems/:userId',
+  (req, res) => {
+    console.log("\n\nhit\n\n")
+    UserController.getKB(
+      req.params.userId,
+      result => res.json(result)
+    );
+  }
+);
+
+router.get(
+  '/kbItems',
+  (req, res) => {
+    UserController.getKB(
+      req.user._id,
+      result => res.json(result)
+    );
+  }
+);
+
+router.get(
   '/populated',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
@@ -78,7 +99,7 @@ router.get(
   (req, res) => {
     UserController.findById(
       req.params.id,
-      result => res.json({ image: result.picture })
+      (err, result) => res.json({ image: result.picture })
     );
   }
 );

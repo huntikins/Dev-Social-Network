@@ -10,10 +10,11 @@
             <div class="list-container col-3">
                 <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
                     <app-kb-list 
-                        v-for="(article, index) in kbArticles" :key="index"
+                        v-for="article in kbArticles" :key="article._id"
                         :title="article.title"
-                        :link="article.link"
-                        :post="article.post"
+                        :link="article.url"
+                        :body="article.body"
+                        :postId="article.post"
                         :comments="article.comments"
                         />
                 </div>
@@ -26,6 +27,7 @@
 import KbList from '@/components/dashboard/profile/KbList'
 import UserFeed from '@/components/dashboard/profile/UserFeed'
 import SideBarUser from '@/components/profile/SideBarUser';
+import api from '../../../utils/api.js';
 export default {
     components: {
         appKbList: KbList,
@@ -35,81 +37,16 @@ export default {
     props: ['userId'],
     data(){
         return{
-            kbArticles: [
-                {
-                    title: 'How to create scrollbar',
-                    link: 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_scrollbar',
-                    post: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    comments: [
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                    ]
-                },
-                {
-                    title: 'How to create scrollbar',
-                    link: 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_scrollbar',
-                    post: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    comments: []
-                },
-                {
-                    title: 'How to create scrollbar',
-                    link: 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_scrollbar',
-                    post: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    comments: [
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                    ]
-                },
-                {
-                    title: 'How to create scrollbar',
-                    link: 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_scrollbar',
-                    post: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    comments: [
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                        {
-                            user: 'Mark Johnson',
-                            post: 'wow cool',
-                            date: '1/1/19'
-                        },
-                    ]
-                },
-            ]
+            kbArticles: []
         }
+    },
+    created() {
+        console.log('test')
+        api.otherUser.getKBItems(this.$props.userId)
+            .then(res => {
+                console.log(res);
+                this.kbArticles = res.data.kbItems.reverse();
+            });
     }
 }
 </script>

@@ -5,6 +5,7 @@ const UserController = require('./User');
 module.exports = {
   create: (userId, kbItem, callback) => {
     kbItem.user = userId;
+    console.log(kbItem);
     KBItem.create(kbItem)
       .then(result_1 => {
         UserController.addKBItem(

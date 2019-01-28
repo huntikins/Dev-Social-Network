@@ -27,6 +27,7 @@ export default {
       });
     } else
       api.otherUser.getImage(this.$props.userId).then(res => {
+        console.log(res)
         this.image = res.data.image;
       });
   }

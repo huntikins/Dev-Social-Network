@@ -129,16 +129,27 @@ module.exports = {
           const post_bTime = post_b.date ? post_b.date.getTime() : 0;
           return post_bTime - post_aTime;
         });
-        let kbItems = result.kbItems.reverse();
+        let kbItems = result.kbItems;
         callback({ posts, kbItems });
       })
       .catch(err => console.error(err));
   },
   getPostsInUserKB: (userId, callback) => {
-    User.findOne({ _id: userId }, {kbItems: 1})
+    User.findOne({ _id: userId }, { kbItems: 1 })
       .populate({
         path: 'kbItems',
         select: 'post'
+      })
+      .then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  getKB: (userId, callback) => {
+    User.findOne({ _id: userId }, { kbItems: 1 })
+      .populate({
+        path: 'kbItems',
+        populate: {
+          path: 'comments.user'
+        }
       })
       .then(result => callback(result))
       .catch(err => console.error(err));

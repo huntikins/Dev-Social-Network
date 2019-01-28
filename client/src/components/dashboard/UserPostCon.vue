@@ -12,6 +12,7 @@
             :postId="_id"
             type="content"
             :date="date"
+            :image="image"
         />
         <div class="content-bottom">
             <div class="row post-userinfo">
