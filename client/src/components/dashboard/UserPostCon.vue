@@ -68,9 +68,10 @@
             <div class="row">
                 <div class="col p-0 m-0">
                     <!--comment section only shown on collapse - external component -->
-                    <app-post-comments :comments="_comments"
-                                        v-if="expandComments"/>
-                    <app-new-comment v-if="expandComments" />
+                    <app-post-comments :comments="comments"
+                                        v-if="expandComments"
+                                        :currentUserId="currentUserId"/>
+                    <app-new-comment v-if="expandComments" :postId="_id" />
                 </div>
             </div>
         </div>
