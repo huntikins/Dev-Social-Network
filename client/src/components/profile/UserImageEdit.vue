@@ -64,6 +64,7 @@ export default {
   height: 175px;
   border: 10px solid #f39121;
   border-radius: 100%;
+  background: white;
 }
 .edit-profile-img {
   position: absolute;
