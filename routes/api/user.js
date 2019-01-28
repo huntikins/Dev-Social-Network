@@ -2,6 +2,16 @@ const router = require('express').Router();
 const UserController = require('../../controllers/User');
 const imageUpload = require("../../services/aws_service");
 
+router.get(
+  '/search/:query',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    UserController.search(
+      req.params.query,
+      result => res.json(result)
+    );
+  }
+);
 
 router.get(
   '/populated/:id',
@@ -25,7 +35,8 @@ router.get(
       req.user._id,
       result => res.json({
         userId: req.user._id,
-        posts: result
+        posts: result.posts,
+        kbItems: result.kbItems
       })
     );
   }
@@ -37,10 +48,36 @@ router.get(
   (req, res) => {
     UserController.getUserPosts(
       req.params.userId,
-      result => res.json({
-        currentUser: req.user._id,
-        otherUser: result
-      })
+      result_1 => {
+        UserController.getPostsInUserKB(
+          req.user._id,
+          result_2 => res.json({
+            otherUser: result_1.posts,
+            currentUser: result_2
+          })
+        );
+      }
+    );
+  }
+);
+
+router.get(
+  '/kbItems/:userId',
+  (req, res) => {
+    console.log("\n\nhit\n\n")
+    UserController.getKB(
+      req.params.userId,
+      result => res.json(result)
+    );
+  }
+);
+
+router.get(
+  '/kbItems',
+  (req, res) => {
+    UserController.getKB(
+      req.user._id,
+      result => res.json(result)
     );
   }
 );
@@ -62,7 +99,7 @@ router.get(
   (req, res) => {
     UserController.findById(
       req.params.id,
-      result => res.json({ image: result.picture })
+      (err, result) => res.json({ image: result.picture })
     );
   }
 );
@@ -71,8 +108,6 @@ router.get(
   '/image',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
-    console.log('-'.repeat(40) + '\n\n')
-    console.log(req.user._id)
     UserController.findById(
       req.user._id,
       (err, result) => res.json({ image: result.picture })
@@ -106,6 +141,7 @@ router.delete(
   (req, res) => {
     UserController.delete(
       req.user._id,
+      req.body.password,
       result => res.json(result)
     );
   }

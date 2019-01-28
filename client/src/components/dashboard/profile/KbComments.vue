@@ -1,20 +1,26 @@
 <template>
     <div class="kb-hide-item">
         <div class="kb-post">
-            <p class="kb-post-body">{{ post }}</p>
+            <p class="kb-post-body">{{ postBody }}</p>
         </div>
         <div class="kb-comment-wrapper">
             <div class="kb-comments" v-for="(comment, index) in comments" :key="index">
-                <small class="text-muted mr-2">{{ comment.date }}</small>
-                <small class="kb-comment-user"><strong>{{ comment.user }}: </strong>{{ comment.post }}</small>
+                <small class="text-muted mr-2">{{ formatDate(comment.date) }}</small>
+                <small class="kb-comment-user"><strong>{{ comment.user.firstName + ' ' + comment.user.lastName }}: </strong>{{ comment.body }}</small>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import moment from 'moment';
 export default {
-    props: [ 'post', 'comments']
+    props: [ 'postBody', 'comments'],
+    methods: {
+        formatDate(date) {
+            return date ? moment(date).format("MM/DD/YY") : '';
+        }
+    }
 }
 </script>
 

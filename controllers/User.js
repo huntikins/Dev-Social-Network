@@ -3,9 +3,13 @@ const singleUpload = require("../services/aws_service").single('image');
 
 module.exports = {
   create: (user, callback) => {
+    user.lowerCaseEmail = user.email.toLowerCase();
+    user.fullName = user.firstName + ' ' + user.lastName;
     User.create(user)
       .then(result => {
-        delete result.password;
+        result.password = undefined;
+        result.lowerCaseEmail = undefined;
+        // console.log(result);
         callback({
           success: true,
           user: result
@@ -22,7 +26,7 @@ module.exports = {
       });
   },
   findByEmail: (email, callback) => {
-    User.findOne({ email }, (err, user) => callback(err, user));
+    User.findOne({ lowerCaseEmail: email.toLowerCase() }, (err, user) => callback(err, user));
   },
   findById: (id, callback) => {
     User.findById(id, (err, user) => {
@@ -30,8 +34,8 @@ module.exports = {
       callback(err, user);
     });
   },
-  delete: (id, callback) => {
-    User.deleteOne({ _id: id })
+  delete: (id, password, callback) => {
+    User.deleteOne({ _id: id, password: password })
       .then(result => callback(result))
       .catch(err => console.error(err));
   },
@@ -73,6 +77,13 @@ module.exports = {
     ).then(result => callback(result))
       .catch(err => console.error(err));
   },
+  addKBItem: (userId, kbItemId, callback) => {
+    User.update(
+      { _id: userId },
+      { $push: { kbItems: kbItemId } }
+    ).then(result => callback(result))
+      .catch(err => console.error(err));
+  },
   populate: (id, callback) => {
     User.findOne({ _id: id })
       .populate([{
@@ -98,13 +109,19 @@ module.exports = {
   },
   getUserPosts: (userId, callback) => {
     User.findOne({ _id: userId })
-      .populate({
+      .populate([{
         path: 'posts',
         populate: [
           { path: 'user' },
           { path: 'comments.user' }
         ]
-      })
+      }, {
+        path: 'kbItems',
+        populate: [
+          { path: 'user' },
+          { path: 'comments.user' }
+        ]
+      }])
       .then(result => {
         let posts = result.posts;
         posts.sort((post_a, post_b) => {
@@ -112,13 +129,34 @@ module.exports = {
           const post_bTime = post_b.date ? post_b.date.getTime() : 0;
           return post_bTime - post_aTime;
         });
-        callback(posts);
+        let kbItems = result.kbItems;
+        callback({ posts, kbItems });
       })
+      .catch(err => console.error(err));
+  },
+  getPostsInUserKB: (userId, callback) => {
+    User.findOne({ _id: userId }, { kbItems: 1 })
+      .populate({
+        path: 'kbItems',
+        select: 'post'
+      })
+      .then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  getKB: (userId, callback) => {
+    User.findOne({ _id: userId }, { kbItems: 1 })
+      .populate({
+        path: 'kbItems',
+        populate: {
+          path: 'comments.user'
+        }
+      })
+      .then(result => callback(result))
       .catch(err => console.error(err));
   },
   getFollowingPosts: (id, callback) => {
     User.findOne({ _id: id })
-      .populate({
+      .populate([{
         path: 'following',
         select: 'posts',
         populate: {
@@ -128,7 +166,10 @@ module.exports = {
             { path: 'comments.user' }
           ]
         }
-      })
+      }, {
+        path: 'kbItems',
+        select: 'post'
+      }])
       .then(result => {
         let posts = [];
         result.following.forEach(user => {
@@ -139,7 +180,11 @@ module.exports = {
           const post_bTime = post_b.date ? post_b.date.getTime() : 0;
           return post_bTime - post_aTime;
         });
-        callback(posts);
+        console.log(result)
+        callback({
+          posts,
+          currentUserKB: result.kbItems
+        });
       })
       .catch(err => console.error(err));
   },
@@ -149,12 +194,24 @@ module.exports = {
       .then(result => callback(result))
       .catch(err => console.error(err));
   },
-
   checkResetToken: (token, callback) => {
     User.findOne({
       passwordResetToken: token,
       resetTokenExpiration: { $gt: Date.now() }
     }).then(callback)
       .catch(err => console.error(err));
+  },
+  search: (query, callback) => {
+    User.find({
+      fullName: new RegExp(query, 'i')
+    }).then(result_1 => {
+      User.find({
+        email: new RegExp(query, 'i')
+      }).then(result_2 => {
+        const results = result_1.concat(result_2);
+        results.forEach(result => result.password = undefined);
+        callback(results);
+      });
+    });
   }
 }

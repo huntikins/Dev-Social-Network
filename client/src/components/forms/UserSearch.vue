@@ -15,17 +15,13 @@
 </template>
 
 <script>
-import SearchResultItem from '@/components/menus/SearchResultItem'
+import SearchResultItem from '@/components/menus/SearchResultItem';
+import api from '../../utils/api';
 export default {
     data(){
         return{
             query: "",
-            results: [
-                        {image: 'https://via.placeholder.com/150', username: 'Hunter Trammell', link: '#'},
-                        {image: 'https://via.placeholder.com/150', username: 'David Knittel', link: '#'},
-                        {image: 'https://via.placeholder.com/150', username: 'Ryan Freeman', link: '#'},
-                        {image: 'https://via.placeholder.com/150', username: 'Mark Cuban', link: '#'},
-                    ]
+            results: []
         }
     },
     components: {
@@ -33,8 +29,8 @@ export default {
     },
     methods: {
         searchUsers() {
-            //pass query into search call, then foreach push username, link to profile, & user image into results array as an object
-            //results are passed into child component and info is shown
+            api.otherUser.searchUsers(this.query)
+                .then(res => this.results = res.data);
         }
     }
 }

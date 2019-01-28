@@ -1,26 +1,28 @@
 <template>
    <transition name="modal">
-    <div class="modal-mask">
+    <div class="modal-mask" :dark="isDeleted">
       <div class="modal-wrapper">
         <div class="modal-container-delete">
-          <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
+          <span class="modal-close" @click="isDeleted ? $router.push('/') : $emit('close')"><i class="fas fa-times"></i></span>
           <div class="modal-header m-0 p-0">
             <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
           </div>
           <div class="modal-body m-0 p-0">
-            <h1 class="home-header text-center m-auto py-4">Delete Account</h1>
+            <h1 class="home-header text-center m-auto py-4">{{ isDeleted ? 'Account Deleted' : 'Delete Account' }}</h1>
+            <h4 v-if="!isDeleted" class="home-body text-center m-auto pb-4">Are you sure?</h4>
             <form id="delete-form">
               <div class="form-group">
                 <input v-validate="'required'" v-model="password" name="password" type="password" class="form-control modal-field" placeholder="password">
-                <small class="home-body">{{ errors.first('password') }}</small>
+                <!-- <small class="home-body">{{ errors.first('password') }}</small> -->
               </div>
             </form>
             <div class="text-center">
-              <small class="home-body">{{ message }}</small>
+              <small class="home-body" v-html="message" id="del-form-mes"></small>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-danger modal-remove-button" @click.prevent="removeAccount()" :disabled="errors.any() || isEmpty" type="submit" form="delete-form">Delete</button>
+            <button v-if="isDeleted" class="btn btn-primary modal-remove-button" @click.prevent="$router.push('/')" type="submit" form="delete-form">OK</button>
+            <button v-else class="btn btn-danger modal-remove-button" @click.prevent="removeAccount()" :disabled="errors.any() || isEmpty" type="submit" form="delete-form">Delete</button>
           </div>
         </div>
       </div>
@@ -34,12 +36,24 @@ export default {
   data() {
     return {
       password: '',
-      message: 'All data will be lost but any saved posts will still be available to their respective users'
+      // message: 'All data will be lost but any saved posts will still be available to their respective users',
+      // Suggested alternative:
+      message: 'All of your account information including posts will be lost. However, users who have saved your posts will still be able to view those posts.',
+      isDeleted: false
     }
   },
   methods: {
       removeAccount(){
-        //drop user from DB
+        api.currentUser.deleteAccount(this.password)
+          .then(res => {
+            console.log(res)
+            if (res.data.n === 1) {
+              this.message = 'Your account has been deleted.';
+              this.isDeleted = true;
+            } else {
+              this.message = 'Unable to delete account.<br>Make sure that you have entered your password correctly.';
+            }
+          });
       }
   },
   computed: {
@@ -92,7 +106,9 @@ input.modal-field:focus {
   display: table;
   transition: opacity .3s ease;
 }
-
+.modal-mask[dark="true"] {
+  background-color: rgba(0, 0, 0, 0.85);
+}
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
@@ -118,6 +134,11 @@ input.modal-field:focus {
   letter-spacing: 2px;
   font-weight: 100;
 }
+
+#del-form-mes {
+  font-size: 15.5px;
+}
+
 .modal-footer {
   border: none !important;
 }

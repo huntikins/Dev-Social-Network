@@ -2,13 +2,14 @@
     <div class="kb-item grid-item">
         <div class="kb-show">
             <i class="kb-icon fas fa-chevron-circle-down" @click="kbExpand = false ? kbExpand === true : kbExpand === false"></i>
-            <a class="kb-title" :href="link" target="_blank">{{ title }}</a>
+            <a v-if="link" class="kb-title" :href="link" target="_blank">{{ title }}</a>
+            <span v-else class="kb-title">{{ title }}</span>
         </div>
         <div class="kb-hide">
             <transition name="bounce">
                 <app-kb-comment
                     v-if="kbExpand" 
-                    :post="post"
+                    :postBody="body"
                     :comments="comments"
                 />
             </transition>
@@ -20,7 +21,7 @@
 import moment from 'moment'
 import KbComments from '@/components/dashboard/profile/KbComments'
 export default {
-    props: ['title', 'link', 'post', 'comments'],
+    props: ['title', 'link', 'postId', 'comments', 'body'],
     data(){
         return {
             kbExpand: false,

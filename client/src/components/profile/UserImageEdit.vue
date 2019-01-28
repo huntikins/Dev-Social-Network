@@ -47,9 +47,6 @@ export default {
   },
   created() {
     this.setImage();
-  },
-  updated() {
-    console.log("updated(): ", this.userImage, this.altImage);
   }
 };
 </script>

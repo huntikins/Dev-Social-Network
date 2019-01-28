@@ -6,7 +6,7 @@
                 <h1 class="name-last">{{ lastName | firstCap }}</h1>
             </div>
             <div class="user-stat">
-                <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city }}, {{ location.state }}</span>
+                <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city || location.state ? `${location.city}, ${location.state}` : zipCode }}</span>
                 <span class="stat-item" v-if="jobTitle || jobCompany">
                     <i class="stat-icon fas fa-building"></i> {{ jobTitle || "Works" }}{{ jobCompany ? ` at ${jobCompany}` : '' }}
                 </span>
@@ -47,7 +47,7 @@ export default {
             lastName: '',
             jobTitle: '',
             jobCompany: '',
-            zipcode: '',
+            zipCode: '',
             location: {},
             interests: [],
             followers: [],
@@ -65,7 +65,7 @@ export default {
             self.jobTitle = user.jobTitle || '';
             self.jobCompany = user.jobCompany || '';
             self.zipCode = user.zipCode;
-            self.location = zipcodes.lookup(parseInt(user.zipCode));
+            self.location = zipcodes.lookup(parseInt(user.zipCode)) || {};
             self.interests = user.interests || [];
             self.followers = user.followers || [];
             self.following = user.following || [];

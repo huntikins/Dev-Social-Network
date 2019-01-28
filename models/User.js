@@ -10,6 +10,10 @@ const UserSchema = new Schema({
     // from bootcamp week 18 activity 15
     match: [/.+@.+\..+/, 'Please enter a valid e-mail address']
   },
+  lowerCaseEmail: {
+    type: String,
+    required: true
+  },
   password: {
     type: String,
     required: true
@@ -22,13 +26,18 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  fullName: {
+    type: String
+  },
   zipCode: {
     type: String,
     required: true,
     validate: {
       validator: value => {
         if (value.length !== 5) return false;
-        if (value !== parseInt(value).toString()) return false;
+        let restringedIntValue = parseInt(value).toString();
+        restringedIntValue = ('0').repeat(5 - restringedIntValue.length) + restringedIntValue;
+        if (value !== restringedIntValue) return false;
         return true;
       },
       message: 'Please enter a valid 5 digit zip code.'
