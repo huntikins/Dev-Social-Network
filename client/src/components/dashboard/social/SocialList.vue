@@ -14,6 +14,7 @@
                     :image="post.image"
                     :description="post.description"
                     :currentUserId="currentUserId"
+                    :currentUserKB="currentUserKB"
                /> 
             </div>
             <div v-else>
@@ -25,6 +26,7 @@
                     :likes="post.likes"
                     :comments="post.comments"
                     :currentUserId="currentUserId"
+                    :currentUserKB="currentUserKB"
                /> 
             </div>
         </div>
@@ -45,7 +47,8 @@ export default {
     data() {
         return{
             posts: [],
-            currentUserId: ''
+            currentUserId: '',
+            currentUserKB: []
         }
     },
     created() {
@@ -58,6 +61,7 @@ export default {
                 console.log(res);
                 self.currentUserId = res.data.currentUserId;
                 self.posts = res.data.posts;
+                self.currentUserKB = res.data.currentUserKB;
             });
         }
     }

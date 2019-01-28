@@ -2,6 +2,16 @@ const router = require('express').Router();
 const UserController = require('../../controllers/User');
 const imageUpload = require("../../services/aws_service");
 
+router.get(
+  '/search/:query',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    UserController.search(
+      req.params.query,
+      result => res.json(result)
+    );
+  }
+);
 
 router.get(
   '/populated/:id',
@@ -25,7 +35,8 @@ router.get(
       req.user._id,
       result => res.json({
         userId: req.user._id,
-        posts: result
+        posts: result.posts,
+        kbItems: result.kbItems
       })
     );
   }
@@ -37,10 +48,15 @@ router.get(
   (req, res) => {
     UserController.getUserPosts(
       req.params.userId,
-      result => res.json({
-        currentUser: req.user._id,
-        otherUser: result
-      })
+      result_1 => {
+        UserController.getPostsInUserKB(
+          req.user._id,
+          result_2 => res.json({
+            otherUser: result_1.posts,
+            currentUser: result_2
+          })
+        );
+      }
     );
   }
 );

@@ -7,7 +7,10 @@ const KBItemSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  category: String,
+  post: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   poster: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -22,22 +25,10 @@ const KBItemSchema = new Schema({
   body: String,
   url: String,
   title: String,
-  body: String,
+  image: String,
+  description: String,
   date: Date,
-  likes: [{
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  }],
   comments: [{
-    body: String,
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  }],
-  notes: [{
     body: String,
     user: {
       type: Schema.Types.ObjectId,

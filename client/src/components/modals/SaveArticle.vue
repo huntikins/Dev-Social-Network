@@ -10,9 +10,9 @@
             <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
           </div>
           <div class="modal-body m-0 p-0">
-            <h1 class="modal-header-text m-auto py-4">Save this article to your Knowledge Base</h1>
+            <h1 class="modal-header-text m-auto py-4">{{ heading }}</h1>
             <!--add form-->
-            <form>
+            <form id="save-form">
               <div class="form-group text-center">
                 <small class="modal-input-lable">Create a title for your KB Entry</small>
                 <input type="text" placeholder="Title" v-model="kBTitle" class="form-control create-comment-title">
@@ -23,15 +23,33 @@
                   :value="true"
                   :sync="true"
                   color="#3dc0ec"
-                  height="35"
-                  width="175"
-                  fontSize="15"
+                  :height="35"
+                  :width="175"
+                  :fontSize="15"
                   :labels="{checked: 'Keep Comments', unchecked: 'Ignore Comments'}"/>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-light modal-default-button" @click="saveToKB">Save</button>
+            <button
+              v-if="!isSaved"
+              class="btn btn-light modal-default-button"
+              type="submit"
+              @click.prevent="saveToKB"
+              form="save-form"
+              :disabled="disableSubmit"
+            >
+              Save
+            </button>
+            <button
+              v-else
+              class="btn btn-light modal-default-button"
+              type="submit"
+              form="save-form"
+              @click.prevent="$emit('saved')"
+            >
+              OK
+            </button>
           </div>
         </div>
       </div>
@@ -40,14 +58,17 @@
 </template>
 
 <script>
-import { ToggleButton } from 'vue-js-toggle-button'
+import { ToggleButton } from 'vue-js-toggle-button';
+import api from '../../utils/api';
 export default {
-  props: ['title', 'url', 'comments', 'body', 'currentUserId' ],
+  props: ['title', 'url', 'comments', 'body', 'postId', 'type', 'date', 'poster' ],
   data() {
     return {
-        kBTitle: this.$props.title,
-        saveComments: false,
-        comments: []
+      kBTitle: this.$props.title,
+      saveComments: false,
+      disableSubmit: false,
+      heading: 'Save this article to your Knowledge Base',
+      isSaved: false
     };
   },
   components: {
@@ -55,34 +76,27 @@ export default {
   },
   methods: {
       saveToKB(){
-        /*
+        let kbItem = {
+          post: this.$props.postId,
+          poster: this.$props.poster,
+          type: this.$props.type,
+          body: this.$props.body,
+          date: this.$props.date,
+          title: this.kBTitle
+        };
+        if (this.saveComments) kbItem.comments = this.$props.comments;
+        if (this.$props.type === 'content') {
 
-          if (saveComments){
-            if(this.$props.comments){
-              //push user, date, body of comment into array
-              let comments = this.$props.comments
-              comments.forEach(comment =>{
-                  this.comments.push({
-                    user: comments.user.firstName + '' + comments.user.lastName,
-                    date: comments.date,
-                    body: comments.body
-                  })
-                }
-              )
+        }
+        this.disableSubmit = true;
+        api.knowledgeBase.add(kbItem)
+          .then(res => {
+            console.log(res)
+            if (res.data.result_2 && res.data.result_2.nModified === 1) {
+              this.isSaved = true;
+              this.heading = 'The post was successfully added to your Knowledge Base.'
             }
-          }
-          var newKB = {
-            title: this.kBTitle,
-            url: if(this.$props.url){
-                    this.$props.url
-                  }else{
-                    ""
-                  },
-            body: this.$props.body,
-            comments: this.comments
-          }
-          //push newKB into db under this.$props.currentUserId (the person who is logged in)
-          */
+          });
       }
   }
 };
@@ -163,6 +177,7 @@ input.create-comment-title:focus {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: "roboto", "sans-serif";
+  z-index: 1000000;
 }
 
 .modal-header {

@@ -12,6 +12,7 @@ const eventsApi = createApiCall('events');
 const postsApi = createApiCall('posts');
 const userApi = createApiCall('user');
 const socialApi = createApiCall('social');
+const kbApi = createApiCall('kb');
 
 export default {
   auth: {
@@ -43,10 +44,14 @@ export default {
     getBasic: userId => userApi.get(`/${userId}`),
     getPopulated: userId => userApi.get(`/populated/${userId}`),
     getPosts: userId => userApi.get(`/posts/${userId}`),
-    getImage: userId => userApi.get(`/image${userId}`)
+    getImage: userId => userApi.get(`/image${userId}`),
+    searchUsers: query => userApi.get(`/search/${query}`)
   },
   social: {
     follow: userId => socialApi.post(`/follow/${userId}`),
     unfollow: userId => socialApi.post(`/unfollow/${userId}`)
+  },
+  knowledgeBase: {
+    add: newKBItem => kbApi.post('/', newKBItem)
   }
 }

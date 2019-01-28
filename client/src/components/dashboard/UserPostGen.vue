@@ -1,10 +1,15 @@
 <template>
     <div class="post-wrapper" title="">
         <app-save-article v-if="createKB" 
-                        @close="createKB=false" 
-                        :comments="_comments"
-                        :body="body"
-                        :currentUserId="currentUserId"/>
+            @close="createKB = false" 
+            @saved="markSaved"
+            :comments="comments"
+            :body="body"
+            :poster="user"
+            :postId="_id"
+            type="text"
+            :date="date"
+        />
         <div class="content-bottom">
             <div class="row post-userinfo">
                 <div class="col-1 post-img-container ">
@@ -33,7 +38,7 @@
                 </div>
                 <div class="col text-center">
                     <!--KB add button-->
-                    <span v-if="saved" @click="removeFromKB()"><i class="fas fa-bookmark post-icon"></i> <small class="post-icon-text"> Saved</small></span>
+                    <span v-if="saved"><i class="fas fa-bookmark post-icon"></i> <small class="post-icon-text"> Saved</small></span>
                     <span v-else @click="addToKB()"><i class="far fa-bookmark post-icon"></i> <small class="post-icon-text"> Save</small></span>
                 </div>
                 <div class="col text-center">
@@ -61,7 +66,7 @@ import moment from 'moment';
 import SaveToKb from '@/components/modals/SaveArticle'
 import api from '../../utils/api.js';
 export default {
-    props: ['user','body','date','likes','comments', '_id', 'currentUserId'],
+    props: ['user','body','date','likes','comments', '_id', 'currentUserId', 'currentUserKB'],
     data(){
         return{
             expandComments: false,
@@ -97,10 +102,17 @@ export default {
             });
         },
         addToKB(){
-            this.saved = true
+            this.createKB = true;
         },
-        removeFromKB(){
-            this.saved = false
+        markSaved() {
+            this.createKB = false;
+            this.saved = true;
+        }
+    },
+    created() {
+        const currentUserKB = this.$props.currentUserKB;
+        for (var i = 0; i < currentUserKB.length; i++) {
+            if (currentUserKB[i].post === this.$props._id) return this.saved = true;
         }
     }
 }

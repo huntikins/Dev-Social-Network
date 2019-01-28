@@ -1,9 +1,10 @@
 <template>
     <div class="display-user">
         <div class="display-user-item" v-for="(result, index) in results" :key="index">
-            <router-link to="/user" class="result-link-wrapper">
-                <img :src="result.image" alt="" class="result-image img-fluid">
-                <p class="result-link">{{ result.username }}</p>
+            <router-link :to="`/user/${result._id}`" class="result-link-wrapper">
+                <img v-if="result.picture" :src="result.picture" :alt="result.fullName || result.email" class="result-image img-fluid">
+                <img v-else src="@/assets/user-icon.png" :alt="result.fullName" class="result-image img-fluid">
+                <p class="result-link">{{ result.fullName || result.email }}</p>
             </router-link>
         </div>
         <h1 class="nothing-found" v-if="!results.length">No results</h1>

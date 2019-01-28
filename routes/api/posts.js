@@ -30,6 +30,8 @@ router.post(
   '/comment/',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
+    console.log('\n\n')
+    console.log(req.body)
     controllers.Post.addComment(
       req.user._id,
       req.body.postId,
@@ -91,7 +93,8 @@ router.get(
       req.user._id,
       result => res.json({
         currentUserId: req.user._id,
-        posts: result
+        posts: result.posts,
+        currentUserKB: result.currentUserKB
       })
     );
   }

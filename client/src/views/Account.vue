@@ -13,8 +13,7 @@
               <h3>{{`${demographics.firstName} ${demographics.lastName}`}}</h3>
               <p>{{demographics.email}}</p>
               <p>{{demographics.zipCode}}</p>
-              <p>{{demographics.jobTitle || 'No job title.'}}</p>
-              <p>{{`at ${demographics.jobCompany}` || 'No job company.'}}</p>
+              <p v-html="jobInfo"></p>
             </div>
           </div>
           <app-demo-form
@@ -118,6 +117,16 @@ export default {
     appBiography: BiographyForm,
     appDeleteAccount: DeleteAccount
   },
+  computed: {
+    jobInfo: function() {
+      const jobTitle = this.demographics.jobTitle;
+      const jobCompany = this.demographics.jobCompany;
+      if (jobTitle && jobCompany) return `${jobTitle} at ${jobCompany}`;
+      else if (jobTitle) return `${jobTitle}<br>(No employer)`;
+      else if (jobCompany) return `(No job title)<br>Works at ${jobCompany}`
+      else return '(No job information)'
+    }
+  },
   methods: {
     getUserData() {
       api.currentUser.getBasic().then(res => {
@@ -136,7 +145,6 @@ export default {
       });
     },
     updateDemographicsDisplay(updatedDemo) {
-      console.log("Account: updating");
       this.demographics = updatedDemo;
       this.editDemographics = false;
     },
@@ -151,9 +159,7 @@ export default {
   },
   created() {
     this.getUserData();
-    console.log("Account: created(): ", this.image);
-  },
-  beforeCreate() {}
+  }
 };
 </script>
 

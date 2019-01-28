@@ -47,9 +47,6 @@ export default {
   },
   created() {
     this.setImage();
-  },
-  updated() {
-    console.log("updated(): ", this.userImage, this.altImage);
   }
 };
 </script>
@@ -64,7 +61,6 @@ export default {
   width: 175px;
   border: 10px solid #f39121;
   border-radius: 100%;
-  overflow: hidden;
 }
 .edit-profile-img {
   position: absolute;

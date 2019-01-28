@@ -1,12 +1,18 @@
 <template>
     <div class="post-wrapper" title="">
         <app-save-article v-if="createKB" 
-                        @close="createKB=false" 
-                        :url="url" 
-                        :title="title" 
-                        :comments="_comments"
-                        :body="body"
-                        :currentUserId="currentUserId"/>
+            @close="createKB = false"
+            @saved="markSaved"
+            :url="url"
+            :title="title" 
+            :comments="comments"
+            :body="body"
+            :currentUserId="currentUserId"
+            :poster="user"
+            :postId="_id"
+            type="content"
+            :date="date"
+        />
         <div class="content-bottom">
             <div class="row post-userinfo">
                 <div class="col-1 post-img-container">
@@ -55,9 +61,9 @@
             <div class="row">
                 <div class="col p-0 m-0">
                     <!--comment section only shown on collapse - external component -->
-                    <app-post-comments :comments="_comments"
+                    <app-post-comments :comments="comments"
                                         v-if="expandComments"/>
-                    <app-new-comment v-if="expandComments" />
+                    <app-new-comment v-if="expandComments" :postId="_id" />
                 </div>
             </div>
         </div>
@@ -72,13 +78,12 @@ import moment from 'moment';
 import SaveToKb from '@/components/modals/SaveArticle'
 import api from '../../utils/api.js';
 export default {
-    props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description', '_id', 'currentUserId'],
+    props: ['user','body','date','likes','comments', 'title', 'url', 'image', 'description', '_id', 'currentUserId', 'currentUserKB'],
     data(){
         return{
             liked: this.$props.likes.indexOf(this.currentUserId) > -1,
             expandComments: false,
             saved: false,
-            text: this.$props.body,
             likeCount: this.likes ? this.likes.length : 0,
             commentCount: this.comments ? this.comments.length : 0,
             userName: this.user.firstName + ' ' + this.user.lastName,
@@ -112,24 +117,30 @@ export default {
             });
         },
         addToKB(){
-            this.saved = true
             this.createKB = true
         },
-        removeFromKB(){
-            this.saved = false
+        markSaved() {
+            this.createKB = false;
+            this.saved = true;
         },
         getAnchorTag(){
             var options = {
                 className: 'text-link', 
                 format: function (value, type) {
                     if (type === 'url' && value.length > 25) {
-                    value = value.slice(0, 25) + '…';
+                        value = value.slice(0, 25) + '…';
                     }
                     return value;
                 }
             }
-            var str = this.text;
+            var str = this.$props.body;
             return linkifyHtml(str, options);
+        }
+    },
+    created() {
+        const currentUserKB = this.$props.currentUserKB;
+        for (var i = 0; i < currentUserKB.length; i++) {
+            if (currentUserKB[i].post === this.$props._id) return this.saved = true;
         }
     }
 }

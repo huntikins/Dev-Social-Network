@@ -26,6 +26,9 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  fullName: {
+    type: String
+  },
   zipCode: {
     type: String,
     required: true,
