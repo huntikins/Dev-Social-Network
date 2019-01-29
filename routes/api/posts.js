@@ -94,7 +94,8 @@ router.get(
       result => res.json({
         currentUserId: req.user._id,
         posts: result.posts,
-        currentUserKB: result.currentUserKB
+        currentUserKB: result.currentUserKB,
+        currentUserFollowing: result.currentUserFollowing
       })
     );
   }

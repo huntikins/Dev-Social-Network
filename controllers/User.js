@@ -180,10 +180,11 @@ module.exports = {
           const post_bTime = post_b.date ? post_b.date.getTime() : 0;
           return post_bTime - post_aTime;
         });
-        console.log(result)
+        // console.log(result)
         callback({
           posts,
-          currentUserKB: result.kbItems
+          currentUserKB: result.kbItems,
+          currentUserFollowing: result.following
         });
       })
       .catch(err => console.error(err));

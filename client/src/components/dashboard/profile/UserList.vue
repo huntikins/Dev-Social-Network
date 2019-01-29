@@ -40,30 +40,30 @@ import UserPostGen from '@/components/dashboard/UserPostGen';
 import UserPostCon from '@/components/dashboard/UserPostCon';
 import api from '../../../utils/api.js';
 export default {
-    props: ['userId'],
+    props: ['userId', 'posts', 'currentUserKB', 'currentUserId'],
     components: {
         appUserPostGen: UserPostGen,
         appUserPostCon: UserPostCon
     },
-    data(){
-        return{
-            posts: [],
-            currentUserId: '',
-            currentUserKB: []
-        }
-    },
+    // data(){
+    //     return{
+    //         posts: [],
+    //         currentUserId: '',
+    //         currentUserKB: []
+    //     }
+    // },
     created() {
-        return this.userId ? api.otherUser.getPosts(this.userId).then(res => {
-            console.log(res);
-            this.currentUserId = res.data.currentUser._id;
-            this.posts = res.data.otherUser;
-            this.currentUserKB = res.data.currentUser.kbItems;
-        }) : api.currentUser.getPosts().then(res => {
-            console.log(res);
-            this.currentUserId = res.data.userId;
-            this.posts = res.data.posts;
-            this.currentUserKB = res.data.kbItems;
-        });
+        // return this.userId ? api.otherUser.getPosts(this.userId).then(res => {
+        //     console.log(res);
+        //     this.currentUserId = res.data.currentUser._id;
+        //     this.posts = res.data.otherUser;
+        //     this.currentUserKB = res.data.currentUser.kbItems;
+        // }) : api.currentUser.getPosts().then(res => {
+        //     console.log(res);
+        //     this.currentUserId = res.data.userId;
+        //     this.posts = res.data.posts;
+        //     this.currentUserKB = res.data.kbItems;
+        // });
     }
 }
 </script>

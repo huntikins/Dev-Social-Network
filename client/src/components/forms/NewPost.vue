@@ -48,7 +48,10 @@ export default {
                             body: self.content_body
                         }
                         api.posts.createPost(post)
-                            .then(res_ => console.log(res_));
+                            .then(res_ => {
+                                console.log(res_);
+                                this.$emit('postAdded');
+                            });
                     });
             } else {
                 this.type = "text";
@@ -57,7 +60,10 @@ export default {
                     body: self.content_body
                 }
                 api.posts.createPost(post)
-                    .then(res_ => console.log(res_));
+                    .then(res_ => {
+                        console.log(res_);
+                        this.$emit('postAdded');
+                    });
             }
         }
     }

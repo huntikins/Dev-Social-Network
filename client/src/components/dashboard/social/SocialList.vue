@@ -40,30 +40,31 @@ import UserPostGen from '@/components/dashboard/UserPostGen';
 import UserPostCon from '@/components/dashboard/UserPostCon';
 import api from '../../../utils/api.js';
 export default {
+    props: ['posts', 'currentUserId', 'currentUserKB'],
     components: {
         appUserPostGen: UserPostGen,
         appUserPostCon: UserPostCon
     },
-    data() {
-        return{
-            posts: [],
-            currentUserId: '',
-            currentUserKB: []
-        }
-    },
+    // data() {
+    //     return{
+    //         posts: [],
+    //         currentUserId: '',
+    //         currentUserKB: []
+    //     }
+    // },
     created() {
-        this.getPosts();
+        // this.getPosts();
     },
     methods: {
-        getPosts() {
-            const self = this;
-            api.posts.getSocialFeed().then(res => {
-                console.log(res);
-                self.currentUserId = res.data.currentUserId;
-                self.posts = res.data.posts;
-                self.currentUserKB = res.data.currentUserKB;
-            });
-        }
+        // getPosts() {
+        //     const self = this;
+        //     api.posts.getSocialFeed().then(res => {
+        //         console.log(res);
+        //         self.currentUserId = res.data.currentUserId;
+        //         self.posts = res.data.posts;
+        //         self.currentUserKB = res.data.currentUserKB;
+        //     });
+        // }
     }
 }
 </script>
