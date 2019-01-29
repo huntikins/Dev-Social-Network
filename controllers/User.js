@@ -181,10 +181,11 @@ module.exports = {
           return post_bTime - post_aTime;
         });
         // console.log(result)
+        let following = result.following.map(user => user._id);
         callback({
           posts,
           currentUserKB: result.kbItems,
-          currentUserFollowing: result.following
+          currentUserFollowing: following
         });
       })
       .catch(err => console.error(err));

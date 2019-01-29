@@ -1,12 +1,13 @@
 <template>
     <div class="social-feed">
-        <app-new-post @postAdded="update" />
+        <app-new-post @post-added="update" />
         <app-user-list
             v-if="currentUserId"
             :user-id="userId"
             :posts="posts"
             :current-user-k-b="currentUserKB"
             :current-user-id="currentUserId"
+            @saved="postSaved"
         />
     </div>
 </template>
@@ -46,8 +47,14 @@ export default {
             })
         },
         update() {
+            // check if viewing current or other user's posts
             if (!this.$props.userId || this.$props.userId === this.currentUserId) {
                 this.getCurrentUserPosts();
+            }
+        },
+        postSaved(newKbItem) {
+            if (!this.$props.userId || this.$props.userId === this.currentUserId) {
+                this.$emit('saved', newKbItem);
             }
         }
     },

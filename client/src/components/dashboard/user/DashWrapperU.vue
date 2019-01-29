@@ -5,7 +5,7 @@
                 <app-side-bar-user :user-id="userId" />
             </div>
             <div class="social-container col-7">
-                <app-user-feed  :user-id="userId"/>
+                <app-user-feed  :user-id="userId" @saved="postSaved"/>
             </div>
             <div class="list-container col-3">
                 <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
@@ -38,6 +38,11 @@ export default {
     data(){
         return{
             kbArticles: []
+        }
+    },
+    methods: {
+        postSaved(newKbItem) {
+            this.kbArticles.unshift(newKbItem);
         }
     },
     created() {

@@ -3,7 +3,7 @@
         <app-save-article v-if="createKB" 
             @close="createKB = false" 
             @saved="markSaved"
-            :comments="comments"
+            :comments="comments_"
             :body="body"
             :poster="user"
             :postId="_id"
@@ -39,7 +39,7 @@
                             <button class="btn btn-outline-secondary edit-post-button" type="button" @click="updatePost">Update</button>
                         </div>
                     </div>
-                    <p v-else class="post-text">{{ body }}</p>
+                    <p v-else class="post-text">{{ body_ }}</p>
                 </div>
             </div>
             <div class="row">
@@ -64,10 +64,10 @@
             <div class="row">
                 <div class="col p-0 m-0">
                     <!--comment section only shown on collapse - external component -->
-                    <app-post-comments :comments="comments" 
-                                        v-if="expandComments" 
-                                        :currentUserId="currentUserId"/>
-                    <app-new-comment v-if="expandComments" :postId="_id" />
+                    <app-post-comments :comments="comments_" 
+                        v-if="expandComments" 
+                        :currentUserId="currentUserId"/>
+                    <app-new-comment v-if="expandComments" :postId="_id" @commentAdded="refreshComments"/>
                 </div>
             </div>
         </div>
@@ -89,21 +89,24 @@ export default {
             saved: false,
             liked: this.$props.likes.indexOf(this.currentUserId) > -1,
             likeCount: this.likes ? this.likes.length : 0,
-            commentCount: this.comments ? this.comments.length : 0,
             userName: this.user.firstName + ' ' + this.user.lastName,
             formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : '',
             createKB: false,
             edit: false,
             remove: false,
-            updatedPost: this.$props.body
+            updatedPost: this.$props.body,
+            comments_: this.$props.comments,
+            body_: this.$props.body
         }
+    },
+    computed: {
+        commentCount() { return this.comments_ ? this.comments_.length : 0 }
     },
     components: {
         appPostComments: Comments,
         appNewComment: NewComment,
         appSaveArticle: SaveToKb,
         appUpdatePost: UpdatePost
-
     },
     methods: {
         like() {
@@ -125,9 +128,10 @@ export default {
         addToKB(){
             this.createKB = true;
         },
-        markSaved() {
+        markSaved(newKbItem) {
             this.createKB = false;
             this.saved = true;
+            this.$emit('saved', newKbItem);
         },
         editPost(){
             this.edit = true
@@ -146,6 +150,10 @@ export default {
             //remove this post from DB forever
             this.edit = false
             this.remove = false
+        },
+        refreshComments(updatedPost) {
+            this.comments_ = updatedPost.comments;
+            if (updatedPost.body !== this.body_) this.body_ = updatedPost.body;
         }
     },
     created() {

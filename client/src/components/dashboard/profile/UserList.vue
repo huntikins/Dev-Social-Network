@@ -1,6 +1,6 @@
 <template>
     <div class="social-list">
-        <div v-for="(post, index) in posts" :key="index">
+        <div v-for="post in posts" :key="post._id">
             <div v-if="post.type === 'content'">
                <app-user-post-con
                     :_id="post._id"
@@ -15,6 +15,7 @@
                     :description="post.description"
                     :currentUserId="currentUserId"
                     :currentUserKB="currentUserKB"
+                    @saved="postSaved"
                /> 
             </div>
             <div v-else>
@@ -27,6 +28,7 @@
                     :comments="post.comments"
                     :currentUserId="currentUserId"
                     :currentUserKB="currentUserKB"
+                    v-on:saved="postSaved"
                /> 
             </div>
         </div>
@@ -52,6 +54,11 @@ export default {
     //         currentUserKB: []
     //     }
     // },
+    methods: {
+        postSaved(newKbItem) {
+            this.$emit('saved', newKbItem);
+        }
+    },
     created() {
         // return this.userId ? api.otherUser.getPosts(this.userId).then(res => {
         //     console.log(res);

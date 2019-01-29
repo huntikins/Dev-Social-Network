@@ -1,6 +1,6 @@
 <template>
     <div class="social-feed">
-        <app-new-post @postAdded="refresh"/>
+        <app-new-post @post-added="refresh"/>
         <app-social-list
             v-if="currentUserId"
             :posts="posts"
@@ -35,10 +35,11 @@ export default {
                 self.posts = res.data.posts;
                 self.currentUserKB = res.data.currentUserKB;
                 self.currentUserId = res.data.currentUserId;
-                if (isFirst) self.isFollowingSelf = res.data.currentUserFollowing.indexOf(self.currentUserId) > -1;
+                self.isFollowingSelf = res.data.currentUserFollowing.indexOf(self.currentUserId) > -1;
             });
         },
         refresh() {
+            console.log(this.isFollowingSelf)
             if (this.isFollowingSelf) this.getPosts(); 
         }
     },

@@ -25,8 +25,11 @@ module.exports = {
       }
     }, {
       new: true
-    }).then(result => callback(result))
-      .catch(err => console.error(err));
+    }).populate({
+      path: 'comments.user',
+      select: { firstName: 1, lastName: 1 }
+    })
+      .then((result) => callback(result))
   },
   deleteComment: (userId, postId, commentId, callback) => {
     Post.updateOne({

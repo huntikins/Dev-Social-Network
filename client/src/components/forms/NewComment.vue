@@ -25,7 +25,8 @@ export default {
                 postId: self.$props.postId,
                 comment: self.newComment
             }).then(res => {
-                console.log(res)
+                console.log(res);
+                this.$emit('commentAdded', res.data);
             });
         }
     }
