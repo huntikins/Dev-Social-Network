@@ -1,6 +1,7 @@
 <template>
     <div class="social-feed">
         <app-new-post @post-added="refresh"/>
+        <app-feed-loader v-if="showLoader"/>
         <app-social-list
             v-if="currentUserId"
             :posts="posts"
@@ -15,17 +16,21 @@
 import NewPost from '@/components/forms/NewPost';
 import SocialList from '@/components/dashboard/social/SocialList';
 import api from '@/utils/api';
+import FeedLoad from "@/components/modals/FeedLoad";
+import { setTimeout } from "timers";
 export default {
     components: {
         appNewPost: NewPost,
-        appSocialList: SocialList
+        appSocialList: SocialList,
+        appFeedLoader: FeedLoad
     },
     data() {
         return {
             currentUserId: '',
             posts: [],
             currentUserKB: [],
-            isFollowingSelf: false
+            isFollowingSelf: false,
+            showLoader: true
         };
     },
     methods: {
@@ -37,6 +42,7 @@ export default {
                 self.currentUserKB = res.data.currentUserKB;
                 self.currentUserId = res.data.currentUserId;
                 self.isFollowingSelf = res.data.currentUserFollowing.indexOf(self.currentUserId) > -1;
+                this.showLoader = false;
             });
         },
         refresh() {
