@@ -6,7 +6,7 @@
                 <input type="text" class="form-control search-field" placeholder="Search" v-model="query" @keypress.enter="searchUsers()">
             </div>
         </div>
-        <div class="search-result-wrapper">
+        <div class="search-result-wrapper" v-if="searchActive">
             <div class="search-results">
                 <app-search-result-item :results="results"/>
             </div>
@@ -21,7 +21,8 @@ export default {
     data(){
         return{
             query: "",
-            results: []
+            results: [],
+            searchActive: false
         }
     },
     components: {
@@ -29,6 +30,7 @@ export default {
     },
     methods: {
         searchUsers() {
+            this.searchActive = true
             api.otherUser.searchUsers(this.query)
                 .then(res => this.results = res.data);
         }
