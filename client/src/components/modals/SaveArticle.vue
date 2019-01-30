@@ -12,7 +12,7 @@
           <div class="modal-body m-0 p-0">
             <h1 class="modal-header-text m-auto py-4">{{ heading }}</h1>
             <!--add form-->
-            <form id="save-form">
+            <form id="save-form" v-if="!isSaved">
               <div class="form-group text-center">
                 <small class="modal-input-lable">Create a title for your KB Entry</small>
                 <input type="text" placeholder="Title" v-model="kBTitle" class="form-control create-comment-title">

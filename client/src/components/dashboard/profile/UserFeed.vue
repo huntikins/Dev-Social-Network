@@ -1,6 +1,7 @@
 <template>
     <div class="social-feed">
         <app-new-post @post-added="update" />
+        <app-feed-loader v-if="showLoader"/>
         <app-user-list
             v-if="currentUserId"
             :user-id="userId"
@@ -17,17 +18,21 @@
 import NewPost from '@/components/forms/NewPost';
 import UserList from '@/components/dashboard/profile/UserList';
 import api from '@/utils/api';
+import FeedLoad from "@/components/modals/FeedLoad";
+import { setTimeout } from "timers";
 export default {
     props: ['userId'],
     components: {
         appNewPost: NewPost,
-        appUserList: UserList
+        appUserList: UserList,
+        appFeedLoader: FeedLoad
     },
     data() {
         return {
             currentUserId: '',
             posts: [],
-            currentUserKB: []
+            currentUserKB: [],
+            showLoader: true
         }
     },
     methods: {
@@ -37,6 +42,7 @@ export default {
                 this.posts = res.data.posts;
                 this.currentUserKB = res.data.kbItems;
                 this.currentUserId = res.data.userId;
+                this.showLoader = false;
             });
         },
         getOtherUserPosts() {
@@ -45,7 +51,8 @@ export default {
                 this.posts = res.data.otherUser;
                 this.currentUserKB = res.data.currentUser.kbItems;
                 this.currentUserId = res.data.currentUser._id;
-            })
+                this.showLoader = false;
+            });
         },
         update() {
             // check if viewing current or other user's posts
@@ -67,11 +74,11 @@ export default {
     created() {
         return this.$props.userId ? this.getOtherUserPosts() : this.getCurrentUserPosts();
     }
-}
+};
 </script>
 
 <style>
 .social-feed {
-    height: 100%;
+  height: 100%;
 }
 </style>

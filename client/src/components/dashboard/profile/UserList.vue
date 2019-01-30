@@ -39,10 +39,12 @@
 
 <script>
 // this is general text post
-import UserPostGen from '@/components/dashboard/UserPostGen';
+import UserPostGen from "@/components/dashboard/UserPostGen";
 // this is formatted content post
-import UserPostCon from '@/components/dashboard/UserPostCon';
-import api from '../../../utils/api.js';
+import UserPostCon from "@/components/dashboard/UserPostCon";
+import api from "../../../utils/api.js";
+import FeedLoad from "@/components/modals/FeedLoad";
+import { setTimeout } from "timers";
 export default {
     props: ['userId', 'posts', 'currentUserKB', 'currentUserId'],
     components: {
@@ -78,14 +80,14 @@ export default {
         //     this.currentUserKB = res.data.kbItems;
         // });
     }
-}
+};
 </script>
 
 <style>
 .social-list {
-    margin-top: 20px;
-    height: 100%;
-    border-radius: 25px 25px 0 0;
-    padding-bottom: 30vh;
+  margin-top: 20px;
+  height: 100%;
+  border-radius: 25px 25px 0 0;
+  padding-bottom: 30vh;
 }
 </style>

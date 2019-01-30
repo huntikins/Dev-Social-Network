@@ -21,7 +21,7 @@ export default {
     return {
       compKey: 0,
       isUploading: false,
-      userImage: undefined,
+      userImage: undefined
     };
   },
   props: ["userId"],
@@ -31,9 +31,10 @@ export default {
   methods: {
     closeReRender(value) {
       this.isUploading = false;
-      this.userImage = value;
+      if (value) {
+        this.userImage = value;
+      }
       this.compKey++;
-      console.log("closeReRender: ", value);
     },
     setImage() {
       API.currentUser
@@ -42,7 +43,6 @@ export default {
           this.userImage = res.data.image;
         })
         .catch(err => console.error(err));
-      console.log("alt image: ", this.altImage);
     }
   },
   created() {
