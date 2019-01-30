@@ -73,8 +73,6 @@ export default {
     },
     clearAndReloadFeed() {
       this.content_body = "";
-      console.log("emmitting ");
-      this.$emit("reloadFeed");
     }
   }
 };
