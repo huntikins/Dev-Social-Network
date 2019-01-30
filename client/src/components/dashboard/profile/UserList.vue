@@ -1,5 +1,6 @@
 <template>
   <div class="social-list" :postsKey="postsKey">
+    <app-feed-loader v-if="!posts.length" />
     <div v-for="(post, index) in posts" :key="index">
       <div v-if="post.type === 'content'">
         <app-user-post-con
@@ -39,11 +40,13 @@ import UserPostGen from "@/components/dashboard/UserPostGen";
 // this is formatted content post
 import UserPostCon from "@/components/dashboard/UserPostCon";
 import api from "../../../utils/api.js";
+import FeedLoad from '@/components/modals/FeedLoad'
 export default {
   props: ["userId"],
   components: {
     appUserPostGen: UserPostGen,
-    appUserPostCon: UserPostCon
+    appUserPostCon: UserPostCon,
+    appFeedLoader: FeedLoad
   },
   data() {
     return {
