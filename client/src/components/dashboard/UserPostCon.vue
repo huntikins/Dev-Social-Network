@@ -5,7 +5,7 @@
             @saved="markSaved"
             :url="url"
             :title="title" 
-            :comments="comments"
+            :comments="comments_"
             :body="body"
             :currentUserId="currentUserId"
             :poster="user"
@@ -75,10 +75,15 @@
             <div class="row">
                 <div class="col p-0 m-0">
                     <!--comment section only shown on collapse - external component -->
-                    <app-post-comments :comments="comments"
-                                        v-if="expandComments"
-                                        :currentUserId="currentUserId"/>
-                    <app-new-comment v-if="expandComments" :postId="_id" />
+                    <app-post-comments :comments="comments_"
+                        v-if="expandComments"
+                        :currentUserId="currentUserId"
+                        :postId="_id"
+                        @comment-removed="refreshComments" />
+                    <app-new-comment
+                        v-if="expandComments"
+                        :postId="_id"
+                        @commentAdded="refreshComments" />
                 </div>
             </div>
         </div>
@@ -101,14 +106,18 @@ export default {
             expandComments: false,
             saved: false,
             likeCount: this.likes ? this.likes.length : 0,
-            commentCount: this.comments ? this.comments.length : 0,
             userName: this.user.firstName + ' ' + this.user.lastName,
             formattedDate: this.date ? moment(this.date).format("MM/DD/YY - hh:mm a") : '',
             createKB: false,
             edit: false,
             remove: false,
-            updatedPost: this.$props.body
+            updatedPost: this.$props.body,
+            body_: this.$props.body,
+            comments_: this.$props.comments
         }
+    },
+    computed: {
+        commentCount() { return this.comments_ ? this.comments_.length : 0 }
     },
     components: {
         appPostComments: Comments,
@@ -139,9 +148,10 @@ export default {
         addToKB(){
             this.createKB = true
         },
-        markSaved() {
+        markSaved(newKbItem) {
             this.createKB = false;
             this.saved = true;
+            this.$emit('saved', newKbItem);
         },
         getAnchorTag(){
             var options = {
@@ -173,6 +183,14 @@ export default {
             //remove this post from DB forever
             this.edit = false
             this.remove = false
+            api.posts.deletePost(this.$props._id)
+                .then(res => {
+                    if (res.data.n) this.$emit('post-deleted')
+                });
+        },
+        refreshComments(updatedPost) {
+            this.comments_ = updatedPost.comments;
+            if (updatedPost.body !== this.body_) this.body_ = updatedPost.body;
         }
     },
     created() {

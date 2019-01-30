@@ -3,7 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container-save">
-          <span class="modal-close" @click="$emit('close')">
+          <span class="modal-close" @click="closeModal">
             <i class="fas fa-times"></i>
           </span>
           <div class="modal-header m-0 p-0">
@@ -46,7 +46,7 @@
               class="btn btn-light modal-default-button"
               type="submit"
               form="save-form"
-              @click.prevent="$emit('saved')"
+              @click.prevent="closeModal"
             >
               OK
             </button>
@@ -68,38 +68,44 @@ export default {
       saveComments: false,
       disableSubmit: false,
       heading: 'Save this article to your Knowledge Base',
-      isSaved: false
+      isSaved: false,
+      kbItem: {}
     };
   },
   components: {
     appToggle: ToggleButton
   },
   methods: {
-      saveToKB(){
-        let kbItem = {
-          post: this.$props.postId,
-          poster: this.$props.poster,
-          type: this.$props.type,
-          body: this.$props.body,
-          date: this.$props.date,
-          title: this.kBTitle
-        };
-        if (this.saveComments) kbItem.comments = this.$props.comments;
-        if (this.$props.type === 'content') {
-          kbItem.url = this.$props.url;
-          kbItem.description = this.$props.description || '';
-          if (this.$props.image) kbItem.image = this.$props.image;
-        }
-        this.disableSubmit = true;
-        api.knowledgeBase.add(kbItem)
-          .then(res => {
-            console.log(res)
-            if (res.data.result_2 && res.data.result_2.nModified === 1) {
-              this.isSaved = true;
-              this.heading = 'The post was successfully added to your Knowledge Base.'
-            }
-          });
+    saveToKB(){
+      let kbItem = {
+        post: this.$props.postId,
+        poster: this.$props.poster,
+        type: this.$props.type,
+        body: this.$props.body,
+        date: this.$props.date,
+        title: this.kBTitle
+      };
+      if (this.saveComments) kbItem.comments = this.$props.comments;
+      if (this.$props.type === 'content') {
+        kbItem.url = this.$props.url;
+        kbItem.description = this.$props.description || '';
+        if (this.$props.image) kbItem.image = this.$props.image;
       }
+      this.disableSubmit = true;
+      api.knowledgeBase.add(kbItem)
+        .then(res => {
+          console.log(res)
+          if (res.data.result_2 && res.data.result_2.nModified === 1) {
+            this.isSaved = true;
+            this.heading = 'The post was successfully added to your Knowledge Base.';
+            this.kbItem = res.data.result_1;
+          }
+        });
+    },
+    closeModal() {
+      if (this.isSaved) return this.$emit('saved', this.kbItem);
+      this.$emit('close');
+    }
   }
 };
 </script>

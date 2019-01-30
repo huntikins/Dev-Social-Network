@@ -8,7 +8,7 @@
                     : {{ comment.body }}
                 </small>
                 <div class="comment-overlay" v-if="comment.user._id === currentUserId">
-                    <button class="btn btn-danger comment-delete" @click="deleteComment">Delete</button>
+                    <button class="btn btn-danger comment-delete" @click="deleteComment(comment._id)">Delete</button>
                 </div>
             </div>
         </div>
@@ -17,14 +17,17 @@
 
 <script>
 import moment from 'moment';
+import api from '../../utils/api';
 export default {
-    props: ['comments', 'currentUserId'],
+    props: ['comments', 'currentUserId', 'postId'],
     methods: {
         formatDate(date) {
             return moment(date).format("MM/DD/YY - hh:mm a");
         },
-        deleteComment(){
-            //grab comment._id and purge from the DB
+        deleteComment(commentId){
+            console.log(this.$props.postId)
+            api.posts.deleteComment(commentId, this.$props.postId)
+                .then(res => this.$emit('comment-removed', res.data));
         }
     }
 }

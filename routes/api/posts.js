@@ -45,6 +45,7 @@ router.delete(
   '/comment/',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
+    console.log(req.body)
     controllers.Post.deleteComment(
       req.user._id,
       req.body.postId,
@@ -94,7 +95,8 @@ router.get(
       result => res.json({
         currentUserId: req.user._id,
         posts: result.posts,
-        currentUserKB: result.currentUserKB
+        currentUserKB: result.currentUserKB,
+        currentUserFollowing: result.currentUserFollowing
       })
     );
   }

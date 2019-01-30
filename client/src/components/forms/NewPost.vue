@@ -56,7 +56,7 @@ export default {
           };
           api.posts.createPost(post).then(res_ => {
             console.log(res_);
-            this.clearAndReloadFeed();
+            this.$emit("post-added");
           });
         });
       } else {
@@ -66,15 +66,10 @@ export default {
           body: self.content_body
         };
         api.posts.createPost(post).then(res_ => {
-          this.clearAndReloadFeed();
           console.log(res_);
+          this.$emit("post-added");
         });
       }
-    },
-    clearAndReloadFeed() {
-      this.content_body = "";
-      console.log("emmitting ");
-      this.$emit("reloadFeed");
     }
   }
 };
