@@ -8,6 +8,7 @@
             :current-user-k-b="currentUserKB"
             :current-user-id="currentUserId"
             @saved="postSaved"
+            @remove-post="removePost"
         />
     </div>
 </template>
@@ -55,6 +56,11 @@ export default {
         postSaved(newKbItem) {
             if (!this.$props.userId || this.$props.userId === this.currentUserId) {
                 this.$emit('saved', newKbItem);
+            }
+        },
+        removePost(postId) {
+            for (let i = 0; i < this.posts.length; i++) {
+                if (this.posts[i]._id === postId) return this.posts.splice(i, 1); 
             }
         }
     },

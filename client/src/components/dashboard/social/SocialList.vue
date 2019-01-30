@@ -15,6 +15,7 @@
                     :description="post.description"
                     :currentUserId="currentUserId"
                     :currentUserKB="currentUserKB"
+                    @post-deleted="removePost(post._id)"
                /> 
             </div>
             <div v-else>
@@ -27,6 +28,7 @@
                     :comments="post.comments"
                     :currentUserId="currentUserId"
                     :currentUserKB="currentUserKB"
+                    @post-deleted="removePost(post._id)"
                /> 
             </div>
         </div>
@@ -56,15 +58,9 @@ export default {
         // this.getPosts();
     },
     methods: {
-        // getPosts() {
-        //     const self = this;
-        //     api.posts.getSocialFeed().then(res => {
-        //         console.log(res);
-        //         self.currentUserId = res.data.currentUserId;
-        //         self.posts = res.data.posts;
-        //         self.currentUserKB = res.data.currentUserKB;
-        //     });
-        // }
+        removePost(postId) {
+            this.$emit('remove-post', postId);
+        }
     }
 }
 </script>

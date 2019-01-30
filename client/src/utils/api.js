@@ -29,8 +29,10 @@ export default {
     getSocialFeed: () => postsApi.get('/following'),
     createPost: newPost => postsApi.post('/', newPost),
     addComment: newComment => postsApi.post('/comment', newComment),
+    deleteComment: (commentId, postId) => postsApi.delete('/comment', { data: { commentId, postId } }),
     like: postId => postsApi.post(`/like/${postId}`),
-    unlike: postId => postsApi.post(`/unlike/${postId}`)
+    unlike: postId => postsApi.post(`/unlike/${postId}`),
+    deletePost: postId => postsApi.delete(`/${postId}`)
   },
   currentUser: {
     getBasic: () => userApi.get('/'),

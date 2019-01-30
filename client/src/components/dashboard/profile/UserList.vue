@@ -16,6 +16,7 @@
                     :currentUserId="currentUserId"
                     :currentUserKB="currentUserKB"
                     @saved="postSaved"
+                    @post-deleted="removePost(post._id)"
                /> 
             </div>
             <div v-else>
@@ -29,6 +30,7 @@
                     :currentUserId="currentUserId"
                     :currentUserKB="currentUserKB"
                     v-on:saved="postSaved"
+                    @post-deleted="removePost(post._id)"
                /> 
             </div>
         </div>
@@ -57,6 +59,10 @@ export default {
     methods: {
         postSaved(newKbItem) {
             this.$emit('saved', newKbItem);
+        },
+        removePost(postId) {
+            console.log(postId);
+            this.$emit('remove-post', postId);
         }
     },
     created() {

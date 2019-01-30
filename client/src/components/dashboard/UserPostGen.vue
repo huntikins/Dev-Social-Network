@@ -66,8 +66,13 @@
                     <!--comment section only shown on collapse - external component -->
                     <app-post-comments :comments="comments_" 
                         v-if="expandComments" 
-                        :currentUserId="currentUserId"/>
-                    <app-new-comment v-if="expandComments" :postId="_id" @commentAdded="refreshComments"/>
+                        :currentUserId="currentUserId"
+                        :postId="_id"
+                        @comment-removed="refreshComments" />
+                    <app-new-comment
+                        v-if="expandComments"
+                        :postId="_id"
+                        @commentAdded="refreshComments"/>
                 </div>
             </div>
         </div>
@@ -150,6 +155,10 @@ export default {
             //remove this post from DB forever
             this.edit = false
             this.remove = false
+            api.posts.deletePost(this.$props._id)
+                .then(res => {
+                    if (res.data.n) this.$emit('post-deleted')
+                });
         },
         refreshComments(updatedPost) {
             this.comments_ = updatedPost.comments;

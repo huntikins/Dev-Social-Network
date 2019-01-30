@@ -6,6 +6,7 @@
             :posts="posts"
             :currentUserKB="currentUserKB"
             :currentUserId="currentUserId"
+            @remove-post="removePost"
         />
     </div>
 </template>
@@ -41,6 +42,11 @@ export default {
         refresh() {
             console.log(this.isFollowingSelf)
             if (this.isFollowingSelf) this.getPosts(); 
+        },
+        removePost(postId) {
+            for (let i = 0; i < this.posts.length; i++) {
+                if (this.posts[i]._id === postId) return this.posts.splice(i, 1); 
+            }
         }
     },
     created() {
