@@ -1,6 +1,6 @@
 <template>
   <div class="social-list" :postsKey="postsKey">
-    <app-feed-loader v-if="!posts.length"/>
+    <app-feed-loader v-if="showLoader"/>
     <div v-for="(post, index) in posts" :key="index">
       <div v-if="post.type === 'content'">
         <app-user-post-con
