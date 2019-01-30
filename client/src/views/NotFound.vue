@@ -1,5 +1,12 @@
 <template>
-    <h1>ERROR 404</h1>
+    <div class="error-page">
+        <div class="container text-center">
+            <h1 class="error-header my-4">404</h1>
+            <p class="error-subheader my-4">Page Does Not Exist</p>
+            <img src="https://media.giphy.com/media/137X5F9GDo7wS4/giphy.gif" alt="BMO" class="my-4">
+            <p class="error-subheader my-4">Return to previous page or click to go <router-link to="/" class="text-white"><u>home</u></router-link></p>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -9,6 +16,19 @@ export default {
 </script>
 
 <style>
+.error-page{
+    background-color: #859595;
+}
+.error-header {
+    font-size: 15em;
+    color: white;
+    font-family: roboto, sans-serif;
+}
+.error-subheader {
+    color: white;
+    font-size: 2em;
+    font-family: roboto, sans-serif;
+}
 /* higher resolution desktops */
 @media (min-width: 1281px) {
     

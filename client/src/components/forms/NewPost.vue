@@ -57,6 +57,7 @@ export default {
           api.posts.createPost(post).then(res_ => {
             console.log(res_);
             this.$emit("post-added");
+            this.content_body = ''
           });
         });
       } else {
@@ -68,6 +69,7 @@ export default {
         api.posts.createPost(post).then(res_ => {
           console.log(res_);
           this.$emit("post-added");
+          this.content_body = ''
         });
       }
     }
