@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 
 module.exports = {
   create: (post, callback) => {
-    post.date = new Date(); 
+    post.date = new Date();
     Post.create(post)
       .then(result => callback(result))
       .catch(err => console.error(err));
@@ -16,37 +16,37 @@ module.exports = {
     Post.findOneAndUpdate({
       _id: postId
     }, {
-      $push: {
-        comments: {
-          body: comment,
-          user: userId,
-          date: new Date()
+        $push: {
+          comments: {
+            body: comment,
+            user: userId,
+            date: new Date()
+          }
         }
-      }
-    }, {
-      new: true
-    }).populate({
-      path: 'comments.user',
-      select: { firstName: 1, lastName: 1 }
-    })
+      }, {
+        new: true
+      }).populate({
+        path: 'comments.user',
+        select: { firstName: 1, lastName: 1 }
+      })
       .then((result) => callback(result))
   },
   deleteComment: (userId, postId, commentId, callback) => {
     Post.findOneAndUpdate({
       _id: postId
     }, {
-      $pull: {
-        comments: {
-          user: userId,
-          _id: commentId
+        $pull: {
+          comments: {
+            user: userId,
+            _id: commentId
+          }
         }
-      }
-    }, {
-      new: true
-    }).populate({
-      path: 'comments.user',
-      select: { firstName: 1, lastName: 1 }
-    })
+      }, {
+        new: true
+      }).populate({
+        path: 'comments.user',
+        select: { firstName: 1, lastName: 1 }
+      })
       .then(result => callback(result))
       .catch(err => console.error(err));
   },
@@ -54,20 +54,32 @@ module.exports = {
     Post.updateOne({
       _id: postId
     }, {
-      $addToSet: {
-        likes: userId
-      }
-    }).then(result => callback(result))
+        $addToSet: {
+          likes: userId
+        }
+      }).then(result => callback(result))
       .catch(err => console.error(err));
   },
   unlike: (userId, postId, callback) => {
     Post.updateOne({
       _id: postId
     }, {
-      $pull: {
-        likes: userId
+        $pull: {
+          likes: userId
+        }
+      }).then(result => callback(result))
+      .catch(err => console.error(err));
+  },
+  updatePost: (userId, postId, body, callback) => {
+    Post.updateOne(
+      { _id: postId },
+      {
+        $set: {
+          body: body
+        }
       }
-    }).then(result => callback(result))
+    )
+      .then(res => callback(res))
       .catch(err => console.error(err));
   }
 }

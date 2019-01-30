@@ -32,7 +32,8 @@ export default {
     deleteComment: (commentId, postId) => postsApi.delete('/comment', { data: { commentId, postId } }),
     like: postId => postsApi.post(`/like/${postId}`),
     unlike: postId => postsApi.post(`/unlike/${postId}`),
-    deletePost: postId => postsApi.delete(`/${postId}`)
+    deletePost: postId => postsApi.delete(`/${postId}`),
+    updatePost: (postId, postBody) => postsApi.put(`/postBody`, { postId, postBody } )
   },
   currentUser: {
     getBasic: () => userApi.get('/'),

@@ -102,4 +102,17 @@ router.get(
   }
 );
 
+router.put(
+  '/postBody',
+  require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
+  (req, res) => {
+    controllers.Post.updatePost(
+      req.user._id,
+      req.body.postId,
+      req.body.body,
+      result => res.json(result)
+    );
+  }
+);
+
 module.exports = router;
