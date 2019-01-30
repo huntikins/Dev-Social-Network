@@ -21,8 +21,7 @@ export default {
   },
   methods: {
     reloadFeed() {
-      console.log("in reload feed");
-    //  this.feedKey++;
+      //  this.feedKey++;
     }
   }
 };
