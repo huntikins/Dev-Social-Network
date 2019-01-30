@@ -1,6 +1,6 @@
 <template>
   <div class="social-list" :postsKey="postsKey">
-    <app-feed-loader v-if="!posts.length" />
+    <app-feed-loader v-if="showLoader"/>
     <div v-for="(post, index) in posts" :key="index">
       <div v-if="post.type === 'content'">
         <app-user-post-con
@@ -40,7 +40,8 @@ import UserPostGen from "@/components/dashboard/UserPostGen";
 // this is formatted content post
 import UserPostCon from "@/components/dashboard/UserPostCon";
 import api from "../../../utils/api.js";
-import FeedLoad from '@/components/modals/FeedLoad'
+import FeedLoad from "@/components/modals/FeedLoad";
+import { setTimeout } from "timers";
 export default {
   props: ["userId"],
   components: {
@@ -53,15 +54,12 @@ export default {
       posts: [],
       currentUserId: "",
       currentUserKB: [],
-      postsKey: 0
+      postsKey: 0,
+      showLoader: true
     };
   },
   created() {
     this.populatePostList();
-  },
-  updated() {
-    console.log("userList Updated");
-    //   this.populatePostList();
   },
   methods: {
     populatePostList() {
@@ -70,11 +68,15 @@ export default {
             this.currentUserId = res.data.currentUser._id;
             this.posts = res.data.otherUser;
             this.currentUserKB = res.data.currentUser.kbItems;
+
+            this.showLoader = false;
           })
         : api.currentUser.getPosts().then(res => {
             this.currentUserId = res.data.userId;
             this.posts = res.data.posts;
             this.currentUserKB = res.data.kbItems;
+
+            this.showLoader = false;
           });
     }
   }
