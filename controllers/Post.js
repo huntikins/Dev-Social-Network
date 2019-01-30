@@ -25,11 +25,14 @@ module.exports = {
       }
     }, {
       new: true
-    }).then(result => callback(result))
-      .catch(err => console.error(err));
+    }).populate({
+      path: 'comments.user',
+      select: { firstName: 1, lastName: 1 }
+    })
+      .then((result) => callback(result))
   },
   deleteComment: (userId, postId, commentId, callback) => {
-    Post.updateOne({
+    Post.findOneAndUpdate({
       _id: postId
     }, {
       $pull: {
@@ -38,7 +41,13 @@ module.exports = {
           _id: commentId
         }
       }
-    }).then(result => callback(result))
+    }, {
+      new: true
+    }).populate({
+      path: 'comments.user',
+      select: { firstName: 1, lastName: 1 }
+    })
+      .then(result => callback(result))
       .catch(err => console.error(err));
   },
   like: (userId, postId, callback) => {

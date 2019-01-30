@@ -1,6 +1,5 @@
 <template>
   <div class="social-list">
-    <app-feed-loader v-if="showLoader"/>
     <div v-for="post in posts" :key="post._id">
       <div v-if="post.type === 'content'">
         <app-user-post-con
@@ -16,6 +15,7 @@
           :description="post.description"
           :currentUserId="currentUserId"
           :currentUserKB="currentUserKB"
+          @post-deleted="removePost(post._id)"
         />
       </div>
       <div v-else>
@@ -28,6 +28,7 @@
           :comments="post.comments"
           :currentUserId="currentUserId"
           :currentUserKB="currentUserKB"
+          @post-deleted="removePost(post._id)"
         />
       </div>
     </div>
@@ -42,33 +43,24 @@ import UserPostCon from "@/components/dashboard/UserPostCon";
 import api from "../../../utils/api.js";
 import FeedLoad from "@/components/modals/FeedLoad";
 export default {
+  props: ["posts", "currentUserId", "currentUserKB"],
   components: {
     appUserPostGen: UserPostGen,
-    appUserPostCon: UserPostCon,
-    appFeedLoader: FeedLoad
+    appUserPostCon: UserPostCon
   },
-  data() {
-    return {
-      posts: [],
-      currentUserId: "",
-      currentUserKB: [],
-      showLoader: true
-    };
-  },
+  // data() {
+  //     return{
+  //         posts: [],
+  //         currentUserId: '',
+  //         currentUserKB: []
+  //     }
+  // },
   created() {
-    this.getPosts();
+    // this.getPosts();
   },
   methods: {
-    getPosts() {
-      const self = this;
-      api.posts.getSocialFeed().then(res => {
-        console.log(res);
-        self.currentUserId = res.data.currentUserId;
-        self.posts = res.data.posts;
-        self.currentUserKB = res.data.currentUserKB;
-
-        this.showLoader = false;
-      });
+    removePost(postId) {
+      this.$emit("remove-post", postId);
     }
   }
 };

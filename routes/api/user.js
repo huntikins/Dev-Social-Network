@@ -36,7 +36,8 @@ router.get(
       result => res.json({
         userId: req.user._id,
         posts: result.posts,
-        kbItems: result.kbItems
+        kbItems: result.kbItems,
+        following: result.following
       })
     );
   }
