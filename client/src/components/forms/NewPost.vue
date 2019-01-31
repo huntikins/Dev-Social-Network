@@ -44,7 +44,7 @@ export default {
       if (this.urlArray.length) {
         this.type = "content";
         const queryUrl =
-          "http://api.linkpreview.net/?key=5c3d58afe394c30b8a6aee93efb4be51af5e05ea3ce29&q=";
+          "https://api.linkpreview.net/?key=5c3d58afe394c30b8a6aee93efb4be51af5e05ea3ce29&q=";
         axios.get(queryUrl + self.urlArray[0]).then(res => {
           let post = {
             title: res.data.title,
