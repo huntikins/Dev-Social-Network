@@ -8,7 +8,7 @@
                     : {{ comment.body }}
                 </small>
                 <div class="comment-overlay" v-if="comment.user._id === currentUserId">
-                    <button class="btn btn-danger comment-delete" @click="deleteComment(comment._id)">Delete</button>
+                    <span class="comment-delete" @click="deleteComment(comment._id)"><i class="fas fa-times"></i></span>
                 </div>
             </div>
         </div>
@@ -76,9 +76,9 @@ export default {
   left: 50%;
 }
 .comment-delete {
-  color: white;
+  color: black;
   font-family: roboto, sans-serif;
-  font-size: 20px;
+  font-size: 15px;
   position: absolute;
   top: 50%;
   left: 90%;

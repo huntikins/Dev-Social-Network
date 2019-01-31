@@ -27,8 +27,11 @@
                     <!--insert menu component here-->
                     <app-update-post @edit="editPost" @remove="deletePost"/>
                 </div>
-                <div class="col-3" v-if="remove === true">
-                    <button class="btn btn-danger" @click="purgePost">Delete Post</button>
+                <div class="col-1 text-right" v-if="remove === true">
+                    <button class="btn btn-danger" @click="purgePost"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="col-1 text-right" v-if="(edit || remove) === true">
+                    <span  @click="returnOptions" class="dropbtn"><i class="fas fa-chevron-right"></i></span>
                 </div>
             </div>
             <div class="row">
@@ -121,6 +124,10 @@ export default {
                 self.likeCount++;
                 self.liked = true;
             });
+        },
+        returnOptions() {
+            this.remove = false;
+            this.edit = false;
         },
         unlike() {
             const self = this;

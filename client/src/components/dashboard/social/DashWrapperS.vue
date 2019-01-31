@@ -55,6 +55,8 @@ export default {
 .social-container {
     position: relative;
     height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 .side-container {
     position: relative;
