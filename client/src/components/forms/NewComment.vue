@@ -27,6 +27,7 @@ export default {
             }).then(res => {
                 console.log(res);
                 this.$emit('commentAdded', res.data);
+                this.newComment = ''
             });
         }
     }
