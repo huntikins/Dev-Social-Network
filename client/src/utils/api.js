@@ -20,7 +20,8 @@ export default {
     login: (email, password) => authApi.post('/login', { email, password }),
     logout: () => authApi.post('/logout'),
     test: () => authApi.get('/test'),
-    forgotPassword: email => authApi.post('/forgotpassword', { email })
+    forgotPassword: email => authApi.post('/forgotpassword', { email }),
+    resetPassword: (token, newPassword) => authApi.post('/resetpassword/', { token, newPassword })
   },
   events: {
     getEventsList: () => eventsApi.get('/')

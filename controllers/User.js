@@ -196,10 +196,13 @@ module.exports = {
       .then(result => callback(result))
       .catch(err => console.error(err));
   },
-  checkResetToken: (token, callback) => {
-    User.findOne({
+  resetPassword: (token, password, callback) => {
+    User.findOneAndUpdate({
       passwordResetToken: token,
       resetTokenExpiration: { $gt: Date.now() }
+    }, {
+      password,
+      passwordResetToken: ''
     }).then(callback)
       .catch(err => console.error(err));
   },

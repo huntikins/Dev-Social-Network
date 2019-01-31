@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  email: {
+  lowerCaseEmail: {
     type: String,
     unique: true,
     required: true,
+  },
+  email: {
+    type: String,
+    required: true,
     // from bootcamp week 18 activity 15
     match: [/.+@.+\..+/, 'Please enter a valid e-mail address']
-  },
-  lowerCaseEmail: {
-    type: String,
-    required: true
   },
   password: {
     type: String,
