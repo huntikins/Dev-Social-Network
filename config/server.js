@@ -25,8 +25,8 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 // Router history fallback (to allow navigation w/ address bar)
-// app.use(require('connect-history-api-fallback')());
-// app.use(express.static('client/dist'));
+app.use(require('connect-history-api-fallback')());
+app.use(express.static('client/dist'));
 
 module.exports = {
   app,
