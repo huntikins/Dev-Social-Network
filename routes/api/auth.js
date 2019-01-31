@@ -77,8 +77,18 @@ router.post('/forgotpassword', (req, res) => {
     sendPasswordResetEmail
   ], err => {
     if (err) return console.error(err);
-
   });
+});
+
+router.post('/resetpassword/', (req, res) => {
+  UserController.resetPassword(
+    req.body.token,
+    req.body.newPassword,
+    result => {
+      if (!result) return res.json({ success: false, message: 'Invalid or expired token.'});
+      else req.login(result, err => err ? res.json(err) : res.json({ success: true, message: 'Successful authentication.' }));
+    }
+  );
 });
 
 module.exports = router;

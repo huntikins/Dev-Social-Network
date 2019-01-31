@@ -7,38 +7,60 @@
             <div class="reset-title mt-4">
                 <h1 class="reset-title-text mt-4">reset password</h1>
             </div>
-            <div class="reset-form">
+            <form class="reset-form" id="reset-form">
                 <div class="form-row">
                     <div class=" form-group col-6 mx-auto my-4 text-center">
                         <input v-validate="'required|min:8'" type="password" name="password" placeholder="create new password" v-model="password" class="form-control reset-password-field">
                         <small class="home-body">{{ errors.first('password') }}</small>
+                        <p class="home-body">{{ message }}</p>
+                        <p class="home-body">{{ countdown }}</p>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="sumbit-reset text-center my-4">
-                <button class="btn btn-light modal-default-button" @click.prevent="resetPassword" :disabled="errors.any() || isEmpty" type="submit" form="login-form">RESET</button>
+                <button class="btn btn-light modal-default-button" @click.prevent="resetPassword" :disabled="errors.any() || isEmpty" type="submit" form="reset-form">RESET</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import api from '../utils/api';
 export default {
+    props: ['token'],
     data(){
         return{
-            password: ''
+            password: '',
+            message: '',
+            countdown: ''
         }
     },
     computed: {
         isEmpty() {
-        return !this.password;
+            return !this.password;
         }
     },
     methods: {
         resetPassword(){
-            //reset password in db & login
+            console.log('wtf')
+            api.auth.resetPassword(this.$props.token, this.password)
+                .then(res => {
+                    if (res.data.success) {
+                        this.message = "Your password has been reset. You will be redirected in a few seconds.";
+                        this.countdown = 6;
+                        const intervalId = setInterval(() => {
+                            this.countdown--;
+                            if (this.countdown === 0) {
+                                this.$router.push('/social');
+                            }
+                        }, 1000);
+                    }
+                    else {
+                        this.message = "Your token is invalid or expired. Please request another token.";
+                    }
+                })
         }
-    }
+    },
 }
 </script>
 

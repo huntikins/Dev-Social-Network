@@ -36,10 +36,14 @@ export default {
     }
   },
   methods: {
-      // forgotPassword(){
-      //   this.message = 'If an account exists with the email provided, your password will be sent via email'
-      //   api.auth.
-      // }
+    forgotPassword() {
+      api.auth.forgotPassword(this.email)
+        .then(res => {
+          const data = res.data;
+          if (data.success) return this.message = data.success;
+          if (data.error) return this.message = data.error;
+        });
+    }
   },
   computed: {
     isEmpty() {

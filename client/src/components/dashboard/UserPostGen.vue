@@ -136,6 +136,7 @@ export default {
         markSaved(newKbItem) {
             this.createKB = false;
             this.saved = true;
+            console.log(newKbItem)
             this.$emit('saved', newKbItem);
         },
         editPost(){

@@ -24,12 +24,12 @@ export default {
     if (!this.$props.userId) {
       api.currentUser.getImage().then(res => {
         this.image = res.data.image;
-      });
+      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.log(err.response.data));
     } else
       api.otherUser.getImage(this.$props.userId).then(res => {
         console.log(res)
         this.image = res.data.image;
-      });
+      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.log(err.response.data));
   }
 };
 </script>
