@@ -46,7 +46,6 @@ export default {
       removeAccount(){
         api.currentUser.deleteAccount(this.password)
           .then(res => {
-            console.log(res)
             if (res.data.n === 1) {
               this.message = 'Your account has been deleted.';
               this.isDeleted = true;

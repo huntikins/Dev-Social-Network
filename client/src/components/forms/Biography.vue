@@ -37,7 +37,6 @@ export default {
       const newBio = this.text;
       api.currentUser.updateInfo({ bio: newBio })
         .then(res => {
-          console.log(res);
           if (res.data.nModified === 1) this.$emit('update', newBio);
           else this.$emit('close');
         });

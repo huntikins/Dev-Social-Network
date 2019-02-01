@@ -46,10 +46,8 @@ export default {
         }
     },
     created() {
-        console.log('test')
         api.otherUser.getKBItems(this.$props.userId)
             .then(res => {
-                console.log(res);
                 this.kbArticles = res.data.kbItems.reverse();
             });
     }

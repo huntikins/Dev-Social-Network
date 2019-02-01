@@ -78,7 +78,6 @@ export default {
     created() {
         const self = this;
         api.otherUser.getBasic(this.$props.userId).then(res => {
-            console.log(res)
             const user = res.data.user;
             self.currentUserId = res.data.currentUser;
             self.firstName = user.firstName;

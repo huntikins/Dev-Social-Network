@@ -94,7 +94,6 @@ export default {
       this.disableSubmit = true;
       api.knowledgeBase.add(kbItem)
         .then(res => {
-          console.log(res)
           if (res.data.result_2 && res.data.result_2.nModified === 1) {
             this.isSaved = true;
             this.heading = 'The post was successfully added to your Knowledge Base.';
