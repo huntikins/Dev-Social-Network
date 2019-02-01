@@ -1,6 +1,6 @@
 <template>
     <div class="social-feed">
-        <app-new-post @post-added="refresh"/>
+        <app-new-post @post-added="getPosts"/>
         <app-feed-loader v-if="showLoader"/>
         <app-social-list
             v-if="currentUserId"
@@ -29,25 +29,18 @@ export default {
             currentUserId: '',
             posts: [],
             currentUserKB: [],
-            isFollowingSelf: false,
             showLoader: true
         };
     },
     methods: {
-        getPosts(isFirst) {
+        getPosts() {
             const self = this;
             api.posts.getSocialFeed().then(res => {
-                console.log(res);
                 self.posts = res.data.posts;
                 self.currentUserKB = res.data.currentUserKB;
                 self.currentUserId = res.data.currentUserId;
-                self.isFollowingSelf = res.data.currentUserFollowing.indexOf(self.currentUserId) > -1;
                 this.showLoader = false;
             });
-        },
-        refresh() {
-            console.log(this.isFollowingSelf)
-            if (this.isFollowingSelf) this.getPosts(); 
         },
         removePost(postId) {
             for (let i = 0; i < this.posts.length; i++) {

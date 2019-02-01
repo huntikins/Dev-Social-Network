@@ -169,9 +169,15 @@ module.exports = {
       }, {
         path: 'kbItems',
         select: 'post'
+      }, {
+        path: 'posts',
+        populate: [
+          { path: 'user' },
+          { path: 'comments.user' }
+        ]
       }])
       .then(result => {
-        let posts = [];
+        let posts = result.posts;
         result.following.forEach(user => {
           Array.prototype.push.apply(posts, user.posts);
         });
