@@ -70,7 +70,7 @@ module.exports = {
       }).then(result => callback(result))
       .catch(err => console.error(err));
   },
-  updatePost: (userId, postId, body, callback) => {
+  updatePost: (postId, body, callback) => {
     Post.updateOne(
       { _id: postId },
       {
@@ -79,7 +79,9 @@ module.exports = {
         }
       }
     )
-      .then(res => callback(res))
+      .then(res => {
+        callback(res)
+      })
       .catch(err => console.error(err));
   }
 }

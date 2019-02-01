@@ -142,7 +142,7 @@ export default {
         this.interests = resData.interests || [];
         this.biography = resData.bio || "";
         this.userId = resData._id;
-      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.log(err.response.data));
+      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.error(err.response.data));
     },
     updateDemographicsDisplay(updatedDemo) {
       this.demographics = updatedDemo;

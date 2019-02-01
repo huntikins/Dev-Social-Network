@@ -45,7 +45,6 @@ router.delete(
   '/comment/',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
-    console.log(req.body)
     controllers.Post.deleteComment(
       req.user._id,
       req.body.postId,
@@ -107,9 +106,8 @@ router.put(
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
     controllers.Post.updatePost(
-      req.user._id,
       req.body.postId,
-      req.body.body,
+      req.body.postBody,
       result => res.json(result)
     );
   }

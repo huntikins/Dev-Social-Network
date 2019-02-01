@@ -25,7 +25,6 @@ export default {
             return moment(date).format("MM/DD/YY - hh:mm a");
         },
         deleteComment(commentId){
-            console.log(this.$props.postId)
             api.posts.deleteComment(commentId, this.$props.postId)
                 .then(res => this.$emit('comment-removed', res.data));
         }

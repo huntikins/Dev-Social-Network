@@ -37,7 +37,6 @@ export default {
         getPosts(isFirst) {
             const self = this;
             api.posts.getSocialFeed().then(res => {
-                console.log(res);
                 self.posts = res.data.posts;
                 self.currentUserKB = res.data.currentUserKB;
                 self.currentUserId = res.data.currentUserId;
@@ -46,7 +45,6 @@ export default {
             });
         },
         refresh() {
-            console.log(this.isFollowingSelf)
             if (this.isFollowingSelf) this.getPosts(); 
         },
         removePost(postId) {

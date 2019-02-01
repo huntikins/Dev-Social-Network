@@ -55,7 +55,6 @@ export default {
             body: self.content_body
           };
           api.posts.createPost(post).then(res_ => {
-            console.log(res_);
             this.$emit("post-added");
             this.content_body = ''
           });
@@ -67,7 +66,6 @@ export default {
           body: self.content_body
         };
         api.posts.createPost(post).then(res_ => {
-          console.log(res_);
           this.$emit("post-added");
           this.content_body = ''
         });
