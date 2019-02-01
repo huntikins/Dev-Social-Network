@@ -317,6 +317,7 @@ textarea.edit-post-text:focus{
 .post-text {
     padding: 10px;
     font-family: roboto, sans-serif;
+    white-space: pre-wrap;
 }
 .post-title {
     padding: 10px 10px 0 10px;
