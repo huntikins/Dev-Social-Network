@@ -298,6 +298,7 @@ textarea.edit-post-text:focus {
 .post-text {
   padding: 10px;
   font-family: roboto, sans-serif;
+  white-space: pre-line;
 }
 .post-icon {
   color: #3dc0ec;
