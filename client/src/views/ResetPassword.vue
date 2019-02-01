@@ -42,7 +42,6 @@ export default {
     },
     methods: {
         resetPassword(){
-            console.log('wtf')
             api.auth.resetPassword(this.$props.token, this.password)
                 .then(res => {
                     if (res.data.success) {

@@ -38,7 +38,6 @@ export default {
     methods: {
         getCurrentUserPosts() {
             api.currentUser.getPosts().then(res => {
-                console.log(res);
                 this.posts = res.data.posts;
                 this.currentUserKB = res.data.kbItems;
                 this.currentUserId = res.data.userId;
@@ -47,7 +46,6 @@ export default {
         },
         getOtherUserPosts() {
             api.otherUser.getPosts(this.$props.userId).then(res => {
-                console.log(res);
                 this.posts = res.data.otherUser;
                 this.currentUserKB = res.data.currentUser.kbItems;
                 this.currentUserId = res.data.currentUser._id;

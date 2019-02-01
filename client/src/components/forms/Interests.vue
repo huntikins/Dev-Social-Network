@@ -25,7 +25,7 @@
 
 <script>
 // import API from "@/utils/userData";
-import api from '../../utils/api.js';
+import api from "../../utils/api.js";
 
 export default {
   props: ["interests"],
@@ -36,29 +36,24 @@ export default {
   },
   methods: {
     stringify(array) {
-      console.log('test')
-      return array.join(', ');
+      return array.join(", ");
     },
     arrayify(string) {
-      const array = string.split(',').map(subString => subString.trim());
+      const array = string.split(",").map(subString => subString.trim());
       const cleanedArray = [];
-      array.forEach(el => (el !== '' && cleanedArray.indexOf(el) < 0) ? cleanedArray.push(el) : null);
+      array.forEach(el =>
+        el !== "" && cleanedArray.indexOf(el) < 0 ? cleanedArray.push(el) : null
+      );
       return cleanedArray;
     },
     submit() {
       const updatedInterests = this.arrayify(this.text);
-      api.currentUser.updateInfo({ interests: updatedInterests })
-        .then(res => {
-          if (res.data.nModified === 1) {
-            this.$emit('update-interests', updatedInterests);
-          }
-          else this.$emit('close');
-        });
+      api.currentUser.updateInfo({ interests: updatedInterests }).then(res => {
+        if (res.data.nModified === 1) {
+          this.$emit("update-interests", updatedInterests);
+        } else this.$emit("close");
+      });
     }
-  },
-  mounted() {
-    console.log('mounted')
-    console.log(this.text)
   }
 };
 </script>

@@ -69,7 +69,6 @@ export default {
           this.profileImage = res.data.picture;
           this.hasUploaded = true;
           this.fileName = null;
-          console.log("img upload res: ", res.data.picture);
         })
         .catch(err => console.error(err));
     },

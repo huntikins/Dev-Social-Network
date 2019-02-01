@@ -58,7 +58,6 @@ export default {
     beforeCreate() {
         const self = this;
         api.currentUser.getBasic().then(res => {
-            console.log(res)
             const user = res.data;
             self.firstName = user.firstName;
             self.lastName = user.lastName;

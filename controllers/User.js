@@ -9,7 +9,6 @@ module.exports = {
       .then(result => {
         result.password = undefined;
         result.lowerCaseEmail = undefined;
-        // console.log(result);
         callback({
           success: true,
           user: result
@@ -186,7 +185,6 @@ module.exports = {
           const post_bTime = post_b.date ? post_b.date.getTime() : 0;
           return post_bTime - post_aTime;
         });
-        // console.log(result)
         let following = result.following.map(user => user._id);
         callback({
           posts,

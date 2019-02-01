@@ -100,12 +100,10 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log(this.demographics)
       this.demographics.jobTitle = this.demographics.jobTitle || '';
       this.demographics.jobCompany = this.demographics.jobCompany || '';
       api.currentUser.updateInfo(this.demographics)
         .then(res => {
-          console.log(res);
           if (res.data.nModified === 1) {
             this.$emit('update-demographics', this.demographics);
           }
