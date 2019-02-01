@@ -97,7 +97,7 @@ export default {
           if (res.data.result_2 && res.data.result_2.nModified === 1) {
             this.isSaved = true;
             this.heading = 'The post was successfully added to your Knowledge Base.';
-            this.kbItem = res.data.result_1;
+            this.kbItem = kbItem;
           }
         });
     },
@@ -105,6 +105,9 @@ export default {
       if (this.isSaved) return this.$emit('saved', this.kbItem);
       this.$emit('close');
     }
+  },
+  created() {
+    console.log(this.$props.comments)
   }
 };
 </script>

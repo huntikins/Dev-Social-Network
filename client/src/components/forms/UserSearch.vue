@@ -30,9 +30,11 @@ export default {
     },
     methods: {
         searchUsers() {
-            this.searchActive = true
-            api.otherUser.searchUsers(this.query)
-                .then(res => this.results = res.data);
+            if (this.query) {
+                this.searchActive = true
+                api.otherUser.searchUsers(this.query)
+                    .then(res => this.results = res.data);
+            }
         }
     }
 }

@@ -212,15 +212,11 @@ module.exports = {
   },
   search: (query, callback) => {
     User.find({
-      fullName: new RegExp(query, 'i')
-    }).then(result_1 => {
-      User.find({
+      $or: [{
+        fullName: new RegExp(query, 'i')
+      }, {
         email: new RegExp(query, 'i')
-      }).then(result_2 => {
-        const results = result_1.concat(result_2);
-        results.forEach(result => result.password = undefined);
-        callback(results);
-      });
-    });
+      }]
+    }).then(result => callback(result));
   }
 }
