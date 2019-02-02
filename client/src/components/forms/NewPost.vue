@@ -45,20 +45,31 @@ export default {
         this.type = "content";
         const queryUrl =
           "https://api.linkpreview.net/?key=5c3d58afe394c30b8a6aee93efb4be51af5e05ea3ce29&q=";
-        axios.get(queryUrl + self.urlArray[0]).then(res => {
-          let post = {
-            title: res.data.title,
-            url: self.urlArray[0],
-            description: res.data.description,
-            image: res.data.image,
-            type: self.type,
-            body: self.content_body
-          };
-          api.posts.createPost(post).then(res_ => {
-            this.$emit("post-added");
-            this.content_body = ''
+        axios.get(queryUrl + self.urlArray[0])
+          .then(res => {
+            let post = {
+              title: res.data.title,
+              url: self.urlArray[0],
+              description: res.data.description,
+              image: res.data.image,
+              type: self.type,
+              body: self.content_body
+            };
+            api.posts.createPost(post).then(res_ => {
+              this.$emit("post-added");
+              this.content_body = ''
+            });
+          })
+          .catch(err => {
+            let post = {
+              type: this.type,
+              body: this.content_body
+            }
+            api.posts.createPost(post).then(res_ => {
+              this.$emit("post-added");
+              this.content_body = ''
+            });
           });
-        });
       } else {
         this.type = "text";
         let post = {

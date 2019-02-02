@@ -12,13 +12,13 @@
                 </span>
                 <div class="stat-item-group">
                     <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-users"></i> {{ friend_count }} 
+                        <i class="stat-icon-group fas fa-users" title="Friends"></i> {{ friend_count }} 
                     </span>
                     <span class="stat-item-group">
-                        <i class="stat-icon-group far fa-eye"></i> {{ following_count }} 
+                        <i class="stat-icon-group far fa-eye" title="Users you follow"></i> {{ following_count }} 
                     </span>
                     <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-eye"></i> {{ follower_count }} 
+                        <i class="stat-icon-group fas fa-eye" title="Users following you"></i> {{ follower_count }} 
                     </span>
                 </div>
             </div>
