@@ -75,7 +75,7 @@ export default {
   left: 50%;
 }
 .comment-delete {
-  color: black;
+  color: red;
   font-family: roboto, sans-serif;
   font-size: 15px;
   position: absolute;
