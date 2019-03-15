@@ -43,7 +43,6 @@ export default {
 .dropdown {
     float: right;
     position: relative;
-    display: inline-block;
 }
 .dropdown-content {
     font-family: roboto, sans-serif;
