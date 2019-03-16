@@ -185,6 +185,16 @@
     .fade-enter, .fade-leave-to {
       opacity: 0;
     }
+
+    .bm-burger-button{
+          width: 32px;
+          height: 26px;
+          left: 20px;
+          top: 17px;
+    }
+    .bm-cross-button {
+      left: 30px;
+    }
             /* higher resolution desktops */
     @media (min-width: 1025px) and (max-width: 1600px) {
         .bm-burger-button{

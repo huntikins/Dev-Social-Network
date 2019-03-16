@@ -104,7 +104,7 @@ export default {
     border-right: none;
 }
 /* Laptops, Desktops */
-@media (min-width: 1025px) and (max-width: 1600px) {
+/* @media (min-width: 1025px) and (max-width: 1600px) { */
     .meetup-icon {
         font-size: 2em;
     }
@@ -114,5 +114,5 @@ export default {
     .event-date {
         font-size: .70em;
     }
-}
+/* } */
 </style>

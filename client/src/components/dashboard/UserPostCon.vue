@@ -402,7 +402,7 @@ textarea.edit-post-text:focus {
   text-decoration: none;
 }
 /* higher resolution laptops */
-@media (min-width: 1025px) and (max-width: 1600px) {
+/* @media (min-width: 1025px) and (max-width: 1600px) { */
   .post-userinfo {
     margin-left: 1px !important;
   }
@@ -412,5 +412,5 @@ textarea.edit-post-text:focus {
   .post-icon {
     font-size: 0.75em;
   }
-}
+/* } */
 </style>

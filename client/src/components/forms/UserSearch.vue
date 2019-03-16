@@ -92,6 +92,6 @@ export default {
         border-bottom: 2px solid rgba(54, 59, 59, .2);
         box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px rgba(54, 59, 59, .2), 0 1px 0 rgba(54, 59, 59, .2);
         outline: 0;
-        background-color: rgba(54, 59, 59, .2)
+        background-color: rgba(54, 59, 59, .2);
     }
 </style>
