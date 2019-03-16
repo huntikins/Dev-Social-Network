@@ -77,6 +77,7 @@ export default {
 }
 .title-wrapper {
     padding-left: 5px;
+    overflow: hidden;
 }
 .event-title {
     vertical-align: top;

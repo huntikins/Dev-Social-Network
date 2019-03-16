@@ -12,8 +12,8 @@
       :date="date"
     />
     <div class="content-bottom">
-      <div class="row post-userinfo">
-        <div class="col-1 post-img-container">
+      <div class="post-userinfo">
+        <div class="post-img-container">
           <!--profilepic-->
           <img
             v-if="user.picture"
@@ -23,25 +23,25 @@
           >
           <img v-else class="img-fluid user-prof-img" src="@/assets/user-icon.png" :alt="userName">
         </div>
-        <div class="col post-details">
+        <div class="post-details">
           <!--username w link to profile @click-->
           <router-link class="post-username" :to="`/user/${user._id}`">{{ userName }}</router-link>
           <!--date-->
           <h3 class="post-date">{{ formattedDate }}</h3>
         </div>
-        <div class="col-1" v-if="user._id === currentUserId && (edit || remove) === false">
-          <!--insert menu component here-->
-          <app-update-post @edit="editPost" @remove="deletePost"/>
-        </div>
-        <div class="col-1 text-right" v-if="remove === true">
-          <button class="btn btn-danger" @click="purgePost">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-        <div class="col-1 text-right" v-if="(edit || remove) === true">
-          <span @click="returnOptions" class="dropbtn">
-            <i class="fas fa-chevron-right"></i>
-          </span>
+        <div class="post-edit-menu">
+          <div v-if="user._id === currentUserId && (edit || remove) === false">
+            <!--insert menu component here-->
+            <app-update-post @edit="editPost" @remove="deletePost"/>
+          </div>
+          <div class="text-right" v-if="remove === true">
+            <button class="btn btn-danger" @click="purgePost">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            <span @click="returnOptions" class="dropbtn">
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </div>
         </div>
       </div>
       <div class="row">

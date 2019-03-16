@@ -300,7 +300,7 @@ export default {
 }
 .post-edit-menu {
   float: right;
-  margin-right: -16px;
+  margin-right: -17px;
 }
 textarea.edit-post-text {
   resize: none;

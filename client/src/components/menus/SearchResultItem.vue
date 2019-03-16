@@ -41,6 +41,7 @@ export default {
 .display-user-item:first-child {
     margin-right: 10px;
 }
+/* source for image sizing trick: http://www.mademyday.de/css-height-equals-width-with-pure-css.html */
 .result-link-wrapper {
     width: 100%;
     height: 0;
