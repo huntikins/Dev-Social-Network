@@ -14,9 +14,11 @@
                     <span class="stat-item-group">
                         <i class="stat-icon-group fas fa-users" title="Friends"></i> {{ friend_count }} 
                     </span>
+                    <span> </span>
                     <span class="stat-item-group">
                         <i class="stat-icon-group far fa-eye" title="Users you follow"></i> {{ following_count }} 
                     </span>
+                    <span> </span>
                     <span class="stat-item-group">
                         <i class="stat-icon-group fas fa-eye" title="Users following you"></i> {{ follower_count }} 
                     </span>
@@ -135,6 +137,9 @@ export default {
     color: #859595;
     margin-top: 10px;
 }
+span.stat-item-group{
+    white-space: nowrap;
+}
 .stat-icon{
     color: #3dc0ec;
 }
@@ -146,12 +151,18 @@ export default {
     border-bottom-right-radius: 25px;
     background-color: white;
     padding: 10px;
+    overflow: scroll;
 }
 .profile-footer {
     margin-top: 10px;
     border-radius: 0 25px 25px 0;
     background-color: white;
     padding: 0 10px 10px 0;
+    overflow: scroll;
+}
+.profile-header::-webkit-scrollbar, .profile-footer::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
 }
 .user-interest {
     padding-top: 10px;
@@ -199,7 +210,7 @@ export default {
     padding: 4px;
 }
 /* higher resolution laptops */
-@media (min-width: 1025px) and (max-width: 1600px)  {
+/* @media (min-width: 1025px) and (max-width: 1600px)  { */
     .profile-info {
         height: 87vh;
         background-color: #f39121; 
@@ -234,7 +245,7 @@ export default {
         margin: 0;
         line-height: 1;
     }
-}
+/* } */
 /* Tablets, Ipads (portrait) */
 @media (min-width: 768px) and (max-width: 1024px) {
 

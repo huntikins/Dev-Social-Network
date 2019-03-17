@@ -77,6 +77,7 @@ export default {
 }
 .title-wrapper {
     padding-left: 5px;
+    overflow: hidden;
 }
 .event-title {
     vertical-align: top;
@@ -104,7 +105,7 @@ export default {
     border-right: none;
 }
 /* Laptops, Desktops */
-@media (min-width: 1025px) and (max-width: 1600px) {
+/* @media (min-width: 1025px) and (max-width: 1600px) { */
     .meetup-icon {
         font-size: 2em;
     }
@@ -114,5 +115,5 @@ export default {
     .event-date {
         font-size: .70em;
     }
-}
+/* } */
 </style>

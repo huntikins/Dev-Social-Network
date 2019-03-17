@@ -16,8 +16,8 @@
       :image="image"
     />
     <div class="content-bottom">
-      <div class="row post-userinfo">
-        <div class="col-1 post-img-container">
+      <div class="post-userinfo">
+        <div class="post-img-container">
           <!--profilepic-->
           <img
             v-if="user.picture"
@@ -27,25 +27,25 @@
           >
           <img v-else class="img-fluid user-prof-img" src="@/assets/user-icon.png" :alt="userName">
         </div>
-        <div class="col post-details">
+        <div class="post-details">
           <!--username w link to profile @click-->
           <router-link class="post-username" :to="`/user/${user._id}`">{{ userName }}</router-link>
           <!--date-->
           <h3 class="post-date">{{ formattedDate }}</h3>
         </div>
-        <div class="col-1" v-if="user._id === currentUserId && (edit || remove) === false">
-          <!--insert menu component here-->
-          <app-update-post @edit="editPost" @remove="deletePost"/>
-        </div>
-        <div class="col-1 text-right" v-if="remove === true">
-          <button class="btn btn-danger" @click="purgePost">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-        <div class="col-1 text-right" v-if="(edit || remove) === true">
-          <span @click="returnOptions" class="dropbtn">
-            <i class="fas fa-chevron-right"></i>
-          </span>
+        <div class="post-edit-menu">
+          <div v-if="user._id === currentUserId && (edit || remove) === false">
+            <!--insert menu component here-->
+            <app-update-post @edit="editPost" @remove="deletePost"/>
+          </div>
+          <div class="text-right" v-if="(edit || remove) === true">
+            <button class="btn btn-danger" v-if="remove === true" @click="purgePost">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            <span @click="returnOptions" class="dropbtn">
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -279,13 +279,15 @@ export default {
 }
 .user-prof-img {
   border-radius: 100%;
-  height: 60px;
-  width: 60px;
+  height: 100%;
+  width: 100%;
 }
 .post-img-container {
   border-radius: 100%;
-  height: 100%;
-  width: 100%;
+  height: 60px;
+  width: 60px;
+  display: inline-block;
+  vertical-align: top;
 }
 .btn-danger {
   border-radius: 100px;
@@ -293,6 +295,12 @@ export default {
 }
 .post-details {
   margin-top: 10px;
+  display: inline-block;
+  padding-left: 15px;
+}
+.post-edit-menu {
+  float: right;
+  margin-right: -17px;
 }
 textarea.edit-post-text {
   resize: none;
@@ -383,6 +391,7 @@ textarea.edit-post-text:focus {
 .post-icon {
   color: #3dc0ec;
   font-size: 1em;
+  margin-right: 2px;
 }
 .post-icon-text {
   color: #3dc0ec;
@@ -393,10 +402,7 @@ textarea.edit-post-text:focus {
   text-decoration: none;
 }
 /* higher resolution laptops */
-@media (min-width: 1025px) and (max-width: 1600px) {
-  .post-img-container {
-    padding: 0 !important;
-  }
+/* @media (min-width: 1025px) and (max-width: 1600px) { */
   .post-userinfo {
     margin-left: 1px !important;
   }
@@ -406,5 +412,5 @@ textarea.edit-post-text:focus {
   .post-icon {
     font-size: 0.75em;
   }
-}
+/* } */
 </style>

@@ -54,7 +54,7 @@ export default {
         padding-top: 10%;
     }
     .button-join {
-        left: 33%;
+        // left: 33%;
     }
     .modal-container-login {
         width: 400px;
@@ -65,7 +65,7 @@ export default {
     }
     .wrapper-anime {
         svg {
-            width: 500%;
+            width: 400%;
 		    height: auto;
         }
     }
@@ -80,11 +80,11 @@ export default {
         height: 600px;
     }
     .button-join {
-        left: 27.5%;
+        // left: 27.5%;
     }
     .wrapper-anime {
         svg {
-            width: 600%;
+            width: 500%;
 		    height: auto;
         }
     }
@@ -108,13 +108,15 @@ export default {
         }
     }
     .button-join {
-        left: 23%;
+        // left: 23%;
+        left: calc(50% - 20px - 115px);
         width: 115px;
         height: 35px;
         font-size: 15px;
     }
     .button-login {
-        left: 52%;
+        // left: 52%;
+        left: calc(50% + 20px);
         width: 115px;
         height: 35px;
         font-size: 15px;
@@ -146,7 +148,7 @@ export default {
   
 }
 /* Most of the Smartphones Mobiles (Portrait) */
-@media (min-width: 320px) and (max-width: 480px) {
+@media screen and (max-width: 480px) {
      .logo-div{
         padding-top: 33%;
     }
@@ -158,16 +160,18 @@ export default {
         }
     }
     .button-join {
-        left: 19%;
+        // left: 19%;
+        left: calc(50% - 10px - 90px);
         width: 90px;
         height: 30px;
-        font-size: 10px;
+        font-size: 12px !important;
     }
     .button-login {
-        left: 53%;
+        // left: 53%;
+        left: calc(50% + 10px);
         width: 90px;
         height: 30px;
-        font-size: 10px;
+        font-size: 12px !important;
     }
     .text-logo {
         width: 290px;
@@ -197,7 +201,8 @@ export default {
 /*galaxy s5*/
 @media (width: 360px) {
     .button-join {
-        left: 23%;
+        // left: 23%;
+        left: calc(50% - 20px - 85px);
         width: 85px;
         height: 25px;
         font-size: 10px !important;
@@ -205,7 +210,8 @@ export default {
         font-weight: 100;
     }
     .button-login {
-        left: 53%;
+        // left: 53%;
+        left: calc(50% + 20px);
         width: 85px;
         height: 25px;
         font-size: 10px !important;
@@ -224,7 +230,8 @@ export default {
         height: auto !important;
     }
     .button-join {
-        left: 25%;
+        // left: 25%;
+        left: calc(50%- 20px - 85px);
         width: 85px;
         height: 25px;
         font-size: 10px !important;
@@ -232,7 +239,8 @@ export default {
         font-weight: 100;
     }
     .button-login {
-        left: 53%;
+        // left: 53%;
+        left: calc(50% + 20px);
         width: 85px;
         height: 25px;
         font-size: 10px !important;

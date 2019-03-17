@@ -130,7 +130,7 @@ textarea#post {
   width: 100%;
 }
 /* higher resolution laptops */
-@media (min-width: 1025px) and (max-width: 1600px) {
+/* @media (min-width: 1025px) and (max-width: 1600px) { */
   .new-post-container {
     height: 75px;
   }
@@ -145,5 +145,5 @@ textarea#post {
     margin-left: 10%;
     width: 90%;
   }
-}
+/* } */
 </style>

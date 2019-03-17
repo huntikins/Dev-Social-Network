@@ -13,6 +13,7 @@ export default {
 <style>
 .logo-img {
     height: 250px;
+    width: 151.15px;
     padding-bottom: 50px;
 }
 </style>

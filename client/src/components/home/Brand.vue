@@ -50,7 +50,8 @@ export default {
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: 100;
-    left: 35%;
+    /* left: 35%; */
+    left: calc(50% - 20px - 150px);
     top: 70%;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -75,7 +76,8 @@ export default {
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: 100;
-    left: 52%;
+    /* left: 52%; */
+    left: calc(50% + 20px);
     top: 70%;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);

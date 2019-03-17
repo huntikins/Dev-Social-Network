@@ -7,6 +7,7 @@
 html {
     background-color: #859595;
     height: 100%;
+    min-width: 320px;
 }
 body{
     overflow: hidden;

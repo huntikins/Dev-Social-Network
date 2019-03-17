@@ -46,7 +46,7 @@ export default {
   overflow: hidden !important;
 }
 /* higher resolution laptops */
-@media (min-width: 1025px) and (max-width: 1600px) {
+/* @media (min-width: 1025px) and (max-width: 1600px) { */
   .profile-image {
     height: 125px !important;
     width: 125px;
@@ -55,5 +55,5 @@ export default {
     top: 3% !important;
     border-radius: 100%;
   }
-}
+/* } */
 </style>

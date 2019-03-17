@@ -20,27 +20,44 @@ export default {
 <style>
 .display-user {
     position: absolute;
-    height: 90%;
+    height: 100%;
     width: 100%;
     overflow-y: scroll;
-    top: 6px;
-    margin: 5% 2% 1% 4%;
-    padding-top: 3%;
+    /* top: 6px; */
+    /* margin: 5% 2% 1% 4%; */
+    /* padding-top: 3%; */
+    border-radius: 25px;
+    padding: 10px;
 }
 .display-user::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
     background: transparent;
 }
-.display-user-item{
-    margin: 2%;
+.display-user-item {
     position: relative;
     float: left;
-
+    width: calc(50% - 5px);
+}
+.display-user-item:first-child {
+    margin-right: 10px;
+}
+/* source for image sizing trick: http://www.mademyday.de/css-height-equals-width-with-pure-css.html */
+.result-link-wrapper {
+    width: 100%;
+    height: 0;
+    padding-top: 100%;
+    position: relative;
+    display: inline-block;
 }
 .result-image {
-    width: 90px;
-    height: 90px;
+    width: 100%;
+    height: 100%;
     border-radius: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 .result-link {
     color: white;
@@ -63,7 +80,7 @@ export default {
     text-align: center;
 }
 /* higher resolution laptops */
-@media (min-width: 1281px) and (max-width: 1600px)  {
+/* @media (min-width: 1281px) and (max-width: 1600px)  {
     .result-image {
         width: 60px;
         height: 60px;
@@ -72,9 +89,9 @@ export default {
         font-size: .5em;
         text-align: center;
     }
-}
+} */
 /* Laptops, Desktops */
-@media (min-width: 1025px) and (max-width: 1280px) {
+/* @media (min-width: 1025px) and (max-width: 1280px) {
     .result-image {
         width: 100px;
         height: 100px;
@@ -83,5 +100,5 @@ export default {
         font-size: .75em;
         text-align: center;
     }
-}
+} */
 </style>

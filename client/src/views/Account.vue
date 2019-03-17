@@ -299,7 +299,7 @@ export default {
   }
 }
 /* Most of the Smartphones Mobiles (Portrait) */
-@media (min-width: 319px) and (max-width: 480px) {
+@media (max-width: 480px) {
   .edit-img-container {
     height: 100px;
     width: 100px;
