@@ -172,11 +172,13 @@ router.post('/s3upload',
         });
       }
       // return res.json({ 'imageUrl': req.file.location });
-      UserController.imageUpload(
-        req.user._id,
-        req.file.location,
-        result => res.json(result)
-      );
+      return req.file ?
+        UserController.imageUpload(
+          req.user._id,
+          req.file.location,
+          result => res.json(result)
+        ) :
+        res.status(418).json({errors: 'Unknown error.'});
     })
   });
 

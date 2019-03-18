@@ -7,7 +7,7 @@
         <i class="fas fa-user-edit"></i>
       </div>
     </div>
-    <app-upload-modal v-if="isUploading" @close="closeReRender"/>
+    <app-upload-modal v-if="isUploading" @close="closeReRender" :image="userImage"/>
   </div>
 </template>
 
