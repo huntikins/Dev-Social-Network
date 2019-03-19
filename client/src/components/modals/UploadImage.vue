@@ -17,12 +17,33 @@
           </div>
           <div class="modal-body m-0 p-0">
             <h1 class="modal-header-text m-auto py-4">Choose a new picture</h1>
-            <croppa
-              class="croppa"
-              v-model="croppa"
-              accept=".jpg, .png"
-              @file-type-mismatch="invalidFiletype"
-            ></croppa>
+            <div id="croppa-container">
+              <croppa
+                class="croppa"
+                v-model="croppa"
+                accept=".jpg, .png"
+                @file-type-mismatch="invalidFiletype"
+                :height="200"
+                :width="200"
+                canvas-color="white"
+                placeholder="Click or drag file here."
+                :placeholder-font-size="12"
+                :show-remove-button="true"
+                @new-image-drawn="onImageChosen"
+                @image-remove="isFileSelected = false"
+              ></croppa>
+              <br>
+              <small class="home-body">{{ message }}</small>
+              <button class="btn btn-light image-control" @click="croppa.zoomOut()" :disabled="!isFileSelected">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button class="btn btn-light image-control" @click="croppa.zoomIn()" :disabled="!isFileSelected">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="btn btn-light image-control rotate" @click="croppa.rotate(1)" :disabled="!isFileSelected">
+                <i class="fas fa-sync-alt"></i>
+              </button>
+            </div>
             <!-- <div class="custom-file">
               <input
                 type="file"
@@ -35,10 +56,11 @@
               <label class="custom-file-label" for="profileImage">{{ fileNameText }}</label>
             </div> -->
           </div>
-          <small class="home-body">{{ message }}</small>
           <div class="modal-footer">
             <button class="btn btn-light modal-default-button" @click="upload">Save</button>
-            <button v-if="hasUploaded" class="btn btn-light modal-default-button" @click="emitLink">Confirm</button>
+            <!-- <button v-if="hasUploaded" class="btn btn-light modal-default-button" @click="$emit('close')">Done</button> -->
+            <button v-if="isFileSelected" class="btn btn-light modal-default-button" @click="croppa.remove()">Change</button>
+            <button v-if="hasUploaded && !isFileSelected" class="btn btn-light modal-default-button" @click="$emit('close')">Done</button>
           </div>
         </div>
       </div>
@@ -51,65 +73,60 @@ import API from "@/utils/userData";
 import Brain from "@/assets/logo-brain.svg"; /*Had to do this because @/ file paths are compiled after component renders */
 
 export default {
-  props: ['image'],
+  props: ['profileImage'],
   data() {
     return {
       defaultBrain: Brain,
-      selectedFile: null,
-      fileName: null,
-      profileImage: this.$props.image,
+      // selectedFile: null,
+      // fileName: null,
+      isFileSelected: false,
       hasUploaded: false,
       croppa: {},
       message: ''
     };
   },
   methods: {
-    onFileChanged(event) {
-      this.selectedFile = event.target.files[0];
-      this.fileName = event.target.files[0].name;
-    },
-    onUpload() {
-      console.log(this.selectedFile)
-      const formData = new FormData();
-      formData.append("profileImage", this.selectedFile, this.fileName);
-      API.putImage(formData)
-        .then(res => {
-          this.profileImage = res.data.picture;
-          this.hasUploaded = true;
-          this.fileName = null;
-        })
-        .catch(err => console.error(err));
+    // onFileChanged(event) {
+    //   this.selectedFile = event.target.files[0];
+    //   this.fileName = event.target.files[0].name;
+    // },
+    // onUpload() {
+    //   console.log(this.selectedFile)
+    //   const formData = new FormData();
+    //   formData.append("profileImage", this.selectedFile, this.fileName);
+    //   API.putImage(formData)
+    //     .then(res => {
+    //       this.profileImage = res.data.picture;
+    //       this.hasUploaded = true;
+    //       this.fileName = null;
+    //     })
+    //     .catch(err => console.error(err));
+    // },
+    onImageChosen() {
+      this.message = '';
+      this.isFileSelected = true;
     },
     upload() {
-      // const croppedPic = this.croppa.generateDataUrl('image/jpeg', .5);
-      // console.log(croppedPic)
-      // const formData = new FormData();
-      // formData.append('profileImage', croppedPic);
-      // API.putImage(formData)
-      //   .then(res => {
-      //     this.profileImage = res.data.picture;
-      //     this.hasUploaded = true;
-      //     this.fileName = null;
-      //   })
-      //   .catch(err => console.error(err));
-        this.croppa.generateBlob(blob => {
-          console.log(blob)
-          const formData = new FormData();
-          formData.append('profileImage', blob);
-          API.putImage(formData)
-            .then(res => {
-              this.profileImage = res.data.picture;
-              this.hasUploaded = true;
-              this.fileName = null;
-            })
-            .catch(err => console.error(err));
-        })
+      this.croppa.generateBlob(blob => {
+        console.log(blob)
+        if (!blob) return null;
+        const formData = new FormData();
+        formData.append('profileImage', blob);
+        API.putImage(formData)
+          .then(res => {
+            this.hasUploaded = true;
+            this.croppa.remove();
+            this.message = 'Profile picture changed successfully.'
+            this.$emit('update-image', res.data.picture);
+          })
+          .catch(err => console.error(err));
+      });
     },
     emitLink() {
       this.$emit("close", this.profileImage);
     },
     reSet() {
-      this.fileName = null;
+      // this.fileName = null;
       this.profileImage = null;
       this.hasUploaded = false;
     },
@@ -121,9 +138,9 @@ export default {
     }
   },
   computed: {
-    fileNameText: function() {
-      return this.fileName ? this.fileName : "Upload Image";
-    }
+    // fileNameText: function() {
+    //   return this.fileName ? this.fileName : "Upload Image";
+    // }
   }
 };
 </script>
@@ -158,7 +175,9 @@ export default {
   display: table-cell;
   vertical-align: middle;
 }
-
+.upload-image-modal-message {
+  text-align: center;
+}
 .modal-container-upload {
   width: 300px;
   margin: 0px auto;
@@ -168,9 +187,30 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: "roboto", "sans-serif";
+  text-align: center;
+}
+#croppa-container {
+  position: relative;
 }
 .croppa, .croppa canvas {
   border-radius: 100%;
+}
+svg.icon.icon-remove {
+  top: 8px !important;
+  right: 8px !important;
+}
+.image-control {
+  border-radius: 100%;
+  height: 38px;
+  width: 38px;
+}
+.image-control:first-of-type {
+  margin-right: 30px;
+}
+.image-control.rotate {
+  position: absolute;
+  top: 170px;
+  left: 0;
 }
 .modal-header {
   margin-top: 0;

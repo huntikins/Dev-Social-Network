@@ -7,7 +7,7 @@
         <i class="fas fa-user-edit"></i>
       </div>
     </div>
-    <app-upload-modal v-if="isUploading" @close="closeReRender" :image="userImage"/>
+    <app-upload-modal v-if="isUploading" @close="closeReRender" :profile-image="userImage" @update-image="updateImage" />
   </div>
 </template>
 
@@ -43,6 +43,9 @@ export default {
           this.userImage = res.data.image;
         })
         .catch(err => console.error(err));
+    },
+    updateImage(newImageUrl) {
+      this.userImage = newImageUrl;
     }
   },
   created() {
