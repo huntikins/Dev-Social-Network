@@ -33,7 +33,6 @@
                 @image-remove="isFileSelected = false"
               ></croppa>
               <br>
-              <small class="home-body">{{ message }}</small>
               <button class="btn btn-light image-control" @click="croppa.zoomOut()" :disabled="!isFileSelected">
                 <i class="fas fa-minus"></i>
               </button>
@@ -43,6 +42,8 @@
               <button class="btn btn-light image-control rotate" @click="croppa.rotate(1)" :disabled="!isFileSelected">
                 <i class="fas fa-sync-alt"></i>
               </button>
+              <br><br>
+              <small class="home-body">{{ message }}</small>
             </div>
             <!-- <div class="custom-file">
               <input
@@ -57,10 +58,10 @@
             </div> -->
           </div>
           <div class="modal-footer">
-            <button class="btn btn-light modal-default-button" @click="upload">Save</button>
+            <button class="btn btn-light modal-default-button" @click="upload" :disabled="submittingFile">Save</button>
             <!-- <button v-if="hasUploaded" class="btn btn-light modal-default-button" @click="$emit('close')">Done</button> -->
-            <button v-if="isFileSelected" class="btn btn-light modal-default-button" @click="croppa.remove()">Change</button>
-            <button v-if="hasUploaded && !isFileSelected" class="btn btn-light modal-default-button" @click="$emit('close')">Done</button>
+            <button v-if="isFileSelected" class="btn btn-light modal-default-button" @click="croppa.remove()" :disabled="submittingFile">Change</button>
+            <button v-if="hasUploaded && !isFileSelected" class="btn btn-light modal-default-button" @click="$emit('close')" :disabled="submittingFile">Done</button>
           </div>
         </div>
       </div>
@@ -80,6 +81,7 @@ export default {
       // selectedFile: null,
       // fileName: null,
       isFileSelected: false,
+      submittingFile: false,
       hasUploaded: false,
       croppa: {},
       message: ''
@@ -107,6 +109,7 @@ export default {
       this.isFileSelected = true;
     },
     upload() {
+      this.submittingFile = true;
       this.croppa.generateBlob(blob => {
         console.log(blob)
         if (!blob) return null;
@@ -116,10 +119,15 @@ export default {
           .then(res => {
             this.hasUploaded = true;
             this.croppa.remove();
-            this.message = 'Profile picture changed successfully.'
+            this.message = 'Profile picture changed successfully.';
+            this.submittingFile = false;
             this.$emit('update-image', res.data.picture);
           })
-          .catch(err => console.error(err));
+          .catch(err => {
+            console.error(err);
+            this.submittingFile = false;
+            this.message = 'Save was unsuccessful.';
+          });
       });
     },
     emitLink() {
