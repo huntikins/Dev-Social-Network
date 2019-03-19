@@ -195,6 +195,10 @@ export default {
 .croppa, .croppa canvas {
   border-radius: 100%;
 }
+svg.icon.icon-remove {
+  top: 8px !important;
+  right: 8px !important;
+}
 .image-control {
   border-radius: 100%;
   height: 38px;
