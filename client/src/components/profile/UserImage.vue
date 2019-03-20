@@ -56,4 +56,15 @@ export default {
     border-radius: 100%;
   }
 /* } */
+@media (max-width: 980px) {
+  .profile-image {
+    height: 12.8vw !important;
+    width: 12.8vw !important;
+  }
+}
+@media (max-width: 767px) {
+  .profile-image {
+    display: none;
+  }
+}
 </style>

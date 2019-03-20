@@ -1,48 +1,66 @@
 <template>
-    <div class="profile-info">
-        <div class="profile-header">
-            <div class="user-name">
-                <h1 class="name-first">{{ firstName | firstCap }}</h1>
-                <h1 class="name-last">{{ lastName | firstCap }}</h1>
+    <div>
+        <!-- Buttons to switch between sidebar views on medium screens -->
+        <app-side-bar-view-toggle-buttons
+            :profile-image="image"
+            :is-current-user="true"
+            :is-social-view="isSocialView"
+            :is-profile-info-showing="isProfileInfoShowing"
+            @profile-view="status => isProfileInfoShowing = status"
+        />
+        <div v-if="isProfileInfoShowing" class="profile-info">
+            <div class="profile-header">
+                <div class="user-name">
+                    <h1 class="name-first">{{ firstName | firstCap }}</h1>
+                    <h1 class="name-last">{{ lastName | firstCap }}</h1>
+                </div>
+                <div class="user-stat">
+                    <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city || location.state ? `${location.city}, ${location.state}` : zipCode }}</span>
+                    <span class="stat-item" v-if="jobTitle || jobCompany">
+                        <i class="stat-icon fas fa-building"></i> {{ jobTitle || "Works" }}{{ jobCompany ? ` at ${jobCompany}` : '' }}
+                    </span>
+                    <div class="stat-item-group">
+                        <span class="stat-item-group">
+                            <i class="stat-icon-group fas fa-users" title="Friends"></i> {{ friend_count }} 
+                        </span>
+                        <span> </span>
+                        <span class="stat-item-group">
+                            <i class="stat-icon-group far fa-eye" title="Users you follow"></i> {{ following_count }} 
+                        </span>
+                        <span> </span>
+                        <span class="stat-item-group">
+                            <i class="stat-icon-group fas fa-eye" title="Users following you"></i> {{ follower_count }} 
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div class="user-stat">
-                <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city || location.state ? `${location.city}, ${location.state}` : zipCode }}</span>
-                <span class="stat-item" v-if="jobTitle || jobCompany">
-                    <i class="stat-icon fas fa-building"></i> {{ jobTitle || "Works" }}{{ jobCompany ? ` at ${jobCompany}` : '' }}
-                </span>
-                <div class="stat-item-group">
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-users" title="Friends"></i> {{ friend_count }} 
-                    </span>
-                    <span> </span>
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group far fa-eye" title="Users you follow"></i> {{ following_count }} 
-                    </span>
-                    <span> </span>
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-eye" title="Users following you"></i> {{ follower_count }} 
-                    </span>
+            <div class="profile-footer">
+                <div class="user-interest">
+                    <h4 class="interest-title">Interests</h4>
+                    <ul class="interest-list">
+                        <li class="interest-list-item" v-for="interest in interests" :key="interest">{{ interest }}</li>
+                    </ul>
+                </div>
+                <div class="user-bio">
+                    <p class="bio-text">{{ bio }}</p>
                 </div>
             </div>
         </div>
-        <div class="profile-footer">
-            <div class="user-interest">
-                <h4 class="interest-title">Interests</h4>
-                <ul class="interest-list">
-                    <li class="interest-list-item" v-for="interest in interests" :key="interest">{{ interest }}</li>
-                </ul>
-            </div>
-            <div class="user-bio">
-                <p class="bio-text">{{ bio }}</p>
-            </div>
-        </div>
+        <app-event-list v-else :events="events"></app-event-list>
     </div>
 </template>
 
 <script>
+import SideBarToggleButtons from '@/components/profile/SideBarToggleButtons';
+import EventList from '@/components/dashboard/social/EventList';
 import zipcodes from 'zipcodes';
 import api from '../../utils/api.js';
 export default {
+    props: ['isSocialView', 'events'],
+    components: {
+        appSideBarViewToggleButtons: SideBarToggleButtons,
+        appEventList: EventList
+    },
     data() {
         return {
             firstName: '',
@@ -54,31 +72,33 @@ export default {
             interests: [],
             followers: [],
             following: [],
-            bio: ""
+            bio: "",
+            image: "",
+            isProfileInfoShowing: true
         }
     },
     beforeCreate() {
-        const self = this;
         api.currentUser.getBasic().then(res => {
+            console.log(res)
             const user = res.data;
-            self.firstName = user.firstName;
-            self.lastName = user.lastName;
-            self.jobTitle = user.jobTitle || '';
-            self.jobCompany = user.jobCompany || '';
-            self.zipCode = user.zipCode;
-            self.location = zipcodes.lookup(parseInt(user.zipCode)) || {};
-            self.interests = user.interests || [];
-            self.followers = user.followers || [];
-            self.following = user.following || [];
-            self.bio = user.bio || '';
+            this.firstName = user.firstName;
+            this.lastName = user.lastName;
+            this.jobTitle = user.jobTitle || '';
+            this.jobCompany = user.jobCompany || '';
+            this.zipCode = user.zipCode;
+            this.location = zipcodes.lookup(parseInt(user.zipCode)) || {};
+            this.interests = user.interests || [];
+            this.followers = user.followers || [];
+            this.following = user.following || [];
+            this.bio = user.bio || '';
+            this.image = user.picture || '';
         });
     },
     computed: {
         friend_count: function() {
             let count = 0;
-            const self = this;
-            self.followers.forEach(user => {
-                if (self.following.indexOf(user) > -1) count++;
+            this.followers.forEach(user => {
+                if (this.following.indexOf(user) > -1) count++;
             });
             return count;
         },
@@ -255,8 +275,14 @@ span.stat-item-group{
 
 }
 /* Low Resolution Tablets, Mobiles (Landscape) */
-@media (min-width: 481px) and (max-width: 767px) {
-
+@media (max-width: 767.5px) {
+    .profile-info {
+        width: 180px;
+        height: 100vh;
+    }
+    .profile-header {
+        padding-top: 40px;
+    }
 }
 /* Most of the Smartphones Mobiles (Portrait) */
 @media (min-width: 319px) and (max-width: 480px) {

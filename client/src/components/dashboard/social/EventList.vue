@@ -17,11 +17,7 @@
 import moment from 'moment';
 import api from '../../../utils/api.js';
 export default {
-    data(){
-        return {
-            events: []
-        }
-    },
+    props: ['events'],
     filters: {
         formatDate(value){
             return moment(value, "YYYY-MM-DD HH:mm").format("LLLL");
@@ -29,10 +25,6 @@ export default {
         caps(value){
             return value.toUpperCase();
         }
-    },
-    beforeCreate() {
-        let self = this;
-        api.events.getEventsList().then(res => self.events = res.data);
     }
 }
 </script>
@@ -116,4 +108,12 @@ export default {
         font-size: .70em;
     }
 /* } */
+@media (max-width: 767.5px) {
+    .list-feed {
+        padding-top: 80px;
+    }
+    .event-item {
+        border-radius: 25px;
+    }
+}
 </style>

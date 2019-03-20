@@ -36,6 +36,7 @@ export default {
         getPosts() {
             const self = this;
             api.posts.getSocialFeed().then(res => {
+                console.log(res)
                 self.posts = res.data.posts;
                 self.currentUserKB = res.data.currentUserKB;
                 self.currentUserId = res.data.currentUserId;

@@ -1,14 +1,14 @@
 <template>
     <div class="dash-container">
         <div class="row m-0 p-0">
-            <div class="side-container col-2">
-                <app-side-bar />
+            <div class="side-container col-md-2">
+                <app-side-bar :is-social-view="true" :events="events" />
             </div>
-            <div class="social-container col-7">
+            <div class="social-container col-md-7">
                 <app-social-feed />
             </div>
-            <div class="list-container col-3">
-                <app-event-list />
+            <div class="list-container col-md-3">
+                <app-event-list :events="events" />
             </div>
         </div>
     </div>
@@ -18,11 +18,20 @@
 import EventList from '@/components/dashboard/social/EventList'
 import SocialFeed from '@/components/dashboard/social/SocialFeed'
 import SideBar from '@/components/profile/SideBar';
+import api from '@/utils/api';
 export default {
+    data(){
+        return {
+            events: []
+        }
+    },
     components: {
         appEventList: EventList,
         appSocialFeed: SocialFeed,
         appSideBar: SideBar
+    },
+    beforeCreate() {
+        api.events.getEventsList().then(res => this.events = res.data);
     }
 }
 </script>
@@ -69,5 +78,16 @@ export default {
     margin-top: 10px;
     margin-right: 0 !important;
     padding-right: 0 !important;
+}
+@media (max-width: 769px) {
+    .side-container {
+        width: 200px;
+    }
+    .social-container {
+        width: calc(100% - 215px);
+    }
+    .list-container {
+        display: none;
+    }
 }
 </style>
