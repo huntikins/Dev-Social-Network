@@ -47,9 +47,9 @@ export default {
   border-radius: 100%;
   border: solid #f39121 2px;
 }
-@media (min-width: 767px) {
+/* @media (min-width: 767px) {
   #side-bar-view-toggle-btns {
     display: none;
   }
-}
+} */
 </style>
