@@ -52,7 +52,7 @@ export default {
     width: 125px;
     border: 5px solid #f39121;
     position: absolute;
-    top: 3% !important;
+    top: 22px !important;
     border-radius: 100%;
   }
 /* } */

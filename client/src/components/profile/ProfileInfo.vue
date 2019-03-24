@@ -31,6 +31,10 @@
           </span>
         </div>
       </div>
+      <div v-if="isCurrentUser === false" class="follow-wrapper">
+        <button class="btn btn-follow" v-if="followusr === false" @click.prevent="$emit('follow')"><i class="stat-icon-follow far fa-eye"></i> follow</button>
+        <button class="btn btn-following" v-else @click.prevent="$emit('unfollow')"><i class="stat-icon-follow far fa-eye"></i> following</button>
+      </div>
     </div>
     <div class="profile-footer">
       <div class="user-interest">
@@ -52,7 +56,7 @@
 
 <script>
 export default {
-  props: ["user", "isCurrentUser"],
+  props: ["user", "isCurrentUser", "followusr"],
   filters: {
     firstCap(value) {
       value = value.toString();
@@ -132,6 +136,34 @@ span.stat-item-group {
 .stat-icon-group {
   color: #3dc0ec;
   font-size: 1em;
+}
+.btn-follow{
+    background-color:#3dc0ec;
+    border-radius: 100px;
+    color: white;
+    font-family: roboto, sans-serif;
+    text-align: center;
+}
+.btn-follow:hover{
+    text-decoration: none;
+    color: white;
+}
+.btn-following{
+    background-color:#859595;
+    border-radius: 100px;
+    color: white;
+    font-family: roboto, sans-serif;
+    text-align: center;
+}
+.btn-following:hover{
+    text-decoration: none;
+    color: white;
+}
+.stat-icon-follow {
+    color: white;
+}
+.follow-wrapper {
+    text-align: center;
 }
 .profile-header {
   border-bottom-right-radius: 25px;

@@ -110,10 +110,11 @@ export default {
 /* } */
 @media (max-width: 767.5px) {
     .list-feed {
-        padding-top: 80px;
+        padding: 80px 0;
     }
     .event-item {
-        border-radius: 25px;
+        border-radius: 0 25px 25px 0;
+        margin-right: 0;
     }
 }
 </style>

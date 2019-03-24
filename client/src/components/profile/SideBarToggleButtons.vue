@@ -1,7 +1,10 @@
 <template>
   <div id="side-bar-view-toggle-btns">
-    <button class="side-bar-btn left btn" @click="$emit('profile-view', false)">
+    <button v-if="isSocialView" class="side-bar-btn left btn" @click="$emit('profile-view', false)">
       <i class="fab fa-meetup"></i>
+    </button>
+    <button v-else class="side-bar-btn left btn" @click="$emit('profile-view', false)">
+      <span class="kb-button-text">KB</span>
     </button>
     <button class="side-bar-btn right btn" @click="$emit('profile-view', true)">
       <img v-if="profileImage" class="side-bar-user-image" :src="profileImage" alt="Profile picture" />
@@ -35,6 +38,15 @@ export default {
 }
 .side-bar-btn > .fa-meetup {
   font-size: 40px;
+  color: white;
+}
+.kb-button-text {
+  font-family: alternate-gothic-no-1-d, sans-serif;
+  display: inline-block;
+  line-height: 1;
+  font-size: 40px;
+  height: 40px;
+  width: 40px;
   color: white;
 }
 .side-bar-btn.right, .side-bar-user-image {

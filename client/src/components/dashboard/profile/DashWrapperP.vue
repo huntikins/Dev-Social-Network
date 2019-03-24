@@ -1,23 +1,14 @@
 <template>
     <div class="dash-container">
         <div class="row m-0 p-0">
-            <div class="side-container col-2">
-                <app-side-bar />
+            <div class="side-container col-md-2">
+                <app-side-bar :kb-articles="kbArticles" />
             </div>
-            <div class="social-container col-7">
+            <div class="social-container col-md-7">
                 <app-user-feed @saved="postSaved" />
             </div>
-            <div class="list-container col-3">
-                <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
-                    <app-kb-list 
-                        v-for="article in kbArticles" :key="article._id"
-                        :title="article.title"
-                        :link="article.url"
-                        :body="article.body"
-                        :comments="article.comments"
-                        :postId="article.postId"
-                        />
-                </div>
+            <div class="list-container col-md-3">
+                <app-kb-list :kb-articles="kbArticles" />
             </div>
         </div>
     </div>
@@ -95,5 +86,16 @@ export default {
     margin-top: 10px;
     margin-right: 0 !important;
     padding-right: 0 !important;
+}
+@media (max-width: 769px) {
+    .side-container {
+        width: 200px;
+    }
+    .social-container {
+        width: calc(100% - 215px);
+    }
+    .list-container {
+        display: none;
+    }
 }
 </style>

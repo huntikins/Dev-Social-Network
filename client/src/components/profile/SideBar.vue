@@ -14,7 +14,8 @@
                 @profile-view="status => isProfileInfoShowing = status"
             />
             <app-profile-info v-if="isProfileInfoShowing" :is-current-user="true" :user="userInfo" />
-            <app-event-list v-else :events="events" />
+            <app-event-list v-else-if="isSocialView" :events="events" />
+            <app-kb-list v-else :kb-articles="kbArticles" />
         </div>
     </div>
 </template>
@@ -23,14 +24,16 @@
 import SideBarToggleButtons from '@/components/profile/SideBarToggleButtons';
 import EventList from '@/components/dashboard/social/EventList';
 import ProfileInfo from './ProfileInfo';
+import kbList from '@/components/dashboard/profile/KbList';
 import zipcodes from 'zipcodes';
 import api from '../../utils/api.js';
 export default {
-    props: ['isSocialView', 'events'],
+    props: ['isSocialView', 'events', 'kbArticles'],
     components: {
         appSideBarViewToggleButtons: SideBarToggleButtons,
         appEventList: EventList,
-        appProfileInfo: ProfileInfo
+        appProfileInfo: ProfileInfo,
+        appKbList: kbList
     },
     data() {
         return {

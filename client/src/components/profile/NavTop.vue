@@ -1,18 +1,21 @@
 <template>
-  <div class="navbar navbar-light justify-content-end">
-    <app-slide width="17">
-      <router-link id to="/social" class="menu-link">Social</router-link>
-      <router-link id to="/profile" class="menu-link">Profile</router-link>
-      <router-link id to="/account" class="menu-link">Account</router-link>
-      <app-user-search/>
-      <span @click="logout" class="logout">Log Out</span>
-      <a class="logout mt-4" href="https://github.com/huntertrammell/Dev-Social-Network/issues">
-        <i class="fab fa-github"></i>
+  <div>
+    <div class="navbar navbar-light justify-content-end">
+      <app-slide width="17">
+        <router-link id to="/social" class="menu-link">Social</router-link>
+        <router-link id to="/profile" class="menu-link">Profile</router-link>
+        <router-link id to="/account" class="menu-link">Account</router-link>
+        <app-user-search/>
+        <span @click="logout" class="logout">Log Out</span>
+        <a class="logout mt-4" href="https://github.com/huntertrammell/Dev-Social-Network/issues">
+          <i class="fab fa-github"></i>
+        </a>
+      </app-slide>
+      <a class="navbar-brand text-right" href="#">
+        <img class="nav-logo" src="@/assets/nav-logo.png" alt="cerebellum">
       </a>
-    </app-slide>
-    <a class="navbar-brand text-right" href="#">
-      <img class="nav-logo" src="@/assets/nav-logo.png" alt="cerebellum">
-    </a>
+    </div>
+    <div class="navbar-background"></div>
   </div>
 </template>
 
@@ -35,11 +38,16 @@ export default {
 
 <style>
 .navbar {
+  height: 10%;
+  width: 100vw;
+  position: fixed;
+  z-index: 20;
+}
+.navbar-background {
   background-color: #859595;
   height: 10%;
   width: 100vw;
   position: fixed;
-  z-index: 4;
 }
 .logout {
   color: white;
