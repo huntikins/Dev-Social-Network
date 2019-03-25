@@ -62,7 +62,7 @@ export default {
     width: 12.8vw !important;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 769px) {
   .profile-image {
     display: none;
   }

@@ -1,12 +1,19 @@
 <template>
   <div id="side-bar-view-toggle-btns">
-    <button v-if="isSocialView" class="side-bar-btn left btn" @click="$emit('profile-view', false)">
-      <i class="fab fa-meetup"></i>
-    </button>
-    <button v-else class="side-bar-btn left btn" @click="$emit('profile-view', false)">
-      <span class="kb-button-text">KB</span>
-    </button>
-    <button class="side-bar-btn right btn" @click="$emit('profile-view', true)">
+    <button
+      v-if="isSocialView"
+      :class="isProfileInfoShowing ? 'side-bar-btn left btn' : 'side-bar-btn left btn active'"
+      @click="$emit('profile-view', false)"
+    ><i class="fab fa-meetup"></i></button>
+    <button
+      v-else
+      :class="isProfileInfoShowing ? 'side-bar-btn left btn' : 'side-bar-btn left btn active'"
+      @click="$emit('profile-view', false)"
+    ><span class="kb-button-text">KB</span></button>
+    <button
+      :class="isProfileInfoShowing ? 'side-bar-btn right btn active' : 'side-bar-btn right btn'"
+      @click="$emit('profile-view', true)"
+    >
       <img v-if="profileImage" class="side-bar-user-image" :src="profileImage" alt="Profile picture" />
       <img
         v-else
@@ -21,7 +28,6 @@
 <script>
 export default {
   props: ['profileImage', 'isCurrentUser', 'isSocialView', 'isProfileInfoShowing']
-
 }
 </script>
 
@@ -58,6 +64,11 @@ export default {
   top: 50px;
   border-radius: 100%;
   border: solid #f39121 2px;
+}
+.side-bar-btn.active {
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 /* @media (min-width: 767px) {
   #side-bar-view-toggle-btns {

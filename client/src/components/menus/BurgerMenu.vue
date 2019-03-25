@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="bm-menu" :class="{ right: right, open: isSideBarOpen }" :style="{ width: currentWidth + '%'}">
+        <!-- switched from inline style to style tag to allow media queries -->
+        <div class="bm-menu" :class="{ right: right, open: isSideBarOpen }">
             
             <slot></slot>
             
@@ -38,6 +39,7 @@
           type: Boolean,
           required: false
         },
+        // Not using
         width: {
           type: [String],
           required: false,
@@ -83,11 +85,12 @@
         }
       },
       computed: {
+        // Not using
         currentWidth: function() {
           if (window.screen.width > 1024){
             return this.isSideBarOpen ? this.width : 0;
           } else {
-            this.width = 100
+            // this.width = 100
             return this.isSideBarOpen ? this.width : 0
           }
           
@@ -167,6 +170,9 @@
       padding-top: 60px;
       transition: 0.5s;
     }
+    .bm-menu.open {
+      width: 16%;
+    }
     .bm-menu.right {
       left:auto;
       right:0px;
@@ -195,7 +201,17 @@
     .bm-cross-button {
       left: 30px;
     }
-            /* higher resolution desktops */
+    @media (max-width: 769px) {
+      .bm-menu.open {
+        width: 190px;
+      }
+    }
+    @media (max-width: 612px) {
+      .bm-menu.open {
+        width: 100%;
+      }
+    }
+    /* higher resolution desktops */
     @media (min-width: 1025px) and (max-width: 1600px) {
         .bm-burger-button{
           top: 25px;

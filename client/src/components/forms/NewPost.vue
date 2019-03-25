@@ -146,7 +146,7 @@ textarea#post {
     width: 90%;
   }
 /* } */
-@media (max-width: 767.5px) {
+@media (max-width: 769px) {
   .new-post-container {
     border-top-left-radius: 25px;
   }

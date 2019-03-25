@@ -89,10 +89,14 @@ export default {
 }
 @media (max-width: 769px) {
     .side-container {
+        flex: none;
         width: 200px;
+        max-width: 200px;
     }
     .social-container {
+        flex: none;
         width: calc(100% - 215px);
+        max-width: calc(100% - 215px);
     }
     .list-container {
         display: none;

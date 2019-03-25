@@ -265,13 +265,18 @@ span.stat-item-group {
   line-height: 1;
 }
 /* } */
-@media (max-width: 767.5px) {
+@media (max-width: 769px) {
   .profile-info {
     width: 180px;
     height: 100vh;
   }
   .profile-header {
     padding-top: 40px;
+  }
+}
+@media (max-width: 612px) {
+  .profile-info {
+    width: 100%;
   }
 }
 </style>

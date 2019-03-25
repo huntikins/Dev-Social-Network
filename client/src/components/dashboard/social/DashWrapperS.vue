@@ -11,6 +11,10 @@
                 <app-event-list :events="events" />
             </div>
         </div>
+        <div class="single column view">
+            <app-event-list :events="events" />
+
+        </div>
     </div>
 </template>
 
@@ -81,13 +85,25 @@ export default {
 }
 @media (max-width: 769px) {
     .side-container {
+        flex: none;
         width: 200px;
+        max-width: none;
     }
     .social-container {
+        flex: none;
         width: calc(100% - 215px);
+        max-width: none;
     }
     .list-container {
         display: none;
+    }
+}
+@media (max-width: 612px) {
+    .dash-container > .row {
+        display: none;
+    }
+    .side-container, .social-container, .list-container {
+        width: 100%;
     }
 }
 </style>

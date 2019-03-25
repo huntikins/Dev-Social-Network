@@ -79,7 +79,7 @@ export default {
 .side-bar-large {
     display: none;
 }
-@media (min-width: 767px) {
+@media (min-width: 769px) {
   .side-bar-medium {
     display: none;
   }
