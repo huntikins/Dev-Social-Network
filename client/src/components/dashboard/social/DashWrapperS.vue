@@ -1,41 +1,77 @@
 <template>
-    <div class="dash-container">
-        <div class="row m-0 p-0">
-            <div class="side-container col-md-2">
-                <app-side-bar :is-social-view="true" :events="events" />
+    <div>
+        <app-user-img :image="userInfo.image" />
+        <div class="dash-container">
+            <div class="row m-0 p-0">
+                <div class="side-container col-md-2">
+                    <app-side-bar :is-social-view="true" :events="events" :user-info="userInfo"/>
+                </div>
+                <div class="social-container col-md-7">
+                    <app-social-feed />
+                </div>
+                <div class="list-container col-md-3">
+                    <app-event-list :events="events" />
+                </div>
             </div>
-            <div class="social-container col-md-7">
-                <app-social-feed />
-            </div>
-            <div class="list-container col-md-3">
+            <div class="single column view">
                 <app-event-list :events="events" />
-            </div>
-        </div>
-        <div class="single column view">
-            <app-event-list :events="events" />
 
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import UserImage from '@/components/profile/UserImage';
 import EventList from '@/components/dashboard/social/EventList'
 import SocialFeed from '@/components/dashboard/social/SocialFeed'
+import zipcodes from 'zipcodes';
 import SideBar from '@/components/profile/SideBar';
 import api from '@/utils/api';
 export default {
     data(){
         return {
+            userInfo: {
+                firstName: '',
+                lastName: '',
+                jobTitle: '',
+                jobCompany: '',
+                zipCode: '',
+                location: {},
+                interests: [],
+                followers: [],
+                following: [],
+                bio: "",
+                image: ""
+            },
             events: []
         }
     },
     components: {
         appEventList: EventList,
         appSocialFeed: SocialFeed,
-        appSideBar: SideBar
+        appSideBar: SideBar,
+        appUserImg: UserImage
     },
     beforeCreate() {
         api.events.getEventsList().then(res => this.events = res.data);
+        api.currentUser.getBasic().then(res => {
+            console.log(res)
+            const user = res.data;
+            this.userInfo = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                jobTitle: user.jobTitle || '',
+                jobCompany: user.jobCompany || '',
+                zipCode: user.zipCode,
+                location: zipcodes.lookup(parseInt(user.zipCode)) || {},
+                interests: user.interests || [],
+                followers: user.followers || [],
+                following: user.following || [],
+                bio: user.bio || '',
+                image: user.picture || ''
+            }
+        });
     }
 }
 </script>

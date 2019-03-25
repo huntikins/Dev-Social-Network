@@ -28,7 +28,7 @@ import kbList from '@/components/dashboard/profile/KbList';
 import zipcodes from 'zipcodes';
 import api from '../../utils/api.js';
 export default {
-    props: ['isSocialView', 'events', 'kbArticles'],
+    props: ['isSocialView', 'events', 'kbArticles', 'userInfo'],
     components: {
         appSideBarViewToggleButtons: SideBarToggleButtons,
         appEventList: EventList,
@@ -37,40 +37,8 @@ export default {
     },
     data() {
         return {
-            userInfo: {
-                firstName: '',
-                lastName: '',
-                jobTitle: '',
-                jobCompany: '',
-                zipCode: '',
-                location: {},
-                interests: [],
-                followers: [],
-                following: [],
-                bio: "",
-                image: ""
-            },
             isProfileInfoShowing: true
         }
-    },
-    beforeCreate() {
-        api.currentUser.getBasic().then(res => {
-            console.log(res)
-            const user = res.data;
-            this.userInfo = {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                jobTitle: user.jobTitle || '',
-                jobCompany: user.jobCompany || '',
-                zipCode: user.zipCode,
-                location: zipcodes.lookup(parseInt(user.zipCode)) || {},
-                interests: user.interests || [],
-                followers: user.followers || [],
-                following: user.following || [],
-                bio: user.bio || '',
-                image: user.picture || ''
-            }
-        });
     }
 }
 </script>

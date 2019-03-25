@@ -14,22 +14,7 @@
 import api from "../../utils/api.js";
 
 export default {
-  props: ["userId"],
-  data() {
-    return {
-      image: undefined
-    };
-  },
-  created() {
-    if (!this.$props.userId) {
-      api.currentUser.getImage().then(res => {
-        this.image = res.data.image;
-      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.error(err.response.data));
-    } else
-      api.otherUser.getImage(this.$props.userId).then(res => {
-        this.image = res.data.image;
-      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.error(err.response.data));
-  }
+  props: ["userId", "image"],
 };
 </script>
 
