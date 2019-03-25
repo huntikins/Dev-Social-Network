@@ -13,7 +13,7 @@
                     <app-event-list :events="events" />
                 </div>
             </div>
-            <div class="single column view">
+            <div class="single-column-view">
                 <app-event-list :events="events" />
 
             </div>
@@ -71,7 +71,7 @@ export default {
                 bio: user.bio || '',
                 image: user.picture || ''
             }
-        });
+        }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.error(err.response.data));
     }
 }
 </script>
@@ -100,6 +100,9 @@ export default {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: rgb(61,192,236);
+}
+.dash-container > .single-column-view {
+    display: none;
 }
 .social-container {
     position: relative;
@@ -137,6 +140,9 @@ export default {
 @media (max-width: 612px) {
     .dash-container > .row {
         display: none;
+    }
+    .dash-container > .single-column-view {
+        display: block;
     }
     .side-container, .social-container, .list-container {
         width: 100%;

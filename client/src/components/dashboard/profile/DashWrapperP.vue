@@ -1,32 +1,54 @@
 <template>
-    <div class="dash-container">
-        <div class="row m-0 p-0">
-            <div class="side-container col-md-2">
-                <app-side-bar :kb-articles="kbArticles" />
-            </div>
-            <div class="social-container col-md-7">
-                <app-user-feed @saved="postSaved" />
-            </div>
-            <div class="list-container col-md-3">
-                <app-kb-list :kb-articles="kbArticles" />
+    <div>
+        <app-user-img :image="userInfo.image" />
+        <div class="dash-container">
+            <div class="row m-0 p-0">
+                <div class="side-container col-md-2">
+                    <app-side-bar :kb-articles="kbArticles" :user-info="userInfo" />
+                </div>
+                <div class="social-container col-md-7">
+                    <app-user-feed @saved="postSaved" />
+                </div>
+                <div class="list-container col-md-3">
+                    <app-kb-list :kb-articles="kbArticles" />
+                </div>
+                <div class="single-column-view">
+
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import UserImage from '@/components/profile/UserImage';
 import KbList from '@/components/dashboard/profile/KbList'
 import UserFeed from '@/components/dashboard/profile/UserFeed'
+import zipcodes from 'zipcodes';
 import SideBar from '@/components/profile/SideBar';
 import api from '@/utils/api';
 export default {
     components: {
         appKbList: KbList,
         appUserFeed: UserFeed,
-        appSideBar: SideBar
+        appSideBar: SideBar,
+        appUserImg: UserImage
     },
     data(){
         return{
+            userInfo: {
+                firstName: '',
+                lastName: '',
+                jobTitle: '',
+                jobCompany: '',
+                zipCode: '',
+                location: {},
+                interests: [],
+                followers: [],
+                following: [],
+                bio: "",
+                image: ""
+            },
             kbArticles: []
         }
     },
@@ -40,6 +62,24 @@ export default {
             .then(res => {
                 this.kbArticles = res.data.kbItems.reverse();
             });
+        api.currentUser.getBasic().then(res => {
+            console.log(res)
+            const user = res.data;
+            this.userInfo = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                jobTitle: user.jobTitle || '',
+                jobCompany: user.jobCompany || '',
+                zipCode: user.zipCode,
+                location: zipcodes.lookup(parseInt(user.zipCode)) || {},
+                interests: user.interests || [],
+                followers: user.followers || [],
+                following: user.following || [],
+                bio: user.bio || '',
+                image: user.picture || ''
+            }
+        }).catch(err => err.response && err.response.status === 401 ? this.$router.push('/') : console.error(err));
+
     }
 }
 </script>
@@ -68,6 +108,9 @@ export default {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: rgb(61,192,236);
+}
+.dash-container > .single-column-view {
+    display: none;
 }
 .social-container {
     position: relative;
@@ -100,6 +143,17 @@ export default {
     }
     .list-container {
         display: none;
+    }
+}
+@media (max-width: 612px) {
+    .dash-container > .row {
+        display: none;
+    }
+    .dash-container > .single-column-view {
+        display: block;
+    }
+    .side-container, .social-container, .list-container {
+        width: 100%;
     }
 }
 </style>

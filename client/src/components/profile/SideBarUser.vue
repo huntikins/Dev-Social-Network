@@ -2,7 +2,13 @@
     <div>
         <!-- Profile info to show on larger screens -->
         <div class="side-bar-large">
-            <app-profile-info :user="userInfo" :is-current-user="false" @follow="follow" @unfollow="unfollow" :followusr="followusr" />
+            <app-profile-info
+                :user="userInfo"
+                :is-current-user="false"
+                :followusr="followusr"
+                @follow="$emit('follow')"
+                @unfollow="$emit('unfollow')"
+            />
         </div>
         <div class="side-bar-medium">
             <!-- Buttons to switch between sidebar views on medium screens -->
@@ -12,8 +18,14 @@
                 :is-profile-info-showing="isProfileInfoShowing"
                 @profile-view="status => isProfileInfoShowing = status"
             />
-            <app-profile-info v-if="isProfileInfoShowing" :is-current-user="false" :user="userInfo" @follow="follow" @unfollow="unfollow" :followusr="followusr" />
-            <app-event-list v-else-if="isSocialView" :events="events" />
+            <app-profile-info
+                v-if="isProfileInfoShowing"
+                :is-current-user="false"
+                :user="userInfo"
+                :followusr="followusr"
+                @follow="$emit('follow')"
+                @unfollow="$emit('unfollow')"
+            />
             <app-kb-list v-else :kb-articles="kbArticles" />
         </div>
     </div>
@@ -26,7 +38,7 @@ import kbList from '@/components/dashboard/profile/KbList';
 import zipcodes from 'zipcodes';
 import api from '../../utils/api.js';
 export default {
-    props: ['userId', 'kbArticles'],
+    props: ['kbArticles', 'userInfo', 'followusr'],
     components: {
         appSideBarViewToggleButtons: SideBarToggleButtons,
         appProfileInfo: ProfileInfo,
@@ -34,68 +46,7 @@ export default {
     },
     data(){
         return {
-            userInfo: {
-                firstName: "",
-                lastName: "",
-                jobTitle: "",
-                zipCode: '',
-                jobCompany: "",
-                location: '',
-                interests: [],
-                followers: [],
-                following: [],
-                bio: "",
-                image: "",
-                _id: null
-            },
-            followusr: false,
-            currentUserId: null,
             isProfileInfoShowing: true
-        }
-    },
-    computed: {
-        friend_count: function() {
-            let count = 0;
-            const self = this;
-            this.followers.forEach(user => {
-                if (this.following.indexOf(user) > -1) count++;
-            });
-            return count;
-        },
-        follower_count: function() { return this.followers.length },
-        following_count: function() { return this.following.length }
-    },
-    created() {
-        api.otherUser.getBasic(this.$props.userId).then(res => {
-            const user = res.data.user;
-            this.currentUserId = res.data.currentUser;
-            this.userInfo.firstName = user.firstName;
-            this.userInfo.lastName = user.lastName;
-            this.userInfo.jobTitle = user.jobTitle || '';
-            this.userInfo.jobCompany = user.jobCompany || '';
-            this.userInfo.zipCode = user.zipCode;
-            this.userInfo.location = zipcodes.lookup(parseInt(user.zipCode));
-            this.userInfo.interests = user.interests || [];
-            this.userInfo.followers = user.followers || [];
-            this.userInfo.following = user.following || [];
-            this.userInfo.bio = user.bio || '';
-            this.userInfo.image = user.picture || "";
-            this.userInfo.followusr = user.followers.indexOf(this.currentUserId) > -1;
-            this.userInfo._id = user._id;
-        });
-    },
-    methods: {
-        follow(){
-            api.social.follow(this.userInfo._id).then(res => console.log(res));
-            this.followusr = true;
-            this.userInfo.followers.push(this.currentUserId);
-            if (this.userInfo._id === this.currentUserId) this.userInfo.following.push(this.currentUserId);
-        },
-        unfollow(){
-            api.social.unfollow(this.userInfo._id).then(res => console.log(res));
-            this.followusr = false;
-            this.userInfo.followers.splice(this.userInfo.followers.indexOf(this.currentUserId), 1);
-            if (this.userInfo._id === this.currentUserId) this.userInfo.following.splice(this.userInfo.following.indexOf(this.currentUserId), 1);
         }
     },
     filters: {
@@ -108,4 +59,15 @@ export default {
 </script>
 
 <style>
+.side-bar-large {
+    display: none;
+}
+@media (min-width: 769px) {
+  .side-bar-medium {
+    display: none;
+  }
+  .side-bar-large {
+    display: block;
+  }
+}
 </style>

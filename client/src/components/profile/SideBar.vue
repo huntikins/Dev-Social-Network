@@ -25,8 +25,6 @@ import SideBarToggleButtons from '@/components/profile/SideBarToggleButtons';
 import EventList from '@/components/dashboard/social/EventList';
 import ProfileInfo from './ProfileInfo';
 import kbList from '@/components/dashboard/profile/KbList';
-import zipcodes from 'zipcodes';
-import api from '../../utils/api.js';
 export default {
     props: ['isSocialView', 'events', 'kbArticles', 'userInfo'],
     components: {

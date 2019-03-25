@@ -14,7 +14,7 @@
 import api from "../../utils/api.js";
 
 export default {
-  props: ["userId", "image"],
+  props: ["userId", "image"]
 };
 </script>
 

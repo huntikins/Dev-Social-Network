@@ -1,5 +1,5 @@
 <template>
-    <div :key="$route">
+    <div :key="$route.path">
         <div class="profile-content">
             <app-boomerang :user-id="userId" />
             <app-dash-wrapper-u :user-id="userId"/>
