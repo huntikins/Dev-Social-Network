@@ -151,4 +151,10 @@ textarea#post {
     border-top-left-radius: 25px;
   }
 }
+@media (max-width: 612px) {
+  .new-post-container {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+  }
+}
 </style>

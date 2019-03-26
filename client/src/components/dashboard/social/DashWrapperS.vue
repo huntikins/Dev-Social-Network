@@ -1,7 +1,20 @@
 <template>
     <div>
         <app-user-img :image="userInfo.image" />
+        <app-mobile-view-toggle
+            v-if="hideButtons === false"
+            view="Social View"
+            :profile-image="userInfo.image"
+            :is-social-view="true"
+            :is-current-user="true"
+            :is-profile-info-showing="isProfileShowing"
+            :are-posts-showing="arePostsShowing"
+            @show-profile-info="showProfileInfo"
+            @show-posts="showPostFeed"
+            @show-other="showKbOrEvents"
+        />
         <div class="dash-container">
+            <!-- Large and medium screen views -->
             <div class="row m-0 p-0">
                 <div class="side-container col-md-2">
                     <app-side-bar :is-social-view="true" :events="events" :user-info="userInfo"/>
@@ -13,22 +26,35 @@
                     <app-event-list :events="events" />
                 </div>
             </div>
+            <!-- Small screen view -->
             <div class="single-column-view">
-                <app-event-list :events="events" />
-
+                <app-profile-info v-if="isProfileShowing" :user="userInfo" :is-current-user="true" />
+                <app-social-feed v-else-if="arePostsShowing" />
+                <app-event-list v-else :events="events" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import MobileViewToggle from '@/components/menus/MobileViewToggle';
 import UserImage from '@/components/profile/UserImage';
 import EventList from '@/components/dashboard/social/EventList'
 import SocialFeed from '@/components/dashboard/social/SocialFeed'
+import ProfileInfo from '@/components/profile/ProfileInfo';
 import zipcodes from 'zipcodes';
 import SideBar from '@/components/profile/SideBar';
 import api from '@/utils/api';
 export default {
+    props: ['hideButtons'],
+    components: {
+        appEventList: EventList,
+        appSocialFeed: SocialFeed,
+        appSideBar: SideBar,
+        appUserImg: UserImage,
+        appMobileViewToggle: MobileViewToggle,
+        appProfileInfo: ProfileInfo
+    },
     data(){
         return {
             userInfo: {
@@ -44,14 +70,24 @@ export default {
                 bio: "",
                 image: ""
             },
-            events: []
+            events: [],
+            isProfileShowing: true,
+            arePostsShowing: false
         }
     },
-    components: {
-        appEventList: EventList,
-        appSocialFeed: SocialFeed,
-        appSideBar: SideBar,
-        appUserImg: UserImage
+    methods: {
+        showProfileInfo() {
+            this.isProfileShowing = true;
+            this.arePostsShowing = false;
+        },
+        showPostFeed() {
+            this.isProfileShowing = false;
+            this.arePostsShowing = true;
+        },
+        showKbOrEvents() {
+            this.isProfileShowing = false;
+            this.arePostsShowing = false;
+        }
     },
     beforeCreate() {
         api.events.getEventsList().then(res => this.events = res.data);

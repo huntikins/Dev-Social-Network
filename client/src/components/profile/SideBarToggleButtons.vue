@@ -1,15 +1,12 @@
 <template>
   <div id="side-bar-view-toggle-btns">
     <button
-      v-if="isSocialView"
       :class="isProfileInfoShowing ? 'side-bar-btn left btn' : 'side-bar-btn left btn active'"
       @click="$emit('profile-view', false)"
-    ><i class="fab fa-meetup"></i></button>
-    <button
-      v-else
-      :class="isProfileInfoShowing ? 'side-bar-btn left btn' : 'side-bar-btn left btn active'"
-      @click="$emit('profile-view', false)"
-    ><span class="kb-button-text">KB</span></button>
+    >
+      <i v-if="isSocialView" class="fab fa-meetup" />
+      <span v-else class="kb-button-text">KB</span>
+    </button>
     <button
       :class="isProfileInfoShowing ? 'side-bar-btn right btn active' : 'side-bar-btn right btn'"
       @click="$emit('profile-view', true)"

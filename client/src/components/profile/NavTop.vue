@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="navbar navbar-light justify-content-end">
-      <app-slide width="17">
+      <app-slide width="17" @open-menu="$emit('open-menu')" @close-menu="$emit('close-menu')">
         <router-link id to="/social" class="menu-link">Social</router-link>
         <router-link id to="/profile" class="menu-link">Profile</router-link>
         <router-link id to="/account" class="menu-link">Account</router-link>
@@ -85,6 +85,22 @@ export default {
   height: 100%;
   width: auto;
 }
+@media (max-width: 612px) {
+  .navbar-brand {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-logo {
+    height: 50%;
+    width: auto;
+  }
+}
+@media (max-width: 358px) {
+  .nav-logo {
+    display: none;
+  }
+} 
 /* Laptops, Desktops */
 /* @media (min-width: 1025px) and (max-width: 1280px) {
   .nav-logo {

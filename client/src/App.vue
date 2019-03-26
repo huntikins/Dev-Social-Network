@@ -16,5 +16,6 @@ body{
 .scroll {
     height: 100%;
     overflow-x: hidden;
+    min-width: 350px !important;
 }
 </style>

@@ -117,4 +117,13 @@ export default {
         margin-right: 0;
     }
 }
+@media (max-width: 612px) {
+    .list-feed {
+        padding-top: 0;
+    }
+    .event-item {
+        border-radius: 25px;
+        margin-right: 10px;
+    }
+}
 </style>

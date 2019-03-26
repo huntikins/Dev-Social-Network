@@ -70,16 +70,17 @@
       },
       methods: {
         openMenu() {
-          this.$emit('openMenu');
+          this.$emit('open-menu');
           this.isSideBarOpen = true;
         },
         closeMenu() {
-          this.$emit('closeMenu');
+          this.$emit('close-menu');
           this.isSideBarOpen = false;
         },
         closeMenuOnEsc(e) {
           e = e || window.event;
           if (e.key === 'Escape' || e.keyCode === 27) {
+            this.$emit('close-menu');
             this.isSideBarOpen = false;
           }
         }

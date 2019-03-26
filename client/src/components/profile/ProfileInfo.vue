@@ -1,6 +1,7 @@
 <template>
   <div class="profile-info">
     <div class="profile-header">
+      <app-user-image :is-mobile-view="true" :image="user.image"></app-user-image>
       <div class="user-name">
         <h1 class="name-first">{{ user.firstName | firstCap }}</h1>
         <h1 class="name-last">{{ user.lastName | firstCap }}</h1>
@@ -55,8 +56,12 @@
 </template>
 
 <script>
+import UserImage from '@/components/profile/UserImage';
 export default {
   props: ["user", "isCurrentUser", "followusr"],
+  components: {
+    appUserImage: UserImage
+  },
   filters: {
     firstCap(value) {
       value = value.toString();
@@ -277,6 +282,14 @@ span.stat-item-group {
 @media (max-width: 612px) {
   .profile-info {
     width: 100%;
+  }
+  .profile-header, .profile-footer {
+    border-radius: 0;
+    padding-top: 0px;
+  }
+  div.stat-item-group {
+    text-align: left;
+    margin-left: 8px;
   }
 }
 </style>
