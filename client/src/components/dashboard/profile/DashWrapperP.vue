@@ -17,7 +17,7 @@
             <!-- Large and medium screen views -->
             <div class="row m-0 p-0">
                 <div class="side-container col-md-2">
-                    <app-side-bar :kb-articles="kbArticles" :user-info="userInfo" />
+                    <app-side-bar :kb-articles="kbArticles" :user-info="userInfo" :hide-buttons="hideButtons" />
                 </div>
                 <div class="social-container col-md-7">
                     <app-user-feed @saved="postSaved" />

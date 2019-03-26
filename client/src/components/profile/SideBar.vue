@@ -7,6 +7,7 @@
         <div class="side-bar-medium">
             <!-- Buttons to switch between sidebar views on medium screens -->
             <app-side-bar-view-toggle-buttons
+                v-if="!hideButtons"
                 :profile-image="userInfo.image"
                 :is-current-user="true"
                 :is-social-view="isSocialView"
@@ -26,7 +27,7 @@ import EventList from '@/components/dashboard/social/EventList';
 import ProfileInfo from './ProfileInfo';
 import kbList from '@/components/dashboard/profile/KbList';
 export default {
-    props: ['isSocialView', 'events', 'kbArticles', 'userInfo'],
+    props: ['isSocialView', 'events', 'kbArticles', 'userInfo', 'hideButtons'],
     components: {
         appSideBarViewToggleButtons: SideBarToggleButtons,
         appEventList: EventList,

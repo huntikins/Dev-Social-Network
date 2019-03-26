@@ -21,6 +21,7 @@
                         :kb-articles="kbArticles"
                         :user-info="userInfo"
                         :followusr="followusr"
+                        :hide-buttons="hideButtons"
                         @follow="follow"
                         @unfollow="unfollow"
                     />

@@ -30,7 +30,7 @@ export default {
 
 <style>
 .side-bar-btn.left {
-  z-index: 10;
+  z-index: 20;
   position: fixed;
   border-radius: 100%;
   background-color: #3dc0ec;
@@ -56,7 +56,7 @@ export default {
   height: 90px;
   width: 90px;
   position: fixed;
-  z-index: 10;
+  z-index: 20;
   left: 100px;
   top: 50px;
   border-radius: 100%;

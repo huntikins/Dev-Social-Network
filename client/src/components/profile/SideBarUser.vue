@@ -13,6 +13,7 @@
         <div class="side-bar-medium">
             <!-- Buttons to switch between sidebar views on medium screens -->
             <app-side-bar-view-toggle-buttons
+                v-if="!hideButtons"
                 :profile-image="userInfo.image"
                 :is-social-view="false"
                 :is-profile-info-showing="isProfileInfoShowing"
@@ -38,7 +39,7 @@ import kbList from '@/components/dashboard/profile/KbList';
 import zipcodes from 'zipcodes';
 import api from '../../utils/api.js';
 export default {
-    props: ['kbArticles', 'userInfo', 'followusr'],
+    props: ['kbArticles', 'userInfo', 'followusr', 'hideButtons'],
     components: {
         appSideBarViewToggleButtons: SideBarToggleButtons,
         appProfileInfo: ProfileInfo,
