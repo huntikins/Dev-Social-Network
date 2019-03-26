@@ -27,7 +27,7 @@
                     />
                 </div>
                 <div class="social-container col-md-7">
-                    <app-user-feed  :user-id="userId" @saved="postSaved"/>
+                    <app-user-feed :user-id="userId" @saved="postSaved"/>
                 </div>
                 <div class="list-container col-md-3">
                     <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
@@ -45,7 +45,7 @@
                     @follow="follow"
                     @unfollow="unfollow"
                 />
-                <app-user-feed v-else-if="arePostsShowing" @saved="postSaved" />
+                <app-user-feed v-else-if="arePostsShowing" :user-id="userId" @saved="postSaved" />
                 <app-kb-list v-else :kb-articles="kbArticles" />
             </div>
         </div>
