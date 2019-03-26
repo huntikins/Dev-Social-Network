@@ -1,7 +1,20 @@
 <template>
     <div>
         <app-user-img :image="userInfo.image" />
+        <app-mobile-view-toggle
+            v-if="hideButtons === false"
+            view="Your Profile"
+            :profile-image="userInfo.image"
+            :is-social-view="false"
+            :is-current-user="true"
+            :is-profile-info-showing="isProfileShowing"
+            :are-posts-showing="arePostsShowing"
+            @show-profile-info="showProfileInfo"
+            @show-posts="showPostFeed"
+            @show-other="showKbOrEvents"
+        />
         <div class="dash-container">
+            <!-- Large and medium screen views -->
             <div class="row m-0 p-0">
                 <div class="side-container col-md-2">
                     <app-side-bar :kb-articles="kbArticles" :user-info="userInfo" />
@@ -12,27 +25,35 @@
                 <div class="list-container col-md-3">
                     <app-kb-list :kb-articles="kbArticles" />
                 </div>
-                <div class="single-column-view">
-
-                </div>
+            </div>
+            <!-- Small screen view -->
+            <div class="single-column-view">
+                <app-profile-info v-if="isProfileShowing" :user="userInfo" :is-current-user="true" />
+                <app-user-feed v-else-if="arePostsShowing" @saved="postSaved" />
+                <app-kb-list v-else :kb-articles="kbArticles" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import MobileViewToggle from '@/components/menus/MobileViewToggle';
 import UserImage from '@/components/profile/UserImage';
 import KbList from '@/components/dashboard/profile/KbList'
 import UserFeed from '@/components/dashboard/profile/UserFeed'
+import ProfileInfo from '@/components/profile/ProfileInfo';
 import zipcodes from 'zipcodes';
 import SideBar from '@/components/profile/SideBar';
 import api from '@/utils/api';
 export default {
+    props: ['hideButtons'],
     components: {
         appKbList: KbList,
         appUserFeed: UserFeed,
         appSideBar: SideBar,
-        appUserImg: UserImage
+        appUserImg: UserImage,
+        appMobileViewToggle: MobileViewToggle,
+        appProfileInfo: ProfileInfo
     },
     data(){
         return{
@@ -49,12 +70,26 @@ export default {
                 bio: "",
                 image: ""
             },
-            kbArticles: []
+            kbArticles: [],
+            isProfileShowing: true,
+            arePostsShowing: false
         }
     },
     methods: {
         postSaved(newKbItem) {
             this.kbArticles.unshift(newKbItem);
+        },
+        showProfileInfo() {
+            this.isProfileShowing = true;
+            this.arePostsShowing = false;
+        },
+        showPostFeed() {
+            this.isProfileShowing = false;
+            this.arePostsShowing = true;
+        },
+        showKbOrEvents() {
+            this.isProfileShowing = false;
+            this.arePostsShowing = false;
         }
     },
     created() {

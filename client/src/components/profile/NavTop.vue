@@ -73,6 +73,9 @@ export default {
   color: white;
   text-decoration: none;
 }
+.logout {
+  white-space: nowrap;
+}
 .logout:hover {
   color: white;
   text-decoration: none;
@@ -84,6 +87,11 @@ export default {
 .nav-logo {
   height: 100%;
   width: auto;
+}
+@media (min-width: 769px) and (max-width: 880px) {
+  a.logout {
+    white-space: normal;
+  }
 }
 @media (max-width: 612px) {
   .navbar-brand {

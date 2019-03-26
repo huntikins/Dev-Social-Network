@@ -1,3 +1,4 @@
+<!-- This file is no longer being used since I moved the image and it is now only the NavTop -->
 <template>
     <div>
         <app-nav-top />

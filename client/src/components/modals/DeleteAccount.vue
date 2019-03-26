@@ -122,6 +122,7 @@ input.modal-field:focus {
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: roboto, sans-serif;
+  max-width: 100vw;
 }
 
 .modal-header {

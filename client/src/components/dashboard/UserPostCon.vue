@@ -272,6 +272,7 @@ export default {
   -webkit-box-shadow: 0px 14px 27px -13px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 14px 27px -13px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 14px 27px -13px rgba(0, 0, 0, 0.75);
+  overflow-wrap: break-word;
 }
 .post-userinfo {
   padding: 5px 1px 5px 5px;

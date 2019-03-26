@@ -5,7 +5,7 @@
       @click="$emit('profile-view', false)"
     >
       <i v-if="isSocialView" class="fab fa-meetup" />
-      <span v-else class="kb-button-text">KB</span>
+      <span v-else class="kb-button-text medium-screen">KB</span>
     </button>
     <button
       :class="isProfileInfoShowing ? 'side-bar-btn right btn active' : 'side-bar-btn right btn'"
@@ -43,10 +43,10 @@ export default {
   font-size: 40px;
   color: white;
 }
-.kb-button-text {
+.kb-button-text.medium-screen {
   font-family: alternate-gothic-no-1-d, sans-serif;
   display: inline-block;
-  line-height: 1;
+  line-height: 1.15;
   font-size: 40px;
   height: 40px;
   width: 40px;

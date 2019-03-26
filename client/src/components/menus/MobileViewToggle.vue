@@ -81,13 +81,14 @@ export default {
   font-size: 40px;
   color: white;
 }
-.kb-button-text {
+.kb-button-text.small-screen {
   font-family: alternate-gothic-no-1-d, sans-serif;
   display: inline-block;
-  line-height: 1;
-  font-size: 40px;
+  line-height: 1.15;
+  font-size: 41px;
   height: 40px;
   width: 40px;
+  margin: .2px .6px;
   color: white;
 }
 .small-screen-btn.active {

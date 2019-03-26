@@ -1,5 +1,5 @@
 <template>
-  <div :key="compKey" class="edit-img-container">
+  <div :key="compKey" :class="hide ? 'edit-img-container hide' : 'edit-img-container'">
     <img v-if="userImage" :src="userImage" alt="Avatar" class="edit-profile-img img-fluid">
     <img v-else src="@/assets/user-icon.png" alt="Avatar" class="edit-profile-img img-fluid">
     <div class="overlay" @click="isUploading = true">
@@ -24,7 +24,7 @@ export default {
       userImage: undefined
     };
   },
-  props: ["userId"],
+  props: ["userId", "hide"],
   components: {
     appUploadModal: UploadImage
   },
@@ -57,7 +57,7 @@ export default {
 <style>
 .edit-img-container {
   position: absolute;
-  z-index: 15;
+  z-index: 20;
   top: 2%;
   left: 11%;
   width: 175px;
@@ -86,6 +86,7 @@ export default {
   z-index: 16;
   transition: 0.5s ease;
   background-color: rgb(61, 192, 236);
+  cursor: pointer;
 }
 .edit-img-container:hover .overlay {
   opacity: 1;
@@ -101,5 +102,10 @@ export default {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: center;
+}
+@media (max-width: 612px) {
+  .edit-img-container.hide {
+    display: none;
+  }
 }
 </style>

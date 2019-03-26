@@ -1,7 +1,10 @@
 <template>
   <div class="account-page">
-    <app-nav-top/>
-    <app-user-img-edit :userId="userId"/>
+    <app-nav-top
+      @open-menu="hidePicture = true"
+      @close-menu="hidePicture = false"
+    />
+    <app-user-img-edit :userId="userId" :hide="hidePicture" />
     <div id="account-management" class="container">
       <section class="row justify-content-md-center">
         <div class="col-10">
@@ -105,7 +108,8 @@ export default {
       biography: "",
       purge: false,
       image: "",
-      userId: ""
+      userId: "",
+      hidePicture: false
     };
   },
   /*  props: ["user"],*/

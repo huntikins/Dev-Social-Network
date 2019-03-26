@@ -1,7 +1,20 @@
 <template>
     <div>
         <app-user-img :image="userInfo.image" />
+        <app-mobile-view-toggle
+            v-if="!hideButtons"
+            :view="userInfo.firstName ? `${userInfo.firstName}'s Profile` : 'User Profile'"
+            :profile-image="userInfo.image"
+            :is-social-view="false"
+            :is-current-user="false"
+            :is-profile-info-showing="isProfileShowing"
+            :are-posts-showing="arePostsShowing"
+            @show-profile-info="showProfileInfo"
+            @show-posts="showPostFeed"
+            @show-other="showKbOrEvents"
+        />
         <div class="dash-container">
+            <!-- Large and medium screen views -->
             <div class="row m-0 p-0">
                 <div class="side-container col-md-2">
                     <app-side-bar-user
@@ -21,17 +34,29 @@
                     </div>
                 </div>
             </div>
+            <!-- Small screen view -->
             <div class="single-column-view">
-
+                <app-profile-info
+                    v-if="isProfileShowing"
+                    :user="userInfo"
+                    :is-current-user="false"
+                    :followusr="followusr"
+                    @follow="follow"
+                    @unfollow="unfollow"
+                />
+                <app-user-feed v-else-if="arePostsShowing" @saved="postSaved" />
+                <app-kb-list v-else :kb-articles="kbArticles" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import MobileViewToggle from '@/components/menus/MobileViewToggle';
 import UserImage from '@/components/profile/UserImage';
 import KbList from '@/components/dashboard/profile/KbList'
 import UserFeed from '@/components/dashboard/profile/UserFeed'
+import ProfileInfo from '@/components/profile/ProfileInfo';
 import zipcodes from 'zipcodes';
 import SideBarUser from '@/components/profile/SideBarUser';
 import api from '../../../utils/api.js';
@@ -40,9 +65,11 @@ export default {
         appKbList: KbList,
         appUserFeed: UserFeed,
         appSideBarUser: SideBarUser,
-        appUserImg: UserImage
+        appUserImg: UserImage,
+        appMobileViewToggle: MobileViewToggle,
+        appProfileInfo: ProfileInfo
     },
-    props: ['userId'],
+    props: ['userId', 'hideButtons'],
     data(){
         return{
             userInfo: {
@@ -61,7 +88,9 @@ export default {
             },
             kbArticles: [],
             currentUserId: '',
-            followusr: false
+            followusr: false,
+            isProfileShowing: true,
+            arePostsShowing: false
         }
     },
     methods: {
@@ -79,6 +108,18 @@ export default {
             this.followusr = false;
             this.userInfo.followers.splice(this.userInfo.followers.indexOf(this.currentUserId), 1);
             if (this.userInfo._id === this.currentUserId) this.userInfo.following.splice(this.userInfo.following.indexOf(this.currentUserId), 1);
+        },
+        showProfileInfo() {
+            this.isProfileShowing = true;
+            this.arePostsShowing = false;
+        },
+        showPostFeed() {
+            this.isProfileShowing = false;
+            this.arePostsShowing = true;
+        },
+        showKbOrEvents() {
+            this.isProfileShowing = false;
+            this.arePostsShowing = false;
         }
     },
     created() {

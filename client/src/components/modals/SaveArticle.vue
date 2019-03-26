@@ -116,8 +116,12 @@ export default {
 .modal-image {
   width: 95px;
 }
+#save-form > .custom-control {
+  padding: 0;
+  text-align: center;
+}
 .comment-toggle {
-  left: 29%;
+  position: static;
 }
 input.create-comment-title{
   background-color: rgb(133,149,149);
@@ -188,6 +192,7 @@ input.create-comment-title:focus {
   transition: all 0.3s ease;
   font-family: "roboto", "sans-serif";
   z-index: 1000000;
+  max-width: 100vw;
 }
 
 .modal-header {

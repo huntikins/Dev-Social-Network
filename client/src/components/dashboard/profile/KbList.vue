@@ -27,4 +27,9 @@ export default {
     padding-top: 80px;
   }
 }
+@media (max-width: 612px) {
+  .kb-feed {
+    padding: 0;
+  }
+}
 </style>

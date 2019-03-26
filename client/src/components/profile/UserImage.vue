@@ -66,9 +66,10 @@ export default {
     top: 10px;
     left: auto;
     right: 10px;
-    width: 40%;
-    height: auto;
+    width: 40vw;
+    height: 40vw;
     max-width: 163px;
+    max-height: 163px;
   }
 }
 </style>

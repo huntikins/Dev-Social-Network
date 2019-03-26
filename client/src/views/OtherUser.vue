@@ -1,20 +1,28 @@
 <template>
     <div :key="$route.path">
         <div class="profile-content">
-            <app-boomerang :user-id="userId" />
-            <app-dash-wrapper-u :user-id="userId"/>
+            <app-nav-top
+                @open-menu="hideMobileViewToggleBtns = true"
+                @close-menu="hideMobileViewToggleBtns = false"
+            />
+            <app-dash-wrapper-u :user-id="userId" :hide-buttons="hideMobileViewToggleBtns" />
         </div>
     </div>
 </template>
 
 <script>
-import Boomerang from '@/components/profile/Boomerang'
+import NavTop from '@/components/profile/NavTop'
 import DashWrapperU from '@/components/dashboard/user/DashWrapperU'
 export default {
     props: ['userId'],
     components: {
-        appBoomerang: Boomerang,
+        appNavTop: NavTop,
         appDashWrapperU: DashWrapperU
+    },
+    data() {
+        return {
+            hideMobileViewToggleBtns: false
+        }
     }
 }
 </script>
