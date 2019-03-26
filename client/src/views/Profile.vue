@@ -1,19 +1,27 @@
 <template>
     <div>
         <div class="profile-content">
-            <app-boomerang />
-            <app-dash-wrapper-p />
+            <app-nav-top
+                @open-menu="hideMobileViewToggleBtns = true"
+                @close-menu="hideMobileViewToggleBtns = false"
+            />
+            <app-dash-wrapper-p :hide-buttons="hideMobileViewToggleBtns" />
         </div>
     </div>
 </template>
 
 <script>
-import Boomerang from '@/components/profile/Boomerang'
+import NavTop from '@/components/profile/NavTop'
 import DashWrapperP from '@/components/dashboard/profile/DashWrapperP'
 export default {
     components: {
-        appBoomerang: Boomerang,
+        appNavTop: NavTop,
         appDashWrapperP: DashWrapperP
+    },
+    data() {
+        return {
+            hideMobileViewToggleBtns: false
+        }
     }
 }
 </script>

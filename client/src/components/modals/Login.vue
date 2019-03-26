@@ -1,40 +1,44 @@
 <template>
-   <transition name="modal">
-    <app-loading v-if="load"/>
-    <app-forgot-password v-if="forgot" @close="forgot = false"/>
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container-login">
-          <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
-          <div class="modal-header m-0 p-0">
-            <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
-          </div>
-          <div class="modal-body m-0 p-0">
-            <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
-            <form id="login-form">
-              <div class="form-group">
-                <input v-validate="'required'" v-model="email" name="email" type="email" class="form-control modal-field" placeholder="email">
-                <small class="home-body">{{ errors.first('email') }}</small>
-              </div>
-              <div class="form-group">
-                <input v-validate="'required'" v-model="password" name="password" type="password" class="form-control modal-field" placeholder="password">
-                <small class="home-body">{{ errors.first('password') }}</small>
-              </div>
-            </form>
-            <div class="row m-0 p-0">
-              <div class="col m-0 p-0">
-                <a href="" class="forgot-data align-top"  @click.prevent="forgot=true">forgot password</a>
-              </div>
+  <div>
+    <transition name="modal">
+      <app-loading v-if="load"/>
+      <app-forgot-password v-if="forgot" @close="forgot = false"/>
+    </transition>
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container-login">
+            <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
+            <div class="modal-header m-0 p-0">
+              <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
             </div>
-            <small class="home-body">{{ message }}</small>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-light modal-default-button" @click.prevent="submitLogin" :disabled="errors.any() || isEmpty" type="submit" form="login-form">LOGIN</button>
+            <div class="modal-body m-0 p-0">
+              <h1 class="home-header m-auto py-4">WELCOME BACK</h1>
+              <form id="login-form">
+                <div class="form-group">
+                  <input v-validate="'required'" v-model="email" name="email" type="email" class="form-control modal-field" placeholder="email">
+                  <small class="home-body">{{ errors.first('email') }}</small>
+                </div>
+                <div class="form-group">
+                  <input v-validate="'required'" v-model="password" name="password" type="password" class="form-control modal-field" placeholder="password">
+                  <small class="home-body">{{ errors.first('password') }}</small>
+                </div>
+              </form>
+              <div class="row m-0 p-0">
+                <div class="col m-0 p-0">
+                  <a href="" class="forgot-data align-top"  @click.prevent="forgot=true">forgot password</a>
+                </div>
+              </div>
+              <small class="home-body">{{ message }}</small>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light modal-default-button" @click.prevent="submitLogin" :disabled="errors.any() || isEmpty" type="submit" form="login-form">LOGIN</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </transition> 
+    </transition>
+  </div>
 </template>
 
 <script>

@@ -177,9 +177,11 @@ module.exports = {
       }])
       .then(result => {
         let posts = result.posts;
-        result.following.forEach(user => {
-          Array.prototype.push.apply(posts, user.posts);
-        });
+        if (result.following.filter(user => user._id.toString() === id.toString()).length < 1) {
+          result.following.forEach(user => {
+            Array.prototype.push.apply(posts, user.posts);
+          });
+        }
         posts.sort((post_a, post_b) => {
           const post_aTime = post_a.date ? post_a.date.getTime() : 0;
           const post_bTime = post_b.date ? post_b.date.getTime() : 0;

@@ -1,113 +1,52 @@
 <template>
-    <div class="profile-info">
-        <div class="profile-header">
-            <div class="user-name">
-                <h1 class="name-first">{{ firstName | firstCap }}</h1>
-                <h1 class="name-last">{{ lastName | firstCap }}</h1>
-            </div>
-            <div class="user-stat">
-                <span class="stat-item" v-if="location"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city }}, {{ location.state }}</span>
-                <span class="stat-item" v-if="jobTitle || jobCompany">
-                    <i class="stat-icon fas fa-building"></i> {{ jobTitle || "Works" }}{{ jobCompany ? ` at ${jobCompany}` : '' }}
-                </span>
-                <div class="stat-item-group">
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-users" title="Friends"></i> {{ friend_count }} 
-                    </span>
-                    <span> </span>
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group far fa-eye" :title="`Users ${firstName} follows`"></i> {{ following_count }} 
-                    </span>
-                    <span> </span>
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-eye" :title="`Users following ${firstName}`"></i> {{ follower_count }} 
-                    </span>
-                </div>
-            </div>
-            <div class="follow-wrapper">
-                <button class="btn btn-follow" v-if="followusr === false" @click.prevent="follow()"><i class="stat-icon-follow far fa-eye"></i> follow</button>
-                <button class="btn btn-following" @click.prevent="unfollow()" v-else><i class="stat-icon-follow far fa-eye"></i> following</button>
-            </div>
+    <div>
+        <!-- Profile info to show on larger screens -->
+        <div class="side-bar-large">
+            <app-profile-info
+                :user="userInfo"
+                :is-current-user="false"
+                :followusr="followusr"
+                @follow="$emit('follow')"
+                @unfollow="$emit('unfollow')"
+            />
         </div>
-        <div class="profile-footer">
-            <div class="user-interest">
-                <h4 class="interest-title">Interests</h4>
-                <ul class="interest-list">
-                    <li class="interest-list-item" v-for="interest in interests" :key="interest">{{ interest }}</li>
-                </ul>
-            </div>
-            <div class="user-profile-bio">
-                <p class="bio-text">{{ bio }}</p>
-            </div>
+        <div class="side-bar-medium">
+            <!-- Buttons to switch between sidebar views on medium screens -->
+            <app-side-bar-view-toggle-buttons
+                :profile-image="userInfo.image"
+                :is-social-view="false"
+                :is-profile-info-showing="isProfileInfoShowing"
+                @profile-view="status => isProfileInfoShowing = status"
+            />
+            <app-profile-info
+                v-if="isProfileInfoShowing"
+                :is-current-user="false"
+                :user="userInfo"
+                :followusr="followusr"
+                @follow="$emit('follow')"
+                @unfollow="$emit('unfollow')"
+            />
+            <app-kb-list v-else :kb-articles="kbArticles" />
         </div>
     </div>
 </template>
 
 <script>
+import SideBarToggleButtons from '@/components/profile/SideBarToggleButtons';
+import ProfileInfo from './ProfileInfo';
+import kbList from '@/components/dashboard/profile/KbList';
 import zipcodes from 'zipcodes';
 import api from '../../utils/api.js';
 export default {
-    props: ['userId'],
+    props: ['kbArticles', 'userInfo', 'followusr'],
+    components: {
+        appSideBarViewToggleButtons: SideBarToggleButtons,
+        appProfileInfo: ProfileInfo,
+        appKbList: kbList
+    },
     data(){
         return {
-            firstName: "",
-            lastName: "",
-            jobTitle: "",
-            zipCode: '',
-            jobCompany: "",
-            location: '',
-            interests: [],
-            followers: [],
-            following: [],
-            bio: "",
-            followusr: false,
-            _id: null,
-            currentUserId: null
-        }
-    },
-    computed: {
-        friend_count: function() {
-            let count = 0;
-            const self = this;
-            self.followers.forEach(user => {
-                if (self.following.indexOf(user) > -1) count++;
-            });
-            return count;
-        },
-        follower_count: function() { return this.followers.length },
-        following_count: function() { return this.following.length }
-    },
-    created() {
-        const self = this;
-        api.otherUser.getBasic(this.$props.userId).then(res => {
-            const user = res.data.user;
-            self.currentUserId = res.data.currentUser;
-            self.firstName = user.firstName;
-            self.lastName = user.lastName;
-            self.jobTitle = user.jobTitle || '';
-            self.jobCompany = user.jobCompany || '';
-            self.zipCode = user.zipCode;
-            self.location = zipcodes.lookup(parseInt(user.zipCode));
-            self.interests = user.interests || [];
-            self.followers = user.followers || [];
-            self.following = user.following || [];
-            self.bio = user.bio || '';
-            self.followusr = user.followers.indexOf(self.currentUserId) > -1;
-            self._id = user._id;
-        });
-    },
-    methods: {
-        follow(){
-            api.social.follow(this._id).then(res => console.log(res));
-            this.followusr = true;
-            this.followers.push(this.currentUserId);
-            if (this._id === this.currentUserId) this.following.push(this.currentUserId);
-        },
-        unfollow(){
-            api.social.unfollow(this._id).then(res => console.log(res));
-            this.followusr = false;
-            this.followers.splice(this.followers.indexOf(this.currentUserId), 1);
-            if (this._id === this.currentUserId) this.following.splice(this.following.indexOf(this.currentUserId), 1);
+            isProfileInfoShowing: true
         }
     },
     filters: {
@@ -120,221 +59,15 @@ export default {
 </script>
 
 <style>
-.btn-follow{
-    background-color:#3dc0ec;
-    border-radius: 100px;
-    color: white;
-    font-family: roboto, sans-serif;
-    text-align: center;
+.side-bar-large {
+    display: none;
 }
-.btn-follow:hover{
-    text-decoration: none;
-    color: white;
-}
-.btn-following{
-    background-color:#859595;
-    border-radius: 100px;
-    color: white;
-    font-family: roboto, sans-serif;
-    text-align: center;
-}
-.btn-following:hover{
-    text-decoration: none;
-    color: white;
-}
-.stat-icon-follow {
-    color: white;
-}
-.follow-wrapper {
-    text-align: center;
-}
-.profile-info {
-    height: 87vh;
-    width: 14%;
-    background-color: #f39121; 
-    position: fixed;
-}
-.user-name{
-    margin-top: 15px;
-    margin-left: 10px;
-}
-.name-first{
-    font-family: alternate-gothic-no-1-d, sans-serif;
-    font-size: 4em;
-    padding: 0;
-    margin: 0;
-    line-height: .75;
-}
-.name-last {
-    font-family: alternate-gothic-no-1-d, sans-serif;
-    font-size: 5em;
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-}
-.user-stat{
-    margin:10px;
-}
-.stat-item{
-    font-family: roboto, sans-serif;
+@media (min-width: 769px) {
+  .side-bar-medium {
+    display: none;
+  }
+  .side-bar-large {
     display: block;
-    margin-left: 10px;
-    font-size: .85em;
-    color: #859595;
-}
-.stat-item-group{
-    text-align: center;
-    font-family: roboto, sans-serif;
-    margin-right: 10px;
-    font-size: 1em;
-    color: #859595;
-    margin-top: 10px;
-}
-span.stat-item-group{
-    white-space: nowrap;
-}
-.stat-icon{
-    color: #3dc0ec;
-}
-.stat-icon-group{
-    color: #3dc0ec;
-    font-size: 1em;
-}
-.profile-header{
-    border-bottom-right-radius: 25px;
-    background-color: white;
-    padding: 10px;
-}
-.profile-footer {
-    margin-top: 10px;
-    border-radius: 0 25px 25px 0;
-    background-color: white;
-    padding: 0 10px 10px 0;
-}
-.user-interest {
-    padding-top: 10px;
-}
-.interest-title{
-    font-family: alternate-gothic-no-1-d, sans-serif;
-    text-align:center;
-    font-size: 2em;
-}
-.interest-list {
-    list-style-type: none;
-    padding-left: 15%;
-    overflow-y: scroll;
-    height: 11vh;
-}
-.interest-list::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-.interest-list-item{
-    text-align: center;
-    font-family: roboto, sans-serif;
-    color: white;
-    background-color: #3dc0ec;
-    border: 1px solid #3dc0ec;
-    padding: 2px;
-    border-radius: 100px;
-    margin: 4px;
-    width: 75%;
-}
-.user-profile-bio{
-    height: 35vh;
-    padding: 4px 4px 4px 10px;
-    background-color: #859595;
-    border-radius: 0 25px 25px 0;
-    overflow-y: scroll;
-}
-.user-profile-bio::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-.bio-text{
-    font-family: roboto, sans-serif;
-    color: white;
-    padding: 4px;
-}
-/* higher resolution laptops */
-/* @media (min-width: 1025px) and (max-width: 1600px)  { */
-    .profile-info {
-        height: 87vh;
-        background-color: #f39121; 
-    }
-    .bio-text {
-        font-size: .75em;
-    }
-    .interest-list-item{
-        font-size: .75em;
-    }
-    .user-name{
-        margin-top: 15px;
-        margin-left: 10px;
-    }
-    .name-first{
-        font-family: alternate-gothic-no-1-d, sans-serif;
-        font-size: 3em;
-        padding: 0;
-        margin: 0;
-        line-height: .75;
-    }
-    .stat-item-group{
-        font-size: .85em; 
-    }
-    .stat-item {
-        font-size: .70em;
-    }
-    .name-last {
-        font-family: alternate-gothic-no-1-d, sans-serif;
-        font-size: 3em;
-        padding: 0;
-        margin: 0;
-        line-height: 1;
-    }
-/* } */
-/* Tablets, Ipads (portrait) */
-@media (min-width: 768px) and (max-width: 1024px) {
-
-}
-/* Tablets, Ipads (landscape) */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-
-}
-/* Low Resolution Tablets, Mobiles (Landscape) */
-@media (min-width: 481px) and (max-width: 767px) {
-
-}
-/* Most of the Smartphones Mobiles (Portrait) */
-@media (min-width: 319px) and (max-width: 480px) {
-
-}
-/*galaxy s5*/
-@media (width: 360px) {
-
-}
-/*pixel 2*/
-@media (width: 411px) {
-
-}
-/*iphone 5SE*/
-@media (width: 320px) {
- 
-}
-/*iphone 6/7/8*/
-@media (width: 375px) {
-
-}
-/*iphone 6/7/8 Plus*/
-@media (width: 414px) {
-
-}
-/*iphone X*/
-@media (width: 375px) {
-
-}
-/*iPad pro*/
-@media (width: 1024px) {
-
+  }
 }
 </style>

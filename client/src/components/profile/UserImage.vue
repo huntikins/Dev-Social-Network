@@ -1,9 +1,9 @@
 <template>
   <div>
-    <img v-if="image" class="profile-image img-fluid" :src="image" alt="Profile picture" />
+    <img v-if="image" :class="imgClass" :src="image" alt="Profile picture" />
     <img
       v-else
-      class="profile-image img-fluid"
+      :class="imgClass"
       src="@/assets/user-icon.png"
       alt="No image for user"
     />
@@ -14,28 +14,18 @@
 import api from "../../utils/api.js";
 
 export default {
-  props: ["userId"],
-  data() {
-    return {
-      image: undefined
-    };
-  },
-  created() {
-    if (!this.$props.userId) {
-      api.currentUser.getImage().then(res => {
-        this.image = res.data.image;
-      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.error(err.response.data));
-    } else
-      api.otherUser.getImage(this.$props.userId).then(res => {
-        this.image = res.data.image;
-      }).catch(err => err.response.status === 401 ? this.$router.push('/') : console.error(err.response.data));
+  props: ["isMobileView", "image"],
+  computed: {
+    imgClass() {
+      return this.$props.isMobileView ? "profile-image mobile img-fluid" : "profile-image img-fluid"
+    }
   }
 };
 </script>
 
 <style>
 .profile-image {
-  height: 175px !important;
+  height: 175px;
   width: 175px;
   border: 10px solid #f39121;
   border-radius: 100%;
@@ -48,12 +38,38 @@ export default {
 /* higher resolution laptops */
 /* @media (min-width: 1025px) and (max-width: 1600px) { */
   .profile-image {
-    height: 125px !important;
+    height: 125px;
     width: 125px;
     border: 5px solid #f39121;
     position: absolute;
-    top: 3% !important;
+    top: 22px;
     border-radius: 100%;
   }
 /* } */
+.profile-image.mobile {
+  display: none;
+}
+@media (max-width: 980px) {
+  .profile-image {
+    height: 12.8vw;
+    width: 12.8vw;
+  }
+}
+@media (max-width: 769px) {
+  .profile-image {
+    display: none;
+  }
+}
+@media (max-width: 612px) {
+  .profile-image.mobile {
+    display: inline-block;
+    top: 10px;
+    left: auto;
+    right: 10px;
+    width: 40vw;
+    height: 40vw;
+    max-width: 163px;
+    max-height: 163px;
+  }
+}
 </style>

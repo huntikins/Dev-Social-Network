@@ -1,251 +1,58 @@
 <template>
-    <div class="profile-info">
-        <div class="profile-header">
-            <div class="user-name">
-                <h1 class="name-first">{{ firstName | firstCap }}</h1>
-                <h1 class="name-last">{{ lastName | firstCap }}</h1>
-            </div>
-            <div class="user-stat">
-                <span class="stat-item"><i class="stat-icon fas fa-map-marker-alt"></i> {{ location.city || location.state ? `${location.city}, ${location.state}` : zipCode }}</span>
-                <span class="stat-item" v-if="jobTitle || jobCompany">
-                    <i class="stat-icon fas fa-building"></i> {{ jobTitle || "Works" }}{{ jobCompany ? ` at ${jobCompany}` : '' }}
-                </span>
-                <div class="stat-item-group">
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-users" title="Friends"></i> {{ friend_count }} 
-                    </span>
-                    <span> </span>
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group far fa-eye" title="Users you follow"></i> {{ following_count }} 
-                    </span>
-                    <span> </span>
-                    <span class="stat-item-group">
-                        <i class="stat-icon-group fas fa-eye" title="Users following you"></i> {{ follower_count }} 
-                    </span>
-                </div>
-            </div>
+    <div>
+        <!-- Profile info to show on larger screens -->
+        <div class="side-bar-large">
+            <app-profile-info :user="userInfo" :is-current-user="true" />
         </div>
-        <div class="profile-footer">
-            <div class="user-interest">
-                <h4 class="interest-title">Interests</h4>
-                <ul class="interest-list">
-                    <li class="interest-list-item" v-for="interest in interests" :key="interest">{{ interest }}</li>
-                </ul>
-            </div>
-            <div class="user-bio">
-                <p class="bio-text">{{ bio }}</p>
-            </div>
+        <div class="side-bar-medium">
+            <!-- Buttons to switch between sidebar views on medium screens -->
+            <app-side-bar-view-toggle-buttons
+                :profile-image="userInfo.image"
+                :is-current-user="true"
+                :is-social-view="isSocialView"
+                :is-profile-info-showing="isProfileInfoShowing"
+                @profile-view="status => isProfileInfoShowing = status"
+            />
+            <app-profile-info v-if="isProfileInfoShowing" :is-current-user="true" :user="userInfo" />
+            <app-event-list v-else-if="isSocialView" :events="events" />
+            <app-kb-list v-else :kb-articles="kbArticles" />
         </div>
     </div>
 </template>
 
 <script>
-import zipcodes from 'zipcodes';
-import api from '../../utils/api.js';
+import SideBarToggleButtons from '@/components/profile/SideBarToggleButtons';
+import EventList from '@/components/dashboard/social/EventList';
+import ProfileInfo from './ProfileInfo';
+import kbList from '@/components/dashboard/profile/KbList';
 export default {
+    props: ['isSocialView', 'events', 'kbArticles', 'userInfo'],
+    components: {
+        appSideBarViewToggleButtons: SideBarToggleButtons,
+        appEventList: EventList,
+        appProfileInfo: ProfileInfo,
+        appKbList: kbList
+    },
     data() {
         return {
-            firstName: '',
-            lastName: '',
-            jobTitle: '',
-            jobCompany: '',
-            zipCode: '',
-            location: {},
-            interests: [],
-            followers: [],
-            following: [],
-            bio: ""
-        }
-    },
-    beforeCreate() {
-        const self = this;
-        api.currentUser.getBasic().then(res => {
-            const user = res.data;
-            self.firstName = user.firstName;
-            self.lastName = user.lastName;
-            self.jobTitle = user.jobTitle || '';
-            self.jobCompany = user.jobCompany || '';
-            self.zipCode = user.zipCode;
-            self.location = zipcodes.lookup(parseInt(user.zipCode)) || {};
-            self.interests = user.interests || [];
-            self.followers = user.followers || [];
-            self.following = user.following || [];
-            self.bio = user.bio || '';
-        });
-    },
-    computed: {
-        friend_count: function() {
-            let count = 0;
-            const self = this;
-            self.followers.forEach(user => {
-                if (self.following.indexOf(user) > -1) count++;
-            });
-            return count;
-        },
-        follower_count: function() { return this.followers.length },
-        following_count: function() { return this.following.length }
-    },
-    filters: {
-        firstCap(value){
-            value = value.toString()
-            return value.charAt(0).toUpperCase() + value.slice(1)
+            isProfileInfoShowing: true
         }
     }
 }
 </script>
 
 <style>
-.profile-info {
-    height: 87vh;
-    width: 14%;
-    background-color: #f39121; 
-    position: fixed;
+.side-bar-large {
+    display: none;
 }
-.user-name{
-    margin-top: 15px;
-    margin-left: 10px;
-}
-.name-first{
-    font-family: alternate-gothic-no-1-d, sans-serif;
-    font-size: 4em;
-    padding: 0;
-    margin: 0;
-    line-height: .75;
-}
-.name-last {
-    font-family: alternate-gothic-no-1-d, sans-serif;
-    font-size: 5em;
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-}
-.user-stat{
-    margin:10px;
-}
-.stat-item{
-    font-family: roboto, sans-serif;
+@media (min-width: 769px) {
+  .side-bar-medium {
+    display: none;
+  }
+  .side-bar-large {
     display: block;
-    margin-left: 10px;
-    font-size: .85em;
-    color: #859595;
+  }
 }
-.stat-item-group{
-    text-align: center;
-    font-family: roboto, sans-serif;
-    margin-right: 10px;
-    font-size: 1em;
-    color: #859595;
-    margin-top: 10px;
-}
-span.stat-item-group{
-    white-space: nowrap;
-}
-.stat-icon{
-    color: #3dc0ec;
-}
-.stat-icon-group{
-    color: #3dc0ec;
-    font-size: 1em;
-}
-.profile-header{
-    border-bottom-right-radius: 25px;
-    background-color: white;
-    padding: 10px;
-    overflow: scroll;
-}
-.profile-footer {
-    margin-top: 10px;
-    border-radius: 0 25px 25px 0;
-    background-color: white;
-    padding: 0 10px 10px 0;
-    overflow: scroll;
-}
-.profile-header::-webkit-scrollbar, .profile-footer::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
-}
-.user-interest {
-    padding-top: 10px;
-}
-.interest-title{
-    font-family: alternate-gothic-no-1-d, sans-serif;
-    text-align:center;
-    font-size: 2em;
-}
-.interest-list {
-    list-style-type: none;
-    padding-left: 15%;
-    overflow-y: scroll;
-    height: 11vh;
-}
-.interest-list::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-.interest-list-item{
-    text-align: center;
-    font-family: roboto, sans-serif;
-    color: white;
-    background-color: #3dc0ec;
-    border: 1px solid #3dc0ec;
-    padding: 2px;
-    border-radius: 100px;
-    margin: 4px;
-    width: 75%;
-}
-.user-bio{
-    height: 40vh;
-    padding: 4px 4px 4px 10px;
-    background-color: #859595;
-    border-radius: 0 25px 25px 0;
-    overflow-y: scroll;
-}
-.user-bio::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-.bio-text{
-    font-family: roboto, sans-serif;
-    color: white;
-    padding: 4px;
-}
-/* higher resolution laptops */
-/* @media (min-width: 1025px) and (max-width: 1600px)  { */
-    .profile-info {
-        height: 87vh;
-        background-color: #f39121; 
-    }
-    .bio-text {
-        font-size: .75em;
-    }
-    .interest-list-item{
-        font-size: .75em;
-    }
-    .user-name{
-        margin-top: 15px;
-        margin-left: 10px;
-    }
-    .name-first{
-        font-family: alternate-gothic-no-1-d, sans-serif;
-        font-size: 3em;
-        padding: 0;
-        margin: 0;
-        line-height: .75;
-    }
-    .stat-item-group{
-        font-size: .85em; 
-    }
-    .stat-item {
-        font-size: .70em;
-    }
-    .name-last {
-        font-family: alternate-gothic-no-1-d, sans-serif;
-        font-size: 3em;
-        padding: 0;
-        margin: 0;
-        line-height: 1;
-    }
-/* } */
 /* Tablets, Ipads (portrait) */
 @media (min-width: 768px) and (max-width: 1024px) {
 
@@ -255,7 +62,7 @@ span.stat-item-group{
 
 }
 /* Low Resolution Tablets, Mobiles (Landscape) */
-@media (min-width: 481px) and (max-width: 767px) {
+@media (max-width: 767.5px) {
 
 }
 /* Most of the Smartphones Mobiles (Portrait) */

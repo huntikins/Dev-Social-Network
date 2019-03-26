@@ -146,4 +146,15 @@ textarea#post {
     width: 90%;
   }
 /* } */
+@media (max-width: 769px) {
+  .new-post-container {
+    border-top-left-radius: 25px;
+  }
+}
+@media (max-width: 612px) {
+  .new-post-container {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+  }
+}
 </style>

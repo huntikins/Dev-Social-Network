@@ -1,86 +1,35 @@
 <template>
-    <div class="kb-item grid-item">
-        <div class="kb-show">
-            <i class="kb-icon fas fa-chevron-circle-down" @click="kbExpand = false ? kbExpand === true : kbExpand === false"></i>
-            <a v-if="link" class="kb-title" :href="link" target="_blank">{{ title }}</a>
-            <span v-else class="kb-title">{{ title }}</span>
-        </div>
-        <div class="kb-hide">
-            <transition name="bounce">
-                <app-kb-comment
-                    v-if="kbExpand" 
-                    :postBody="body"
-                    :comments="comments"
-                />
-            </transition>
-        </div>
-    </div>
+  <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
+    <app-kb-list-item 
+      v-for="article in kbArticles" :key="article._id"
+      :title="article.title"
+      :link="article.url"
+      :body="article.body"
+      :comments="article.comments"
+      :postId="article.postId"
+    />
+  </div>
 </template>
 
 <script>
-import moment from 'moment'
-import KbComments from '@/components/dashboard/profile/KbComments'
+import kbListItem from './KbListItem';
 export default {
-    props: ['title', 'link', 'postId', 'comments', 'body'],
-    data(){
-        return {
-            kbExpand: false,
-        }
-    },
-    components: {
-        appKbComment: KbComments
-    }
+  props: ['kbArticles'],
+  components: {
+    appKbListItem: kbListItem
+  }
 }
 </script>
 
 <style>
-.bounce-enter-active {
-  animation: bounce-in .5s;
-}
-.bounce-leave-active {
-  animation: bounce-in .5s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
+@media (max-width: 767.5px) {
+  .kb-feed {
+    padding-top: 80px;
   }
 }
-.kb-item {
-    margin: 10px;
-    padding: 10px 0 10px 10px;
-    border-radius: 25px 0 0 25px;
-    border: 3px solid rgb(61,192,236);
-    background-color: rgba(61,192,236, 0.6); 
-    -webkit-box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
-    box-shadow: 0px 14px 30px -10px rgba(0,0,0,0.75);
+@media (max-width: 612px) {
+  .kb-feed {
+    padding: 0;
+  }
 }
-.kb-show{
-    padding: 5px;
-}
-.kb-icon {
-    color: white;
-    font-size: 1.25em;
-    padding-right: 10px;
-}
-.kb-title {
-    color:  white;
-    font-family: roboto, sans-serif;
-    font-size: 1.75em;
-}
-.kb-title:hover {
-    color:  white;
-}
-/* Laptops, Desktops */
-/* @media (min-width: 1025px) and (max-width: 1600px) { */
-    .kb-title {
-        font-size: 1em;
-    }
-    .kb-icon {
-        font-size: 1em;
-    }
-/* } */
 </style>
