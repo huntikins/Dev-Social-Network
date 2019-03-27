@@ -38,16 +38,18 @@ export default {
 
 <style>
 .navbar {
-  height: 10%;
+  height: 72.2px;
   width: 100vw;
   position: fixed;
+  background-color: transparent;
   z-index: 20;
 }
 .navbar-background {
   background-color: #859595;
-  height: 10%;
+  height: 72.2px;
   width: 100vw;
   position: fixed;
+  z-index: 10;
 }
 .logout {
   color: white;

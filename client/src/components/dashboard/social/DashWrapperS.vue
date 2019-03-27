@@ -121,7 +121,7 @@ export default {
     overflow-x: hidden;
     height: 100%;
     background-color: #f39121;
-    margin-top: 10vh;
+    margin-top: 72.2px;
 }
 .dash-container::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

@@ -26,10 +26,10 @@
 
 ## Project Features
 * Users can create posts. If there is a URL in the post, it is displayed as a link and a preview of the site contents is included when the post is displayed.
-* Users can search for other users by entering part or all of a user's name or email.
+* Users can search for other users by entering part or all of a user's name or email address.
 * Users can follow other users.
-* Post feeds are displayed in reverse chronological order (newest posts at the top).
 * The Social Feed includes the posts of all the users the current user is following as well as the current user's own posts.
+* Post feeds are displayed in reverse chronological order (newest posts at the top).
 * Upcoming local technology related Meetup events are displayed based on the zipcode the user provides.
 * Users can edit their account information and view other users' profiles.
 * Users can "like" and comment on posts.
@@ -41,6 +41,7 @@
 * All user actions are validated server side to ensure that the user is logged in and has permission to access the requested data.
 * Users can upload a profile image and use the included tool to crop and rotate it.
 * Accounts can be quickly deleted at the user's request if they can verify their password.
+* The site is fully mobile responsive.
 
 ## Technologies Used
 #### Front End
@@ -78,10 +79,10 @@
 
 ## Instructions for Use
 #### General Use
-Visit the [deployed site](https://cerebellum-network.herokuapp.com) or clone the repository and build the app yourself using the instructions below. (Be aware that the process for building the app yourself is very involved and requires you sign up for some services.) When you arrive at the landing page, register for an account. Once registered, you should be automatically logged in. Open the menu in the top left corner of the screen to navigate the site and search for other users. Use the above [explanation of features](#project-features) to learn what the site has to offer or just explore.
+Visit the [deployed site](https://cerebellum-network.herokuapp.com) or clone the repository and build the app yourself using the instructions below. (Be aware that the process for building the app yourself is very involved and requires you sign up for some free services.) When you arrive at the landing page, register for an account. Once registered, you should be automatically logged in. Open the menu in the top left corner of the screen to navigate the site and search for other users. Use the above [list of features](#project-features) to learn what the site has to offer or just explore.
 
 #### Building the App
-If you wish to build the app yourself, you must have Node, Yarn (package manager), and MongoDB installed on your machine. You must also register for an Meetup API key, a SendGrid.com account, and an AWS S3 account. Clone the [repository](https://github.com/huntertrammell/Dev-Social-Network) to your local machine. Make sure you have a local MongoDB server running. Navigate to the root of the repository in your CLI and run `yarn install`. In the root of the repo, create a file named `.env` and add the following code to it.
+If you wish to build the app yourself, you must have Node, Yarn (package manager), and MongoDB installed on your machine. You must also register for a Meetup API key, a SendGrid.com account, and an AWS S3 account. Clone the [repository](https://github.com/huntertrammell/Dev-Social-Network) to your local machine. Make sure you have a local MongoDB server running. Navigate to the root of the repository in your CLI and run `yarn install`. In the root of the repo, create a file named `.env` and add the following code to it.
 ```
 Secret_Access_Key=
 Access_Key_ID=
@@ -89,7 +90,7 @@ S3_Bucket=
 Meetup_Api_Key=
 Sendgrid_Password=
 ```
-Add your information in the appropriate places directly after each equal sign. The first three values pertain the AWS S3. Alternatively, you may attempt to build and run the site without registering for all three services, but the server will crash when you attempt to start it and you will have to use the error messages to determine which lines of code to disable until the server starts without crashing.
+Add your information in the appropriate places directly after each equal sign. The first three values pertain to AWS S3. Alternatively, you can attempt to build and run the site without registering for all three services. If you do this, the server will crash when you attempt to start it and you will have to use the error messages to determine which lines of code to disable until you are able to get it started. You should be able to use most of the features of the site then, but the image upload, events feed, and password reset will not work.
 
 To run from the development server, run `yarn dev` in the root of the repo. Open a second CLI window and run `yarn start`. The front end should be running at `localhost:3000` with the back-end server running at `localhost:8080`. Visit `localhost:3000` in your browser. The API calls should be automatically redirected to port 8080. Alternatively, you can build the app by running `yarn build` in the root of the repo. Once the build is finished, run `yarn start`. The app should be running at `localhost:8080`.
 
