@@ -21,12 +21,13 @@
                         :kb-articles="kbArticles"
                         :user-info="userInfo"
                         :followusr="followusr"
+                        :hide-buttons="hideButtons"
                         @follow="follow"
                         @unfollow="unfollow"
                     />
                 </div>
                 <div class="social-container col-md-7">
-                    <app-user-feed  :user-id="userId" @saved="postSaved"/>
+                    <app-user-feed :user-id="userId" @saved="postSaved"/>
                 </div>
                 <div class="list-container col-md-3">
                     <div class="kb-feed grid" data-masonry='{ "itemSelector": ".grid-item" }'>
@@ -44,7 +45,7 @@
                     @follow="follow"
                     @unfollow="unfollow"
                 />
-                <app-user-feed v-else-if="arePostsShowing" @saved="postSaved" />
+                <app-user-feed v-else-if="arePostsShowing" :user-id="userId" @saved="postSaved" />
                 <app-kb-list v-else :kb-articles="kbArticles" />
             </div>
         </div>
@@ -160,7 +161,7 @@ export default {
     overflow-x: hidden;
     height: 100%;
     background-color: #f39121;
-    margin-top: 10vh;
+    margin-top: 72.2px;
 }
 .dash-container::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

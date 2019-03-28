@@ -65,7 +65,7 @@
             class="media content-media-wrapper img-thumbnail"
             v-if="title && (image || description)"
           >
-            <img :src="image" class="mr-3 img-thumbnail desc-image" alt="...">
+            <img :src="image" class="img-thumbnail desc-image" alt="Site image">
             <div class="media-body content-desc">
               <h5>
                 <a :href="url" target="_blank" class="mt-0 content-link">{{ title }}</a>
@@ -354,7 +354,9 @@ textarea.edit-post-text:focus {
   font-size: 0.75em;
 }
 .desc-image {
-  width: 15% !important;
+  width: 15%;
+  min-width: 80px;
+  margin-top: 10px;
 }
 .content-top {
   padding: 0 !important;
@@ -414,4 +416,26 @@ textarea.edit-post-text:focus {
     font-size: 0.75em;
   }
 /* } */
+@media (max-width: 440px) {
+  .content-media-wrapper {
+    margin-right: 10px;
+  }
+}
+@media (max-width: 359px) {
+  .content-media-wrapper {
+    margin: 0 0 15px;
+  }
+  .media-body.content-desc {
+    display: inline-block;
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+  .content-bottom > .row {
+    width: 100%;
+    margin: 0;
+  }
+  .content-bottom .col {
+    padding: 0;
+  }
+}
 </style>

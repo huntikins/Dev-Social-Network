@@ -31,21 +31,27 @@ export default {
   border-radius: 100%;
   position: fixed;
   z-index: 15;
-  top: 2%;
+  top: 22px;
   left: 11%;
   overflow: hidden !important;
 }
-/* higher resolution laptops */
-/* @media (min-width: 1025px) and (max-width: 1600px) { */
+@media (max-width: 1600px) {
   .profile-image {
-    height: 125px;
-    width: 125px;
+    height: calc(12.5vw - 25px);
+    width: calc(12.5vw - 25px);
     border: 5px solid #f39121;
     position: absolute;
     top: 22px;
     border-radius: 100%;
   }
-/* } */
+}
+@media (max-width: 1200px) {
+  .profile-image {
+    height: 125px;
+    width: 125px;
+    border-radius: 100%;
+  }
+}
 .profile-image.mobile {
   display: none;
 }

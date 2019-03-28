@@ -17,7 +17,7 @@
             <!-- Large and medium screen views -->
             <div class="row m-0 p-0">
                 <div class="side-container col-md-2">
-                    <app-side-bar :is-social-view="true" :events="events" :user-info="userInfo"/>
+                    <app-side-bar :is-social-view="true" :events="events" :user-info="userInfo" :hide-buttons="hideButtons" />
                 </div>
                 <div class="social-container col-md-7">
                     <app-social-feed />
@@ -121,7 +121,7 @@ export default {
     overflow-x: hidden;
     height: 100%;
     background-color: #f39121;
-    margin-top: 10vh;
+    margin-top: 72.2px;
 }
 .dash-container::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

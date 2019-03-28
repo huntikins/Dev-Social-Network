@@ -95,6 +95,7 @@ export default {
   width: 14%;
   background-color: #f39121;
   position: fixed;
+  top: 72.2px;
 }
 .user-name {
   margin-top: 15px;
