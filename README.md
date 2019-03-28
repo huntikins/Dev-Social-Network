@@ -98,8 +98,10 @@ To run from the development server, run `yarn dev` in the root of the repo. Open
 This project was developed by Hunter Trammell, David Knittel, and Ryan Freeman.
 
 * Hunter Trammell
+  - Email: [hunterttrammell@gmail.com](mailto:hunterttrammell@gmail.com)
   - Portfolio: [huntertrammell.github.io](https://huntertrammell.github.io/)
   - GitHub: [github.com/huntertrammell](https://github.com/huntertrammell)
+  - LinkedIn: [https://www.linkedin.com/in/huntertrammell/](https://www.linkedin.com/in/huntertrammell/)
 
 * David Knittel
   - Email: [djknit@gmail.com](mailto:djknit@gmail.com)
