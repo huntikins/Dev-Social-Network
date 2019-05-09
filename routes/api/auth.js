@@ -33,6 +33,22 @@ router.post(
 );
 
 router.post(
+  '/guest-login',
+  (req, res, next) => {
+    req.body = {
+      email: 'nobody@fakemail.org',
+      password: process.env.GUEST_ACCOUNT_PASSWORD
+    };
+    next();
+  },
+  passport.authenticate(
+    'local',
+    { failureRedirect: '/api/auth/fail', failureFlash: true }
+  ),
+  (req, res) => res.json({ success: true, message: 'Successful authentication.' })
+);
+
+router.post(
   '/logout',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {

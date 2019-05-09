@@ -4,7 +4,7 @@
             <app-img-lrg></app-img-lrg>
         </div>
         <div class="row">
-            <app-txt-lrg></app-txt-lrg>
+            <app-txt-lrg :isGuest="isGuest" />
         </div>
     </div>
 </template>
@@ -13,6 +13,7 @@
 import LogoImg from '@/components/home/ImgLrg'
 import LogoTxt from '@/components/home/Brand'
 export default {
+    props: ['isGuest'],
     components: {
         appImgLrg: LogoImg,
         appTxtLrg: LogoTxt

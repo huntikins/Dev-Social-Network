@@ -1,6 +1,6 @@
 <template>
     <div class="home-content">
-        <app-logo />
+        <app-logo :isGuest="isGuest" />
         <app-anime />
     </div>
 </template>
@@ -11,6 +11,7 @@ import AnimeLogo from '@/components/home/LogoAnime';
 import api from '../utils/api.js';
 export default {
     name: 'home',
+    props: ['isGuest'],
     components: {
         appLogo: logo,
         appAnime: AnimeLogo

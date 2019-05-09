@@ -2,13 +2,15 @@
   <div>
     <transition name="modal">
       <app-loading v-if="load"/>
-      <app-forgot-password v-if="forgot" @close="forgot = false"/>
+      <app-forgot-password v-if="forgot && !isGuest" @close="forgot = false"/>
     </transition>
     <transition name="modal">
       <div class="modal-mask">
         <div class="modal-wrapper">
           <div class="modal-container-login">
-            <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
+            <span class="modal-close" @click="$emit('close')">
+              <i class="fas fa-times" />
+            </span>
             <div class="modal-header m-0 p-0">
               <img class="modal-image m-auto p-0" src="@/assets/logo-brain.svg" alt="cerebellum">
             </div>
@@ -32,7 +34,20 @@
               <small class="home-body">{{ message }}</small>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-light modal-default-button" @click.prevent="submitLogin" :disabled="errors.any() || isEmpty" type="submit" form="login-form">LOGIN</button>
+              <button
+                :class="`btn btn-light modal-default-button${
+                  isLoginBtnActive ?
+                    isLoginBtnFocus ? ' focus active' : ' active'
+                    :
+                    ''
+                }`"
+                @click.prevent="submitLogin"
+                :disabled="errors.any() || isEmpty"
+                type="submit"
+                form="login-form"
+              >
+                LOGIN
+              </button>
             </div>
           </div>
         </div>
@@ -46,13 +61,16 @@ import api from '../../utils/api.js';
 import Loading from '@/components/modals/Loading'
 import ForgotPassword from '@/components/modals/ForgotPassword'
 export default {
+  props: ['isGuest'],
   data() {
     return {
-      email: '',
-      password: '',
+      email: false ? 'nobody@fakemail.org' : '',
+      password: false ? 'xxxxxxxxx' : '',
       message: '',
       load: false,
-      forgot: false
+      forgot: false,
+      isLoginBtnActive: false,
+      isLoginBtnFocus: false
     }
   },
   components: {
@@ -61,25 +79,47 @@ export default {
   },
   methods: {
     submitLogin() {
-      const self = this;
-      api.auth.login(self.email, self.password)
+      const apiCall = this.$props.isGuest ?
+        api.auth.loginAsGuest :
+        () => api.auth.login(this.email, this.password);
+      apiCall()
         .then(res => {
+          console.log(res);
           if (res.data.success) {
-            self.load=true
-            self.$router.push('/social')
+            this.load = true;
+            this.$router.push('/social');
           }
-          self.message = res.data.message;
+          this.message = res.data.message;
         })
-        .catch(err => self.message = err.response.data.message || '');
-      setTimeout(function(){
+        .catch(err => {console.log(err.response); this.message = err.response.data.message || ''});
+      setTimeout(() => {
         this.load = false
-      }, 10000)
+      }, 4000);
     }
   },
   computed: {
     isEmpty() {
       return !this.email || !this.password;
     }
+  },
+  mounted() {
+    if (!this.$props.isGuest) return null;
+    setTimeout(() => {
+      this.email = 'nobody@fakemail.org';
+      this.password = 'xxxxxxxxx';
+      setTimeout(() => {
+        this.isLoginBtnActive = true;
+        setTimeout(() => {
+          this.isLoginBtnFocus = true;
+          setTimeout(() => {
+            console.log(this)
+            this.isLoginBtnFocus = false;
+            this.isLoginBtnActive = false;
+            return this.submitLogin();
+          }, 500);
+        }, 500);
+      }, 700);
+    }, 500);
   }
 }
 </script>
