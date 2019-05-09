@@ -1,6 +1,6 @@
 <template>
-   <transition name="modal">
-    <div class="modal-mask">
+  <transition name="modal">
+    <div class="modal-mask forgot-password">
       <div class="modal-wrapper">
         <div class="modal-container-login">
           <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
@@ -54,6 +54,9 @@ export default {
 </script>
 
 <style>
+.modal-mask.forgot-password {
+  z-index: 9999;
+}
 .modal-image {
   width: 95px;
 }
