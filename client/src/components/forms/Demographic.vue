@@ -13,6 +13,7 @@
             v-model="demographics.firstName"
             v-validate="'required'"
             name="first-name"
+            :disabled="isGuest"
           >
           <small v-if="errors.first('first-name')" class="account-form-error">First name is required.</small>
         </div>
@@ -26,6 +27,7 @@
             v-model="demographics.lastName"
             v-validate="'required'"
             name="last-name"
+            :disabled="isGuest"
           >
           <small v-if="errors.first('last-name')" class="account-form-error">Last name is required.</small>
         </div>
@@ -85,7 +87,7 @@ import API from "@/utils/userData";
 import api from '../../utils/api.js';
 
 export default {
-  props: ["demInfo"],
+  props: ["demInfo", 'isGuest'],
   data() {
     return {
       demographics: {

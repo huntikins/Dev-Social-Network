@@ -140,6 +140,7 @@ router.delete(
   '/',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
+    if (req.user.email === 'nobody@fakemail.org') return res.status(403).end();
     UserController.delete(
       req.user._id,
       req.body.password,
@@ -152,9 +153,22 @@ router.put(
   '/',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
+    console.log(req.body)
+    let { body } = req;
+    let updatedProps = {}
+    updatedProps.firstName = body.firstName || undefined;
+    lastName = body.lastName || undefined;
+    jobTitle = body.jobTitle || undefined;
+    jobCompany = body.jobCompany || undefined;
+    zipCode = body.zipCode || undefined;
+    if (req.user.email === 'nobody@fakemail.org') {
+      updatedProps.firstName = undefined;
+      updatedProps.body.lastName = undefined;
+    }
+    console.log(updatedProps)
     UserController.update(
       req.user._id,
-      req.body,
+      updatedProps,
       result => res.json(result)
     );
   }

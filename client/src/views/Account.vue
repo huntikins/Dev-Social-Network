@@ -25,6 +25,7 @@
             class="section-wrapper"
             @update-demographics="updateDemographicsDisplay"
             @close="editDemographics = false"
+            :isGuest="isGuest"
           />
         </div>
       </section>
@@ -73,7 +74,7 @@
         </div>
       </section>
 
-      <app-delete-account v-if="purge" @close="purge = false"/>
+      <app-delete-account v-if="purge" @close="purge = false" :isGuest="isGuest" />
 
       <section class="row justify-content-md-center pb-4">
         <div class="col-8 text-center pb-4">
@@ -129,6 +130,9 @@ export default {
       else if (jobTitle) return `${jobTitle}<br>(No employer)`;
       else if (jobCompany) return `(No job title)<br>Works at ${jobCompany}`
       else return '(No job information)'
+    },
+    isGuest: function() {
+      return this.demographics && this.demographics.email === 'nobody@fakemail.org';
     }
   },
   methods: {

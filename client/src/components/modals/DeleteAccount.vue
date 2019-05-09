@@ -9,10 +9,19 @@
           </div>
           <div class="modal-body m-0 p-0">
             <h1 class="home-header text-center m-auto py-4">{{ isDeleted ? 'Account Deleted' : 'Delete Account' }}</h1>
-            <h4 v-if="!isDeleted" class="home-body text-center m-auto pb-4">Are you sure?</h4>
+            <h4 v-if="isGuest" class="home-body text-center m-auto pb-4">Sorry.  You may not delete the guest account.</h4>
+            <h4 v-else-if="!isDeleted" class="home-body text-center m-auto pb-4">Are you sure?</h4>
             <form id="delete-form">
               <div class="form-group">
-                <input v-validate="'required'" v-model="password" name="password" type="password" class="form-control modal-field" placeholder="password">
+                <input
+                  v-validate="'required'"
+                  v-model="password"
+                  name="password"
+                  type="password"
+                  class="form-control modal-field"
+                  placeholder="password"
+                  :disabled="isGuest"
+                />
                 <!-- <small class="home-body">{{ errors.first('password') }}</small> -->
               </div>
             </form>
@@ -33,6 +42,7 @@
 <script>
 import api from '../../utils/api.js';
 export default {
+  props: ['isGuest'],
   data() {
     return {
       password: '',

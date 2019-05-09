@@ -74,6 +74,7 @@ const sendPasswordResetEmail = require('../../services/nodemailer');
 
 // source: http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/
 router.post('/forgotpassword', (req, res) => {
+  if (req.body.email === 'nobody@fakemail.org') return res.status(403).send();
   // https://caolan.github.io/async/docs.html#waterfall 
   async.waterfall([
     done => {
