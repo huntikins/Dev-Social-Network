@@ -33,6 +33,22 @@ router.post(
 );
 
 router.post(
+  '/guest-login',
+  (req, res, next) => {
+    req.body = {
+      email: 'nobody@fakemail.org',
+      password: process.env.GUEST_ACCOUNT_PASSWORD
+    };
+    next();
+  },
+  passport.authenticate(
+    'local',
+    { failureRedirect: '/api/auth/fail', failureFlash: true }
+  ),
+  (req, res) => res.json({ success: true, message: 'Successful authentication.' })
+);
+
+router.post(
   '/logout',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
@@ -58,6 +74,7 @@ const sendPasswordResetEmail = require('../../services/nodemailer');
 
 // source: http://sahatyalkabov.com/how-to-implement-password-reset-in-nodejs/
 router.post('/forgotpassword', (req, res) => {
+  if (req.body.email === 'nobody@fakemail.org') return res.status(403).send();
   // https://caolan.github.io/async/docs.html#waterfall 
   async.waterfall([
     done => {

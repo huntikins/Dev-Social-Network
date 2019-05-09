@@ -1,10 +1,25 @@
 <template>
     <div class="col col-offset-4 text-center img-wrapper">
         <img class="text-logo" src="@/assets/logo-home.png" alt=""> 
-        <button class="btn btn-light button-join hvr-float-shadow" @click="join = true">JOIN US</button>
+        <button
+            :class="`btn btn-light button-join${isGuest ? '' : ' hvr-float-shadow'}`"
+            @click="openCreateAccountModal"
+        >
+            JOIN US
+        </button>
         <app-join v-if="join" @close="join = false"/>
-        <button class="btn btn-light button-login hvr-float-shadow" @click="login = true">LOGIN</button>
-        <app-login v-if="login" @close="login = false"/>
+        <button
+            :class="`btn btn-light button-login hvr-float-shadow${
+                isLoginBtnActive ?
+                    isLoginBtnFocus ? ' active focus' : ' active'
+                    :
+                    ''
+            }`"
+            @click="openLoginModal"
+        >
+            LOGIN
+        </button>
+        <app-login v-if="login" @close="login = false" :isGuest="isGuest" />
     </div>
 </template>
 
@@ -12,15 +27,38 @@
 import Login from '@/components/modals/Login'
 import Join from '@/components/modals/NewUsr'
 export default {
+    props: ['isGuest'],
     data(){
         return {
             login: false,
             join: false,
+            isLoginBtnActive: false,
+            isLoginBtnFocus: false
         }
     },
     components: {
         appLogin: Login,
         appJoin: Join
+    },
+    methods: {
+        openCreateAccountModal() {
+            return this.$props.isGuest ? null : this.join = true;
+        },
+        openLoginModal() {
+            return this.$props.isGuest ? null : this.login = true;
+        }
+    },
+    mounted() {
+        if (!this.$props.isGuest) return null;
+        setTimeout(() => {
+            this.isLoginBtnActive = true;
+            setTimeout(() => {
+                this.isLoginBtnFocus = true;
+                setTimeout(() => {
+                    this.login = true;
+                }, 600);
+            }, 700);
+        }, 700);
     }
 }
 </script>
@@ -106,12 +144,14 @@ export default {
   -webkit-transition-property: transform, opacity;
   transition-property: transform, opacity;
 }
-.hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active {
+.hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active,
+.hvr-float-shadow.active, .hvr-float-shadow.focus {
   -webkit-transform: translateY(-5px);
   transform: translateY(-5px);
   /* move the element up by 5px */
 }
-.hvr-float-shadow:hover:before, .hvr-float-shadow:focus:before, .hvr-float-shadow:active:before {
+.hvr-float-shadow:hover:before, .hvr-float-shadow:focus:before, .hvr-float-shadow:active:before,
+.hvr-float-shadow.active:before, .hvr-float-shadow.focus:before {
   opacity: 1;
   -webkit-transform: translateY(5px);
   transform: translateY(5px);

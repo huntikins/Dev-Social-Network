@@ -1,6 +1,6 @@
 <template>
-   <transition name="modal">
-    <div class="modal-mask">
+  <transition name="modal">
+    <div class="modal-mask forgot-password">
       <div class="modal-wrapper">
         <div class="modal-container-login">
           <span class="modal-close" @click="$emit('close')"><i class="fas fa-times"></i></span>
@@ -42,7 +42,13 @@ export default {
           const data = res.data;
           if (data.success) return this.message = data.success;
           if (data.error) return this.message = data.error;
-        });
+        })
+        .catch(err => this.message =
+          (
+            err && err.response && err.response.status === 403 &&
+            'You may not reset the Guest Account password.'
+          ) || err || 'Unknown error.'
+        );
     }
   },
   computed: {
@@ -54,6 +60,9 @@ export default {
 </script>
 
 <style>
+.modal-mask.forgot-password {
+  z-index: 9999;
+}
 .modal-image {
   width: 95px;
 }

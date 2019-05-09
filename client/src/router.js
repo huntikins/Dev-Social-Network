@@ -42,6 +42,12 @@ export default new Router({
       component: () => import(/*  */ './views/ResetPassword.vue')
     },
     {
+      path: '/guest-login',
+      name: 'guestLogin',
+      props: { isGuest: true },
+      component: Home
+    },
+    {
       path: '*',
       name: 'notfound',
       component: NotFound
