@@ -154,17 +154,16 @@ router.put(
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
     console.log(req.body)
-    let { body } = req;
+    const isGuest = req.user.email === 'nobody@fakemail.org';
+    const { firstName, lastName, jobTitle, jobCompany, zipCode, interests, bio } = req.body;
     let updatedProps = {}
-    updatedProps.firstName = body.firstName || undefined;
-    lastName = body.lastName || undefined;
-    jobTitle = body.jobTitle || undefined;
-    jobCompany = body.jobCompany || undefined;
-    zipCode = body.zipCode || undefined;
-    if (req.user.email === 'nobody@fakemail.org') {
-      updatedProps.firstName = undefined;
-      updatedProps.body.lastName = undefined;
-    }
+    if (firstName && !isGuest) updatedProps.firstName = firstName;
+    if (lastName && !isGuest) updatedProps.lastName = lastName;
+    if (jobTitle) updatedProps.jobTitle = jobTitle;
+    if (jobCompany) updatedProps.jobCompany = jobCompany;
+    if (zipCode) updatedProps.zipCode = zipCode;
+    if (interests) updatedProps.interests = interests;
+    if (bio) updatedProps.bio = bio;
     console.log(updatedProps)
     UserController.update(
       req.user._id,
