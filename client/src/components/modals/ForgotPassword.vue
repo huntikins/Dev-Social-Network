@@ -47,7 +47,9 @@ export default {
           (
             err && err.response && err.response.status === 403 &&
             'You may not reset the Guest Account password.'
-          ) || err || 'Unknown error.'
+          ) || (
+            err && err.response && err.response.data.message
+          ) || 'Unknown error.'
         );
     }
   },
