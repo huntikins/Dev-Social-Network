@@ -88,9 +88,13 @@ Secret_Access_Key=
 Access_Key_ID=
 S3_Bucket=
 Meetup_Api_Key=
+Sendgrid_Username=
 Sendgrid_Password=
+Email_From_Address=
 ```
-Add your information in the appropriate places directly after each equal sign. The first three values pertain to AWS S3. Alternatively, you can attempt to build and run the site without registering for all three services. If you do this, the server will crash when you attempt to start it and you will have to use the error messages to determine which lines of code to disable until you are able to get it started. You should be able to use most of the features of the site then, but the image upload, events feed, and password reset will not work.
+Add your information in the appropriate places directly after each equal sign. The first three values pertain to AWS S3. The last value is the email to use as the "from" address when sending password reset emails.
+
+Alternatively, you can attempt to build and run the site without registering for all three services. If you do this, the server will crash when you attempt to start it and you will have to use the error messages to determine which lines of code to disable until you are able to get it started. You should be able to use most of the features of the site then, but the image upload, events feed, and password reset will not work.
 
 To run from the development server, run `yarn dev` in the root of the repo. Open a second CLI window and run `yarn start`. The front end should be running at `localhost:3000` with the back-end server running at `localhost:8080`. Visit `localhost:3000` in your browser. The API calls should be automatically redirected to port 8080. Alternatively, you can build the app by running `yarn build` in the root of the repo. Once the build is finished, run `yarn start`. The app should be running at `localhost:8080`.
 
