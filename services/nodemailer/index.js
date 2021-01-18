@@ -8,7 +8,7 @@ const smtpTransport = require('./smtpTransport');
 
 const sendPasswordResetEmail = (req, res, token, user, done) => {
   if (!smtpTransport) {
-    const msg = 'Sorry, this service is unavailable.';
+    const msg = 'Service Unavailable. Sorry!';
     return res.status(503).json({ message: msg, error: msg });
   }
   const mailOptions = {

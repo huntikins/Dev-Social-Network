@@ -173,10 +173,13 @@ router.put(
   }
 );
 
-const singleUpload = imageUpload.single('profileImage');
+const singleUpload = imageUpload && imageUpload.single('profileImage');
 router.post('/s3upload',
   require('connect-ensure-login').ensureLoggedIn('/api/auth/fail'),
   (req, res) => {
+    if (!imageUpload) {
+      return res.status(503).json({ message: 'Service Unavailable. Sorry!' });
+    }
     singleUpload(req, res, (err) => {
       if (err) {
         return res.status(422).send({
