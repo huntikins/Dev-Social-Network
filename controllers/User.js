@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const singleUpload = require("../services/aws_service").single('image');
 
 module.exports = {
   create: (user, callback) => {

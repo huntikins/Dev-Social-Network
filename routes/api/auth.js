@@ -93,7 +93,11 @@ router.post('/forgotpassword', (req, res) => {
     },
     sendPasswordResetEmail
   ], err => {
-    if (err) return console.error(err);
+    if (err) {
+      console.error(err);
+      const msg = 'Sorry, this service is unavailable.';
+      res.status(503).json({ error: msg, message: msg });
+    }
   });
 });
 
