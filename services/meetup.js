@@ -1,3 +1,10 @@
+/* * * * * * * * * * * *
+IMPORTANT NOTE:
+  MeetUp may no longer be offering access via api key.
+  They have switched to OAuth.
+  I have not been able to determine whether the API can still be used without a paid account.
+* * * * * * * * * * * * */
+
 const axios = require('axios');
 const zipcodes = require('zipcodes');
 
@@ -26,9 +33,13 @@ const getEvents = (zip, callback) => {
         });
         callback(events);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(new Error('Bad MeetUp API response.'));
+        console.log('  L==>', err && err.response && err.response.data);
+        callback(null, ({ message: 'MeetUp API is unavailable.', status: 503 }));
+      });
   }
-  else callback({});
+  else callback(null, ({ message: 'Location not found.' }));
 };
 
 module.exports = { getEvents };

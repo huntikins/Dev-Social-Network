@@ -8,7 +8,11 @@ router.get(
   (req, res) => {
     getEvents(
       req.user.zipCode,
-      result => res.json(result)
+      (result, err) => (
+        err ?
+        res.status(err.status || 500).json({ message: err.message }) :
+        res.json(result)
+      )
     );
   }
 );
