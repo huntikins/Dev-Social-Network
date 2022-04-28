@@ -14,7 +14,7 @@
   "author": "djknit <djknit@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.4",
     "aws-sdk": "^2.387.0",
     "axios": "^0.21.1",
     "connect-ensure-login": "^0.1.1",
